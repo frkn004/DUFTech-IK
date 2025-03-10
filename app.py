@@ -43,8 +43,6 @@ from functools import wraps
 import re
 import base64
 from flask_session import Session
-from werkzeug.utils import secure_filename
-import uuid
 
 # .env dosyasını yükle
 load_dotenv()
@@ -317,7 +315,7 @@ class InterviewAssistant(VoiceAssistant):
             self.custom_questions = interview_data.get("questions", [])
             self.cv_summary = interview_data.get("cv_summary", "")
             self.pre_info = interview_data.get("pre_info", "")
-            
+
             # CV verilerini kaydet (eğer varsa)
             self.cv_data = interview_data.get("cv_data", {})
             
@@ -1912,7 +1910,7 @@ def analyze_cv():
             'success': False,
             'error': f'CV analiz hatası: {str(e)}'
         })
-
+    
 def start_file_watcher():
     """Dosya izleme sistemini başlat - Sadece terminal log'ları için"""
     try:
@@ -2402,9 +2400,12 @@ if __name__ == '__main__':
         # Dosya izleme sistemini başlat
         observer = start_file_watcher()
         
-        # Flask uygulamasını başlat
-        print("\n[*] Web sunucusu başlatılıyor (Port: 5004)...")
-        app.run(host='0.0.0.0', port=5004)
+        # Domain ve port bilgilerini al
+        DOMAIN_NAME = os.getenv('DOMAIN_NAME', 'www.aimulakat.duftech.com.tr')
+        PORT = int(os.getenv('PORT', 5000))
+        
+        print(f"\n[*] Web sunucusu başlatılıyor (Domain: {DOMAIN_NAME}, Port: {PORT})...")
+        app.run(host='0.0.0.0', port=PORT)
         
     except Exception as e:
         print(f"\n[!] Program başlatılamadı: {str(e)}")
