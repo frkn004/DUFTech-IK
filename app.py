@@ -43,6 +43,7 @@ from functools import wraps
 import re
 import base64
 from flask_session import Session
+from werkzeug.utils import secure_filename
 
 # .env dosyasını yükle
 load_dotenv()
@@ -1166,6 +1167,22 @@ async def start_recording():
 @app.route('/process_audio', methods=['POST'])
 async def process_audio():
     try:
+        global current_interview
+        
+        # Interview kodu kontrolü
+        interview_code = request.form.get('interview_code')
+        if not interview_code:
+            return jsonify({
+                'success': False,
+                'error': 'Mülakat kodu gerekli'
+            })
+            
+        # Eğer current_interview tanımlı değilse veya farklı bir kod ise, yeni bir instance oluştur
+        if not current_interview or current_interview.code != interview_code:
+            current_interview = InterviewAssistant()
+            current_interview.set_interview_details(interview_code)
+            logger.info(f"process_audio: Mülakat nesnesi oluşturuldu: {interview_code}")
+            
         audio_file = request.files.get('audio')
         if not audio_file:
             return jsonify({
@@ -1698,6 +1715,15 @@ def serve_report(filename):
 def analyze_cv():
     """CV dosyasını analiz eden endpoint"""
     try:
+        # Önce OpenAI API anahtarını kontrol et
+        openai_api_key = os.getenv('OPENAI_API_KEY')
+        if not openai_api_key:
+            logging.error("OpenAI API anahtarı bulunamadı")
+            return jsonify({
+                'success': False,
+                'error': 'API anahtarı yapılandırması bulunamadı'
+            })
+            
         if 'cv_file' not in request.files:
             return jsonify({
                 'success': False,
@@ -1713,13 +1739,31 @@ def analyze_cv():
                 'error': 'Dosya seçilmedi'
             })
             
+        # Geçici dizini kontrol et ve oluştur
+        if not os.path.exists('temp'):
+            os.makedirs('temp', exist_ok=True)
+            logging.info("Temp dizini oluşturuldu")
+            
         # Geçici dosyayı kaydet
-        temp_path = os.path.join('temp', f'cv_{int(time.time())}_{cv_file.filename}')
-        os.makedirs('temp', exist_ok=True)
-        cv_file.save(temp_path)
+        timestamp = int(time.time())
+        random_suffix = random.randint(10000, 99999)
+        safe_filename = secure_filename(cv_file.filename)
+        temp_path = os.path.join('temp', f'cv_{timestamp}_{random_suffix}_{safe_filename}')
         
+        # Dosyayı kaydetmeden önce izinleri kontrol et
+        try:
+            with open(temp_path, 'wb') as f:
+                f.write(cv_file.read())
+            logging.info(f"CV dosyası kaydedildi: {temp_path}")
+        except Exception as file_error:
+            logging.error(f"Dosya kaydetme hatası: {str(file_error)}")
+            return jsonify({
+                'success': False,
+                'error': f'Dosya kaydetme hatası: {str(file_error)}'
+            })
+            
         # Dosya tipini algıla
-        file_ext = os.path.splitext(cv_file.filename)[1].lower()
+        file_ext = os.path.splitext(safe_filename)[1].lower()
         
         # Dosya içeriğini çıkar
         cv_text = ""
@@ -1755,101 +1799,119 @@ def analyze_cv():
             })
             
         # OpenAI ile CV analizi yap
-        client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
-        
-        # Pozisyon hakkında daha fazla bilgi soruyorsa, pozisyon gereksinimleri analizi yap
-        position_context = ""
-        if position:
+        try:
+            client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+            
+            # Pozisyon hakkında daha fazla bilgi soruyorsa, pozisyon gereksinimleri analizi yap
+            position_context = ""
+            if position:
+                try:
+                    position_response = client.chat.completions.create(
+                        model="gpt-4-turbo",
+                        response_format={"type": "json_object"},
+                        messages=[
+                            {"role": "system", "content": """
+                                Verilen pozisyonun gerekenliklerini analiz eden bir İK uzmanısın. 
+                                Pozisyon adından yola çıkarak aşağıdaki formatta JSON çıktısı üreteceksin:
+                                
+                                {
+                                    "position_title": "Pozisyon adı",
+                                    "required_skills": ["beceri1", "beceri2", ...],
+                                    "preferred_experience": ["deneyim1", "deneyim2", ...],
+                                    "education_requirements": ["eğitim1", "eğitim2", ...],
+                                    "keywords": ["anahtar kelime1", "anahtar kelime2", ...]
+                                }
+                                
+                                Tahminlerin mümkün olduğunca gerçekçi ve doğru olmalı.
+                            """},
+                            {"role": "user", "content": f"Bu pozisyon için gereksinimleri analiz et: {position}"}
+                        ]
+                    )
+                    
+                    position_data = json.loads(position_response.choices[0].message.content)
+                    position_context = f"""
+                        Pozisyon bilgilerini de analiz et:
+                        Pozisyon: {position}
+                        Gerekli beceriler: {', '.join(position_data.get('required_skills', []))}
+                        Tercih edilen deneyimler: {', '.join(position_data.get('preferred_experience', []))}
+                        Anahtar kelimeler: {', '.join(position_data.get('keywords', []))}
+                    """
+                except Exception as e:
+                    logging.error(f"Pozisyon analizi hatası: {str(e)}")
+                    position_context = f"Pozisyon: {position}"
+            
+            # CV analizi
             try:
-                position_response = client.chat.completions.create(
+                response = client.chat.completions.create(
                     model="gpt-4-turbo",
                     response_format={"type": "json_object"},
                     messages=[
-                        {"role": "system", "content": """
-                            Verilen pozisyonun gerekenliklerini analiz eden bir İK uzmanısın. 
-                            Pozisyon adından yola çıkarak aşağıdaki formatta JSON çıktısı üreteceksin:
+                        {"role": "system", "content": f"""
+                            Sen bir CV analiz uzmanısın. Verilen CV metnini analiz ederek aşağıdaki yapılandırılmış JSON formatında döndür:
                             
-                            {
-                                "position_title": "Pozisyon adı",
-                                "required_skills": ["beceri1", "beceri2", ...],
-                                "preferred_experience": ["deneyim1", "deneyim2", ...],
-                                "education_requirements": ["eğitim1", "eğitim2", ...],
-                                "keywords": ["anahtar kelime1", "anahtar kelime2", ...]
-                            }
+                            {{
+                                "personal_info": {{
+                                    "name": "Ad Soyad",
+                                    "email": "e-posta adresi",
+                                    "phone": "telefon numarası",
+                                    "location": "konum"
+                                }},
+                                "summary": "Adayın kısa özeti",
+                                "skills": ["beceri1", "beceri2", ...],
+                                "experience": [
+                                    {{
+                                        "title": "Pozisyon başlığı",
+                                        "company": "Şirket adı",
+                                        "duration": "Çalışma süresi",
+                                        "description": "Pozisyon açıklaması",
+                                        "achievements": ["başarı1", "başarı2", ...]
+                                    }},
+                                    ...
+                                ],
+                                "education": [
+                                    {{
+                                        "degree": "Derece",
+                                        "institution": "Okul/Üniversite adı",
+                                        "year": "Eğitim yılı",
+                                        "description": "Eğitim açıklaması"
+                                    }},
+                                    ...
+                                ],
+                                "languages": ["dil1", "dil2", ...],
+                                "certificates": ["sertifika1", "sertifika2", ...],
+                                "profile_summary": "Bu adayın güçlü yanları ve pozisyona uygunluğu hakkında 3-4 cümlelik özet",
+                                "position_match": {{
+                                    "match_percentage": 0-100 arası bir sayı,
+                                    "matching_skills": ["eşleşen beceri1", ...],
+                                    "missing_skills": ["eksik beceri1", ...],
+                                    "recommendations": ["öneri1", "öneri2", ...]
+                                }}
+                            }}
                             
-                            Tahminlerin mümkün olduğunca gerçekçi ve doğru olmalı.
+                            Bazı alanlar CV'de bulunmayabilir. Bu durumda boş dizi veya null değeri kullan.
+                            CV'deki bilgileri mümkün olduğunca eksiksiz çıkar. Hiçbir bilgi uydurmadan, CV'de olan bilgileri yapılandırılmış formata çevir.
+                            {position_context}
                         """},
-                        {"role": "user", "content": f"Bu pozisyon için gereksinimleri analiz et: {position}"}
+                        {"role": "user", "content": f"Aşağıdaki CV'yi analiz et ve yapılandırılmış JSON formatında döndür:\n\n{cv_text}"}
                     ]
                 )
                 
-                position_data = json.loads(position_response.choices[0].message.content)
-                position_context = f"""
-                    Pozisyon bilgilerini de analiz et:
-                    Pozisyon: {position}
-                    Gerekli beceriler: {', '.join(position_data.get('required_skills', []))}
-                    Tercih edilen deneyimler: {', '.join(position_data.get('preferred_experience', []))}
-                    Anahtar kelimeler: {', '.join(position_data.get('keywords', []))}
-                """
-            except Exception as e:
-                logging.error(f"Pozisyon analizi hatası: {str(e)}")
-        
-        response = client.chat.completions.create(
-            model="gpt-4-turbo",
-            response_format={"type": "json_object"},
-            messages=[
-                {"role": "system", "content": f"""
-                    Sen bir CV analiz uzmanısın. Verilen CV metnini analiz ederek aşağıdaki yapılandırılmış JSON formatında döndür:
-                    
-                    {{
-                        "personal_info": {{
-                            "name": "Ad Soyad",
-                            "email": "e-posta adresi",
-                            "phone": "telefon numarası",
-                            "location": "konum"
-                        }},
-                        "summary": "Adayın kısa özeti",
-                        "skills": ["beceri1", "beceri2", ...],
-                        "experience": [
-                            {{
-                                "title": "Pozisyon başlığı",
-                                "company": "Şirket adı",
-                                "duration": "Çalışma süresi",
-                                "description": "Pozisyon açıklaması",
-                                "achievements": ["başarı1", "başarı2", ...]
-                            }},
-                            ...
-                        ],
-                        "education": [
-                            {{
-                                "degree": "Derece",
-                                "institution": "Okul/Üniversite adı",
-                                "year": "Eğitim yılı",
-                                "description": "Eğitim açıklaması"
-                            }},
-                            ...
-                        ],
-                        "languages": ["dil1", "dil2", ...],
-                        "certificates": ["sertifika1", "sertifika2", ...],
-                        "profile_summary": "Bu adayın güçlü yanları ve pozisyona uygunluğu hakkında 3-4 cümlelik özet",
-                        "position_match": {{
-                            "match_percentage": 0-100 arası bir sayı,
-                            "matching_skills": ["eşleşen beceri1", ...],
-                            "missing_skills": ["eksik beceri1", ...],
-                            "recommendations": ["öneri1", "öneri2", ...]
-                        }}
-                    }}
-                    
-                    Bazı alanlar CV'de bulunmayabilir. Bu durumda boş dizi veya null değeri kullan.
-                    CV'deki bilgileri mümkün olduğunca eksiksiz çıkar. Hiçbir bilgi uydurmadan, CV'de olan bilgileri yapılandırılmış formata çevir.
-                    {position_context}
-                """},
-                {"role": "user", "content": f"Aşağıdaki CV'yi analiz et ve yapılandırılmış JSON formatında döndür:\n\n{cv_text}"}
-            ]
-        )
-        
-        # JSON yanıtını parse et
-        cv_data = json.loads(response.choices[0].message.content)
+                # JSON yanıtını parse et
+                cv_data = json.loads(response.choices[0].message.content)
+                
+            except Exception as api_error:
+                logging.error(f"OpenAI API hatası: {str(api_error)}")
+                return jsonify({
+                    'success': False, 
+                    'error': f'CV analizi sırasında API hatası: {str(api_error)}'
+                })
+                
+        except Exception as e:
+            logging.error(f"CV analiz genel hatası: {str(e)}")
+            return jsonify({
+                'success': False,
+                'error': f'CV analiz hatası: {str(e)}'
+            })
         
         # Geçici dosyayı sil
         try:
