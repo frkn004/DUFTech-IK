@@ -572,47 +572,60 @@
                     formData.append('position', position);
                 }
                 
+                console.log("CV analizi başlatılıyor...");
+                
                 // CV dosyasını sunucuya yükle ve analiz et
-                const response = await fetch('/analyze_cv', {
-                    method: 'POST',
-                    body: formData
-                });
-                
-                if (!response.ok) {
-                    throw new Error('CV analizi sırasında bir hata oluştu');
-                }
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    // CV analiz sonucunu göster
-                    document.getElementById('cvAnalysisStatus').classList.add('hidden');
-                    document.getElementById('cvSummaryContainer').classList.remove('hidden');
+                try {
+                    const response = await fetch('/analyze_cv', {
+                        method: 'POST',
+                        body: formData
+                    });
                     
-                    // CV verilerini sakla
-                    window.cvData = result.cv_data;
+                    // Yanıtı kontrol et
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        console.error('Sunucu yanıtı başarısız:', response.status, errorText);
+                        throw new Error(`CV analizi sırasında bir hata oluştu (${response.status}): ${errorText}`);
+                    }
                     
-                    // CV özetini oluştur
-                    displayCVSummary(result.cv_data);
+                    // JSON yanıtını parse et
+                    const result = await response.json();
+                    console.log("CV analiz sonucu:", result);
                     
-                    // Kişisel bilgileri forma doldur
-                    populateFormFromCV(result.cv_data);
-                    
-                    // Pozisyon uyum analizini göster
-                    analyzePositionMatch(result.cv_data);
-                    
-                    // Otomatik sorular oluştur
-                    displayGeneratedQuestions(result.cv_data);
-                    
-                    // Başarı mesajı göster
-                    showMessage('CV başarıyla analiz edildi', 'success');
-                } else {
-                    throw new Error(result.error || 'CV analizi başarısız oldu');
+                    if (result.success) {
+                        // CV analiz sonucunu göster
+                        document.getElementById('cvAnalysisStatus').classList.add('hidden');
+                        document.getElementById('cvSummaryContainer').classList.remove('hidden');
+                        
+                        // CV verilerini sakla
+                        window.cvData = result.cv_data;
+                        
+                        // CV özetini oluştur
+                        displayCVSummary(result.cv_data);
+                        
+                        // Kişisel bilgileri forma doldur
+                        populateFormFromCV(result.cv_data);
+                        
+                        // Pozisyon uyum analizini göster
+                        analyzePositionMatch(result.cv_data);
+                        
+                        // Otomatik sorular oluştur
+                        displayGeneratedQuestions(result.cv_data);
+                        
+                        // Başarı mesajı göster
+                        showMessage('CV başarıyla analiz edildi', 'success');
+                    } else {
+                        console.error('CV analiz hatası:', result.error);
+                        throw new Error(result.error || 'CV analizi başarısız oldu');
+                    }
+                } catch (fetchError) {
+                    console.error('Fetch işlemi hatası:', fetchError);
+                    throw fetchError;
                 }
             } catch (error) {
                 console.error('CV analiz hatası:', error);
                 document.getElementById('cvAnalysisStatus').classList.add('hidden');
-                showMessage(error.message, 'error');
+                showMessage(error.message || 'CV analizi sırasında beklenmeyen bir hata oluştu', 'error');
             }
         }
         
