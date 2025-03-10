@@ -1,0 +1,348 @@
+{
+  "code": "ITZBB6WA",
+  "candidate_name": "furkan",
+  "position": "yazılımcı",
+  "requirements": [],
+  "questions": [
+    "- \"Merhaba Furkan, hoş geldin. Öncelikle bize biraz kendinden ve bugüne kadar edindiğin yazılım deneyiminden bahseder misin?\"",
+    "- \"Çok güzel, teşekkür ederim. Peki, yazılımcı olarak çalışmayı neyin motive ediyor? Bu pozisyon için özellikle neden başvurmayı düşündün?\"",
+    "- \"Anladım, çok ilginç. Şimdi biraz daha teknik konulara geçelim. Python veya Java gibi dillerde yazılım geliştirme konusunda deneyimlerini bizimle paylaşabilir misin?\"",
+    "- \"Bu deneyimlerin ışığında, karşılaştığın bir yazılım sorununu nasıl çözdüğünü bize anlatır mısın? Yani genel anlamda problem çözme yaklaşımın neleri içeriyor?\"",
+    "- \"Anladım, bu durumu nasıl çözdüğün hakkında bize bilgi verdiğin için teşekkür ederim. Peki, yazılım projelerinde genellikle takım halinde mi çalışıyorsun, yoksa daha çok bağımsız mı çalışıyorsun? Takım çalışması ve iletişim konularındaki deneyimlerini ve yaklaşımlarını bizimle paylaşır mısın?\""
+  ],
+  "created_at": "2025-03-10T20:29:32.969276",
+  "status": "active",
+  "started_at": "2025-03-10T20:29:59.355929",
+  "photos": [
+    {
+      "filename": "20250310203005.jpg",
+      "timestamp": "2025-03-10T17:30:05.893Z",
+      "path": "ITZBB6WA_photos/20250310203005.jpg"
+    },
+    {
+      "filename": "20250310203030.jpg",
+      "timestamp": "2025-03-10T17:30:30.886Z",
+      "path": "ITZBB6WA_photos/20250310203030.jpg"
+    },
+    {
+      "filename": "20250310203056.jpg",
+      "timestamp": "2025-03-10T17:30:56.534Z",
+      "path": "ITZBB6WA_photos/20250310203056.jpg"
+    },
+    {
+      "filename": "20250310203126.jpg",
+      "timestamp": "2025-03-10T17:31:26.523Z",
+      "path": "ITZBB6WA_photos/20250310203126.jpg"
+    },
+    {
+      "filename": "20250310203150.jpg",
+      "timestamp": "2025-03-10T17:31:50.865Z",
+      "path": "ITZBB6WA_photos/20250310203150.jpg"
+    },
+    {
+      "filename": "20250310203216.jpg",
+      "timestamp": "2025-03-10T17:32:16.533Z",
+      "path": "ITZBB6WA_photos/20250310203216.jpg"
+    },
+    {
+      "filename": "20250310203246.jpg",
+      "timestamp": "2025-03-10T17:32:46.531Z",
+      "path": "ITZBB6WA_photos/20250310203246.jpg"
+    },
+    {
+      "filename": "20250310203301.jpg",
+      "timestamp": "2025-03-10T17:33:01.520Z",
+      "path": "ITZBB6WA_photos/20250310203301.jpg"
+    },
+    {
+      "filename": "20250310203321.jpg",
+      "timestamp": "2025-03-10T17:33:21.526Z",
+      "path": "ITZBB6WA_photos/20250310203321.jpg"
+    },
+    {
+      "filename": "20250310203341.jpg",
+      "timestamp": "2025-03-10T17:33:41.527Z",
+      "path": "ITZBB6WA_photos/20250310203341.jpg"
+    },
+    {
+      "filename": "20250310203356.jpg",
+      "timestamp": "2025-03-10T17:33:56.524Z",
+      "path": "ITZBB6WA_photos/20250310203356.jpg"
+    },
+    {
+      "filename": "20250310203416.jpg",
+      "timestamp": "2025-03-10T17:34:16.525Z",
+      "path": "ITZBB6WA_photos/20250310203416.jpg"
+    },
+    {
+      "filename": "20250310203436.jpg",
+      "timestamp": "2025-03-10T17:34:36.532Z",
+      "path": "ITZBB6WA_photos/20250310203436.jpg"
+    },
+    {
+      "filename": "20250310203451.jpg",
+      "timestamp": "2025-03-10T17:34:51.528Z",
+      "path": "ITZBB6WA_photos/20250310203451.jpg"
+    },
+    {
+      "filename": "20250310203511.jpg",
+      "timestamp": "2025-03-10T17:35:11.527Z",
+      "path": "ITZBB6WA_photos/20250310203511.jpg"
+    },
+    {
+      "filename": "20250310203531.jpg",
+      "timestamp": "2025-03-10T17:35:31.518Z",
+      "path": "ITZBB6WA_photos/20250310203531.jpg"
+    },
+    {
+      "filename": "20250310203546.jpg",
+      "timestamp": "2025-03-10T17:35:46.510Z",
+      "path": "ITZBB6WA_photos/20250310203546.jpg"
+    },
+    {
+      "filename": "20250310203606.jpg",
+      "timestamp": "2025-03-10T17:36:06.512Z",
+      "path": "ITZBB6WA_photos/20250310203606.jpg"
+    },
+    {
+      "filename": "20250310203626.jpg",
+      "timestamp": "2025-03-10T17:36:26.518Z",
+      "path": "ITZBB6WA_photos/20250310203626.jpg"
+    },
+    {
+      "filename": "20250310203641.jpg",
+      "timestamp": "2025-03-10T17:36:41.520Z",
+      "path": "ITZBB6WA_photos/20250310203641.jpg"
+    },
+    {
+      "filename": "20250310203711.jpg",
+      "timestamp": "2025-03-10T17:37:11.526Z",
+      "path": "ITZBB6WA_photos/20250310203711.jpg"
+    },
+    {
+      "filename": "20250310203731.jpg",
+      "timestamp": "2025-03-10T17:37:31.522Z",
+      "path": "ITZBB6WA_photos/20250310203731.jpg"
+    },
+    {
+      "filename": "20250310203756.jpg",
+      "timestamp": "2025-03-10T17:37:56.515Z",
+      "path": "ITZBB6WA_photos/20250310203756.jpg"
+    },
+    {
+      "filename": "20250310203811.jpg",
+      "timestamp": "2025-03-10T17:38:11.517Z",
+      "path": "ITZBB6WA_photos/20250310203811.jpg"
+    },
+    {
+      "filename": "20250310203826.jpg",
+      "timestamp": "2025-03-10T17:38:26.529Z",
+      "path": "ITZBB6WA_photos/20250310203826.jpg"
+    },
+    {
+      "filename": "20250310203856.jpg",
+      "timestamp": "2025-03-10T17:38:56.531Z",
+      "path": "ITZBB6WA_photos/20250310203856.jpg"
+    },
+    {
+      "filename": "20250310203921.jpg",
+      "timestamp": "2025-03-10T17:39:21.520Z",
+      "path": "ITZBB6WA_photos/20250310203921.jpg"
+    },
+    {
+      "filename": "20250310203946.jpg",
+      "timestamp": "2025-03-10T17:39:46.529Z",
+      "path": "ITZBB6WA_photos/20250310203946.jpg"
+    },
+    {
+      "filename": "20250310204006.jpg",
+      "timestamp": "2025-03-10T17:40:06.532Z",
+      "path": "ITZBB6WA_photos/20250310204006.jpg"
+    },
+    {
+      "filename": "20250310204026.jpg",
+      "timestamp": "2025-03-10T17:40:26.530Z",
+      "path": "ITZBB6WA_photos/20250310204026.jpg"
+    },
+    {
+      "filename": "20250310204056.jpg",
+      "timestamp": "2025-03-10T17:40:56.524Z",
+      "path": "ITZBB6WA_photos/20250310204056.jpg"
+    },
+    {
+      "filename": "20250310204111.jpg",
+      "timestamp": "2025-03-10T17:41:11.533Z",
+      "path": "ITZBB6WA_photos/20250310204111.jpg"
+    },
+    {
+      "filename": "20250310204126.jpg",
+      "timestamp": "2025-03-10T17:41:26.530Z",
+      "path": "ITZBB6WA_photos/20250310204126.jpg"
+    },
+    {
+      "filename": "20250310204146.jpg",
+      "timestamp": "2025-03-10T17:41:46.528Z",
+      "path": "ITZBB6WA_photos/20250310204146.jpg"
+    },
+    {
+      "filename": "20250310204211.jpg",
+      "timestamp": "2025-03-10T17:42:11.532Z",
+      "path": "ITZBB6WA_photos/20250310204211.jpg"
+    },
+    {
+      "filename": "20250310204231.jpg",
+      "timestamp": "2025-03-10T17:42:31.529Z",
+      "path": "ITZBB6WA_photos/20250310204231.jpg"
+    },
+    {
+      "filename": "20250310204251.jpg",
+      "timestamp": "2025-03-10T17:42:51.526Z",
+      "path": "ITZBB6WA_photos/20250310204251.jpg"
+    },
+    {
+      "filename": "20250310204316.jpg",
+      "timestamp": "2025-03-10T17:43:16.525Z",
+      "path": "ITZBB6WA_photos/20250310204316.jpg"
+    },
+    {
+      "filename": "20250310204341.jpg",
+      "timestamp": "2025-03-10T17:43:41.528Z",
+      "path": "ITZBB6WA_photos/20250310204341.jpg"
+    },
+    {
+      "filename": "20250310204406.jpg",
+      "timestamp": "2025-03-10T17:44:06.527Z",
+      "path": "ITZBB6WA_photos/20250310204406.jpg"
+    },
+    {
+      "filename": "20250310204421.jpg",
+      "timestamp": "2025-03-10T17:44:21.525Z",
+      "path": "ITZBB6WA_photos/20250310204421.jpg"
+    },
+    {
+      "filename": "20250310204446.jpg",
+      "timestamp": "2025-03-10T17:44:46.526Z",
+      "path": "ITZBB6WA_photos/20250310204446.jpg"
+    },
+    {
+      "filename": "20250310204511.jpg",
+      "timestamp": "2025-03-10T17:45:11.527Z",
+      "path": "ITZBB6WA_photos/20250310204511.jpg"
+    },
+    {
+      "filename": "20250310204531.jpg",
+      "timestamp": "2025-03-10T17:45:31.528Z",
+      "path": "ITZBB6WA_photos/20250310204531.jpg"
+    },
+    {
+      "filename": "20250310204601.jpg",
+      "timestamp": "2025-03-10T17:46:01.520Z",
+      "path": "ITZBB6WA_photos/20250310204601.jpg"
+    },
+    {
+      "filename": "20250310204621.jpg",
+      "timestamp": "2025-03-10T17:46:21.522Z",
+      "path": "ITZBB6WA_photos/20250310204621.jpg"
+    },
+    {
+      "filename": "20250310204641.jpg",
+      "timestamp": "2025-03-10T17:46:41.534Z",
+      "path": "ITZBB6WA_photos/20250310204641.jpg"
+    },
+    {
+      "filename": "20250310204701.jpg",
+      "timestamp": "2025-03-10T17:47:01.511Z",
+      "path": "ITZBB6WA_photos/20250310204701.jpg"
+    },
+    {
+      "filename": "20250310204726.jpg",
+      "timestamp": "2025-03-10T17:47:26.500Z",
+      "path": "ITZBB6WA_photos/20250310204726.jpg"
+    },
+    {
+      "filename": "20250310204746.jpg",
+      "timestamp": "2025-03-10T17:47:46.499Z",
+      "path": "ITZBB6WA_photos/20250310204746.jpg"
+    },
+    {
+      "filename": "20250310204811.jpg",
+      "timestamp": "2025-03-10T17:48:11.500Z",
+      "path": "ITZBB6WA_photos/20250310204811.jpg"
+    },
+    {
+      "filename": "20250310204836.jpg",
+      "timestamp": "2025-03-10T17:48:36.496Z",
+      "path": "ITZBB6WA_photos/20250310204836.jpg"
+    },
+    {
+      "filename": "20250310204856.jpg",
+      "timestamp": "2025-03-10T17:48:56.473Z",
+      "path": "ITZBB6WA_photos/20250310204856.jpg"
+    },
+    {
+      "filename": "20250310204926.jpg",
+      "timestamp": "2025-03-10T17:49:26.479Z",
+      "path": "ITZBB6WA_photos/20250310204926.jpg"
+    },
+    {
+      "filename": "20250310204941.jpg",
+      "timestamp": "2025-03-10T17:49:41.495Z",
+      "path": "ITZBB6WA_photos/20250310204941.jpg"
+    },
+    {
+      "filename": "20250310204956.jpg",
+      "timestamp": "2025-03-10T17:49:56.501Z",
+      "path": "ITZBB6WA_photos/20250310204956.jpg"
+    },
+    {
+      "filename": "20250310205016.jpg",
+      "timestamp": "2025-03-10T17:50:16.496Z",
+      "path": "ITZBB6WA_photos/20250310205016.jpg"
+    },
+    {
+      "filename": "20250310205031.jpg",
+      "timestamp": "2025-03-10T17:50:31.496Z",
+      "path": "ITZBB6WA_photos/20250310205031.jpg"
+    },
+    {
+      "filename": "20250310205046.jpg",
+      "timestamp": "2025-03-10T17:50:46.491Z",
+      "path": "ITZBB6WA_photos/20250310205046.jpg"
+    },
+    {
+      "filename": "20250310205106.jpg",
+      "timestamp": "2025-03-10T17:51:06.493Z",
+      "path": "ITZBB6WA_photos/20250310205106.jpg"
+    },
+    {
+      "filename": "20250310205121.jpg",
+      "timestamp": "2025-03-10T17:51:21.494Z",
+      "path": "ITZBB6WA_photos/20250310205121.jpg"
+    },
+    {
+      "filename": "20250310205136.jpg",
+      "timestamp": "2025-03-10T17:51:36.500Z",
+      "path": "ITZBB6WA_photos/20250310205136.jpg"
+    },
+    {
+      "filename": "20250310205201.jpg",
+      "timestamp": "2025-03-10T17:52:01.490Z",
+      "path": "ITZBB6WA_photos/20250310205201.jpg"
+    },
+    {
+      "filename": "20250310205216.jpg",
+      "timestamp": "2025-03-10T17:52:16.494Z",
+      "path": "ITZBB6WA_photos/20250310205216.jpg"
+    },
+    {
+      "filename": "20250310205231.jpg",
+      "timestamp": "2025-03-10T17:52:31.495Z",
+      "path": "ITZBB6WA_photos/20250310205231.jpg"
+    },
+    {
+      "filename": "20250310205335.jpg",
+      "timestamp": "2025-03-10T17:53:35.822Z",
+      "path": "ITZBB6WA_photos/20250310205335.jpg"
+    }
+  ]
+}

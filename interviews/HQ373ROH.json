@@ -1,0 +1,51 @@
+{
+  "code": "HQ373ROH",
+  "candidate_name": "FURKAN SEVİNÇ",
+  "position": "CEO",
+  "requirements": [],
+  "questions": [
+    "- \"Furkan Bey, sizinle tanışmaktan büyük keyif alıyorum. Kendinizden ve profesyonel geçmişinizden biraz bahseder misiniz?\"",
+    "- \"CEO pozisyonuna başvurmanızı tetikleyen en önemli etken ne oldu? Bu rolde ne tür beklentileriniz var ve kariyer hedeflerinize nasıl hizmet edeceğini düşünüyorsunuz?\"",
+    "- \"Bir şirketin en üst düzey yöneticisi olarak, özellikle stratejik planlama ve operasyonel yönetim konusunda hangi teknik yetkinliklere sahip olduğunuzu anlatır mısınız?\"",
+    "- \"Bir problemle karşılaştığınızda genellikle nasıl bir çözüm yoluna başvurursunuz? Belki geçmişte yaşadığınız bir olayı örnek vererek bu süreci bizimle paylaşabilir misiniz?\"",
+    "- \"Bir CEO'nun en önemli görevlerinden biri de farklı kişilik ve yeteneklere sahip bir ekibi yönetmektir. Ekip dinamiklerini nasıl yönettiğinizi ve iletişim stratejilerinizin neler olduğunu bizimle paylaşabilir misiniz?\""
+  ],
+  "created_at": "2025-03-10T22:27:54.240230",
+  "status": "completed",
+  "started_at": "2025-03-10T22:28:05.337296",
+  "photos": [
+    {
+      "filename": "20250310222811.jpg",
+      "timestamp": "2025-03-10T19:28:11.751Z",
+      "path": "HQ373ROH_photos/20250310222811.jpg"
+    },
+    {
+      "filename": "20250310222836.jpg",
+      "timestamp": "2025-03-10T19:28:36.911Z",
+      "path": "HQ373ROH_photos/20250310222836.jpg"
+    },
+    {
+      "filename": "20250310222851.jpg",
+      "timestamp": "2025-03-10T19:28:51.915Z",
+      "path": "HQ373ROH_photos/20250310222851.jpg"
+    },
+    {
+      "filename": "20250310222906.jpg",
+      "timestamp": "2025-03-10T19:29:06.770Z",
+      "path": "HQ373ROH_photos/20250310222906.jpg"
+    },
+    {
+      "filename": "20250310222926.jpg",
+      "timestamp": "2025-03-10T19:29:26.924Z",
+      "path": "HQ373ROH_photos/20250310222926.jpg"
+    },
+    {
+      "filename": "20250310222946.jpg",
+      "timestamp": "2025-03-10T19:29:46.921Z",
+      "path": "HQ373ROH_photos/20250310222946.jpg"
+    }
+  ],
+  "conversation_history": [],
+  "ended": true,
+  "ended_at": "2025-03-10T22:29:53.292845"
+}

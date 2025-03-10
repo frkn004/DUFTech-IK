@@ -1,0 +1,31 @@
+{
+  "code": "2M5U4UTE",
+  "candidate_name": "FURKAN SEVİNÇ",
+  "position": "CEO",
+  "requirements": [],
+  "questions": [
+    "- Merhaba Furkan Bey, hoş geldiniz. İlk olarak, bize biraz kendinizden ve CEO olarak kazandığınız deneyimlerden bahsedebilir misiniz?",
+    "- CEO pozisyonuna başvurmanızın temel sebebi nedir? Bu pozisyonun sizin için ne gibi anlamlar taşıdığını bizimle paylaşabilir misiniz?",
+    "- CEO rolünde, karşılaşacağınız öngörülemeyen zorluklara ve problemlere karşı yaklaşımınız nasıl olurdu? Burada özellikle problem çözme stratejilerinizi merak ediyoruz.",
+    "- Şirket liderliği konusunda teknik bilgilerinizden ve bu bilgilerin iş pratiğine nasıl döküldüğünden bahsedebilir misiniz?",
+    "- Takımın performansı ve motivasyonu üzerinde büyük bir etkisi olan bir CEO'nun, iş yerinde iletişim ve takım çalışmasını nasıl yöneteceğini bize anlatabilir misiniz?"
+  ],
+  "created_at": "2025-03-10T20:59:30.266554",
+  "status": "completed",
+  "started_at": "2025-03-10T20:59:44.341777",
+  "photos": [
+    {
+      "filename": "20250310205950.jpg",
+      "timestamp": "2025-03-10T17:59:50.743Z",
+      "path": "2M5U4UTE_photos/20250310205950.jpg"
+    },
+    {
+      "filename": "20250310210006.jpg",
+      "timestamp": "2025-03-10T18:00:06.496Z",
+      "path": "2M5U4UTE_photos/20250310210006.jpg"
+    }
+  ],
+  "conversation_history": [],
+  "ended": true,
+  "ended_at": "2025-03-10T21:00:14.819782"
+}

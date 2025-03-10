@@ -1,0 +1,2234 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DUF Tech Mülakat Asistanı</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='duftech-interlocked-3d.svg') }}">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e6e6ff 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 1200px;
+            height: 100vh;
+            margin: 0 auto;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .duftech-logo {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 180px;
+            height: auto;
+            z-index: 100;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+            transition: transform 0.3s ease;
+        }
+
+        .duftech-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .aiva-avatar {
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0bc5ea 0%, #0d9488 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 20px 40px rgba(11, 197, 234, 0.4);
+            z-index: 10;
+            overflow: hidden;
+            transform-origin: center center;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .aiva-avatar i {
+            font-size: 5rem;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 2;
+            transition: all 0.5s ease;
+        }
+
+        /* Robot Animasyonları */
+        .aiva-avatar.speaking {
+            animation: robot-speak 2s infinite;
+            background: linear-gradient(135deg, #9c27b0 0%, #a855f7 100%);
+            box-shadow: 0 20px 40px rgba(156, 39, 176, 0.4);
+        }
+
+        .aiva-avatar.speaking i {
+            animation: robot-icon-speak 1s infinite;
+        }
+
+        .aiva-avatar.listening {
+            animation: robot-listen 3s infinite;
+            background: linear-gradient(135deg, #0d9488 0%, #06b6d4 100%);
+            box-shadow: 0 20px 40px rgba(13, 148, 136, 0.4);
+        }
+
+        .aiva-avatar.listening i {
+            animation: robot-icon-listen 1.5s infinite;
+        }
+
+        .aiva-avatar.idle {
+            animation: robot-idle 4s infinite;
+        }
+
+        .aiva-avatar.idle i {
+            animation: robot-icon-idle 2s infinite;
+        }
+
+        @keyframes robot-speak {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.05); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        @keyframes robot-icon-speak {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); color: #ffffff; }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes robot-listen {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(0.95); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        @keyframes robot-icon-listen {
+            0% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(5deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        @keyframes robot-idle {
+            0% { transform: translate(-50%, -50%); }
+            25% { transform: translate(-50%, -52%); }
+            75% { transform: translate(-50%, -48%); }
+            100% { transform: translate(-50%, -50%); }
+        }
+
+        @keyframes robot-icon-idle {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0); }
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-header {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            color: #0bc5ea;
+            text-align: center;
+        }
+
+        .modal-body {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-footer {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .modal-button {
+            background: linear-gradient(135deg, #0bc5ea 0%, #9c27b0 100%);
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-button:hover {
+            background: linear-gradient(135deg, #9c27b0 0%, #a855f7 100%);
+            transform: translateY(-2px);
+        }
+
+        .chat-messages {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .chat-bubble {
+            position: fixed;
+            max-width: 400px;
+            padding: 1.5rem;
+            border-radius: 20px;
+            background: white;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            pointer-events: auto;
+            opacity: 0;
+            transform: scale(0.8) translateY(20px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .chat-bubble.active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        .chat-bubble.fade-out {
+            opacity: 0;
+            transform: scale(0.9) translateY(-20px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .assistant-bubble {
+            left: 60%;
+            top: 30%;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 1px solid rgba(11, 197, 234, 0.2);
+        }
+
+        .user-bubble {
+            right: 60%;
+            top: 60%;
+            background: linear-gradient(135deg, #0bc5ea 0%, #0d9488 100%);
+            color: white;
+        }
+
+        .message-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .message-icon {
+            flex-shrink: 0;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .assistant-bubble .message-icon {
+            background: linear-gradient(135deg, #0bc5ea 0%, #0d9488 100%);
+            color: white;
+        }
+
+        .user-bubble .message-icon {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .message-text {
+            flex-grow: 1;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .status-indicator {
+            position: fixed;
+            bottom: 80px;
+            left: 20px;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #9c27b0;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            z-index: 11;
+            min-width: 250px;
+        }
+
+        .status-indicator i {
+            font-size: 1.4rem;
+        }
+
+        .status-indicator.speaking {
+            background: linear-gradient(135deg, #0bc5ea 0%, #0d9488 100%);
+            color: white;
+            animation: status-pulse 2s infinite;
+        }
+
+        .status-indicator.listening {
+            background: linear-gradient(135deg, #9c27b0 0%, #a855f7 100%);
+            color: white;
+            animation: status-pulse 1s infinite;
+        }
+
+        .status-indicator.processing {
+            background: linear-gradient(135deg, #0bc5ea 0%, #9c27b0 100%);
+            color: white;
+            animation: status-pulse 0.5s infinite;
+        }
+
+        .status-indicator.idle {
+            background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%);
+            color: white;
+        }
+
+        @keyframes status-pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .auto-mode .status-indicator {
+            background: #9c27b0;
+            color: white;
+        }
+
+        .auto-mode-indicator {
+            display: inline-flex;
+            align-items: center;
+            margin-left: 0.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        .volume-waves {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .volume-waves::before,
+        .volume-waves::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: rgba(11, 197, 234, 0.2);
+            animation: waves 2s infinite;
+        }
+
+        .volume-waves::after {
+            animation-delay: 1s;
+        }
+
+        @keyframes waves {
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .completed {
+            background: linear-gradient(135deg, #0bc5ea 0%, #0d9488 100%);
+        }
+        
+        .paused {
+            opacity: 0.7;
+        }
+
+        /* Mod butonları için stiller */
+        .mode-button {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 100;
+            box-shadow: 0 8px 16px rgba(251, 191, 36, 0.3);
+            font-size: 1.1rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mode-button:hover {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 20px rgba(251, 191, 36, 0.4);
+        }
+
+        .mode-button i {
+            font-size: 1.2rem;
+        }
+
+        #manualModeButton {
+            left: 20px;
+            bottom: 80px;
+        }
+
+        #autoModeButton {
+            left: 20px;
+            bottom: 20px;
+        }
+
+        #endInterviewButton {
+            right: 20px;
+            bottom: 20px;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            box-shadow: 0 8px 16px rgba(239, 68, 68, 0.3);
+            display: none; /* Başlangıçta gizli */
+        }
+
+        #endInterviewButton:hover {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            box-shadow: 0 12px 20px rgba(239, 68, 68, 0.4);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Başlangıç butonu için özel stil */
+        #modeButton {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            box-shadow: 0 8px 16px rgba(16, 185, 129, 0.3);
+        }
+
+        #modeButton:hover {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            box-shadow: 0 12px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        #modeButton.interview-started {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            box-shadow: 0 8px 16px rgba(251, 191, 36, 0.3);
+        }
+
+        #modeButton.interview-started:hover {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            box-shadow: 0 12px 20px rgba(251, 191, 36, 0.4);
+        }
+
+        /* Baloncuklar için farklı pozisyonlar */
+        .position-1 { 
+            top: 15%; 
+            left: 15%; 
+            transform: translate(-50%, -50%) rotate(-5deg);
+        }
+        .position-2 { 
+            top: 15%; 
+            right: 15%; 
+            transform: translate(50%, -50%) rotate(5deg);
+        }
+        .position-3 { 
+            bottom: 15%; 
+            left: 15%; 
+            transform: translate(-50%, 50%) rotate(5deg);
+        }
+        .position-4 { 
+            bottom: 15%; 
+            right: 15%; 
+            transform: translate(50%, 50%) rotate(-5deg);
+        }
+        .position-5 { 
+            top: 50%; 
+            left: 10%; 
+            transform: translateX(-50%) rotate(-3deg);
+        }
+        .position-6 { 
+            top: 50%; 
+            right: 10%; 
+            transform: translateX(50%) rotate(3deg);
+        }
+
+        .processing-steps {
+            position: fixed;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem;
+            border-radius: 0.8rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: none;
+            text-align: left;
+            min-width: 250px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .processing-step {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0.3rem 0;
+            padding: 0.4rem 0.6rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            opacity: 0.5;
+            font-size: 0.9rem;
+        }
+
+        .processing-step.active {
+            opacity: 1;
+            background: rgba(79, 70, 229, 0.1);
+        }
+
+        .processing-step.completed {
+            opacity: 1;
+            color: #059669;
+            font-size: 0.85rem;
+        }
+
+        .processing-step i {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        .step-spinner {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Süre sayacı için stil */
+        .timer {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0.75rem 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #4f46e5;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .timer i {
+            color: #ef4444;
+        }
+
+        /* Kamera ve Fotoğraf Stilleri */
+        .camera-container {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            width: 240px;
+            height: 180px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+            z-index: 40;
+            display: block; /* Başlangıçta görünür olsun */
+            border: 2px solid #0bc5ea;
+        }
+
+        #videoElement {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scaleX(-1); /* Ayna görüntüsü */
+        }
+
+        .camera-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .photo-flash {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            opacity: 0;
+            transition: opacity 0.1s;
+        }
+
+        .photo-flash.active {
+            opacity: 0.8;
+            animation: flash 0.3s ease-out;
+        }
+
+        @keyframes flash {
+            0% { opacity: 0.8; }
+            100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- DufTech Logo -->
+    <img src="{{ url_for('static', filename='duftech-interlocked-3d.svg') }}" alt="DufTech Logo" class="duftech-logo">
+
+    <!-- Bilgilendirme Modal -->
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                Mülakat Bilgilendirmesi
+            </div>
+            <div class="modal-body">
+                <div class="space-y-4">
+                    <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                        <p class="text-yellow-800 font-semibold mb-2">⚠️ Önemli Not:</p>
+                        <p class="text-yellow-700">Bu uygulama en iyi Google Chrome tarayıcısında çalışmaktadır. Lütfen Chrome kullanınız.</p>
+                    </div>
+
+                    <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                        <p class="text-blue-800 font-semibold mb-2">🎯 Mülakat Modları:</p>
+                        <div class="space-y-2">
+                            <p class="flex items-center text-blue-700">
+                                <i class="fas fa-microphone mr-2"></i>
+                                <strong>Otomatik Mod:</strong> Sesiniz algılandığında otomatik kayıt başlar ve durur
+                            </p>
+                            <p class="flex items-center text-blue-700">
+                                <i class="fas fa-hand mr-2"></i>
+                                <strong>Manuel Mod:</strong> Space tuşuna basılı tutarak konuşabilirsiniz
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+                        <p class="text-green-800 font-semibold mb-2">✅ Başlarken:</p>
+                        <ul class="list-disc ml-6 space-y-2 text-green-700">
+                            <li>"Mülakata Başla" butonuna tıklayın</li>
+                            <li>Mod seçimi için butona tekrar tıklayabilirsiniz</li>
+                            <li>GPT'nin konuşması bitene kadar bekleyin</li>
+                            <li>Net ve anlaşılır konuşun</li>
+                            <li>Cevaplarınızı çok geciktirmeyin</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-red-50 p-4 rounded-lg border border-red-200">
+                        <p class="text-red-800 font-semibold mb-2">❌ Dikkat Edilmesi Gerekenler:</p>
+                        <ul class="list-disc ml-6 space-y-2 text-red-700">
+                            <li>Mikrofon izni vermeyi unutmayın</li>
+                            <li>Gürültülü ortamlardan kaçının</li>
+                            <li>Sistem sizi anlamadığında tekrar deneyin</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-button" onclick="closeModal()">Anladım, Başla</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800">{{ interview.candidate_name }}</h1>
+                    <p class="text-gray-600">{{ interview.position }}</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-sm text-gray-500">Mülakat Kodu: {{ interview.code }}</p>
+                    <p class="text-xs text-gray-500">{{ interview.created_at }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="chat-container" id="chatContainer">
+        <!-- AIVA Avatar -->
+        <div class="aiva-avatar" id="aivaAvatar">
+            <div class="avatar-effect" id="avatarEffect"></div>
+            <i class="fas fa-smile-beam text-white text-7xl"></i>
+        </div>
+
+        <!-- Chat Messages -->
+        <div id="messages" class="chat-messages"></div>
+    </div>
+
+    <!-- Başlangıç Container -->
+    <div id="startContainer" class="max-w-md mx-auto p-6 bg-white rounded-2xl shadow-xl" style="display: none;">
+        <div class="text-center mb-6">
+            <h2 class="text-2xl font-bold text-gray-800">Mülakata Başlayın</h2>
+            <p class="text-gray-600 mt-2">Aşağıdaki butona tıklayarak mülakata başlayabilirsiniz.</p>
+        </div>
+        <div class="text-center">
+            <button id="startInterviewBtn" class="w-full py-3 px-6 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl shadow-lg hover:from-purple-700 hover:to-indigo-700 transition-all duration-300">
+                <i class="fas fa-microphone-alt mr-2"></i>
+                Mülakata Başla
+            </button>
+        </div>
+    </div>
+
+    <!-- Kamera Görüntüsü -->
+    <div class="camera-container" id="cameraContainer">
+        <video id="videoElement" autoplay playsinline></video>
+        <canvas id="photoCanvas" style="display:none;"></canvas>
+        <div class="camera-overlay" id="cameraOverlay">
+            <div class="photo-flash" id="photoFlash"></div>
+        </div>
+    </div>
+
+    <!-- Durum Göstergesi -->
+    <div class="status-indicator">
+        <div class="status-dot" id="statusDot"></div>
+        <span id="statusText">Dinlemeye hazır</span>
+    </div>
+
+    <!-- Süre Sayacı -->
+    <div class="timer">
+        <i class="fas fa-clock"></i>
+        <span id="interviewTimer">00:00</span>
+    </div>
+
+    <!-- Mod Butonu -->
+    <button class="mode-button" id="modeButton">
+        <i class="fas fa-play"></i>
+        <span>Mülakata Başla</span>
+    </button>
+
+    <button class="mode-button hidden" id="manualModeButton">
+        <i class="fas fa-hand"></i>
+        <span>Manuel Mod</span>
+    </button>
+
+    <button class="mode-button" id="autoModeButton" style="display: none;">
+        <i class="fas fa-microphone"></i>
+        <span>Otomatik Mod</span>
+    </button>
+
+    <button class="mode-button" id="endInterviewButton" style="display: none;">
+        <i class="fas fa-stop"></i>
+        <span>Mülakatı Bitir</span>
+    </button>
+
+    <script>
+        let mediaRecorder = null;
+        let audioChunks = [];
+        let isRecording = false;
+        let audioContext = null;
+        let analyser = null;
+        let silenceStart = null;
+        let silenceTimeout = null;
+        let isAutoMode = true;
+        let isGPTSpeaking = false;
+        let interviewEnded = false;
+        let speechQueue = [];
+        let isSpeaking = false;
+        let utteranceQueue = [];
+        let isProcessingUtterance = false;
+        let audioStream = null;
+        let isAudioInitialized = false;
+        let isMediaRecorderReady = false;
+        let interviewCode = new URLSearchParams(window.location.search).get('code');
+        let realtimeSession = null;
+        let interviewStartTime = null;
+        let timerInterval = null;
+        let chatHistory = [];
+        let videoStream = null;
+        let cameraActive = false;
+        let photoInterval = null;
+        let lastPhotoTime = 0;
+        let photoCounter = 0;
+
+        // WebSocket yerine SSE kullanımı
+        async function initializeRealtimeSession() {
+            try {
+                const response = await fetch('/get_interview_token', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        code: interviewCode
+                    })
+                });
+
+                const data = await response.json();
+                if (!data.success) {
+                    throw new Error('Token alınamadı');
+                }
+
+                // Token'ı localStorage'a kaydet
+                localStorage.setItem('interview_token', data.token);
+                localStorage.setItem('interview_session_id', data.session_id);
+
+                return true;
+            } catch (error) {
+                console.error('SSE başlatma hatası:', error);
+                showError('Bağlantı hatası oluştu');
+                return false;
+            }
+        }
+
+        async function sendAudioToRealtime(audioBlob) {
+            if (!realtimeSession || realtimeSession.readyState !== WebSocket.OPEN) {
+                showError('Realtime bağlantısı aktif değil');
+                return;
+            }
+
+            try {
+                // Ses verisini base64'e çevir
+                const reader = new FileReader();
+                reader.readAsDataURL(audioBlob);
+                reader.onloadend = function() {
+                    const base64Audio = reader.result.split(',')[1];
+                    
+                    // Ses verisini gönder
+                    realtimeSession.send(JSON.stringify({
+                        type: 'message',
+                        role: 'user',
+                        content: base64Audio,
+                        audio: true
+                    }));
+                };
+            } catch (error) {
+                console.error('Ses gönderme hatası:', error);
+                showError('Ses gönderilemedi');
+            }
+        }
+
+        // Sayfa yüklendiğinde
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Modal'ı göster
+            showModal();
+
+            // Realtime oturumu başlat
+            const initialized = await initializeRealtimeSession();
+            if (!initialized) {
+                return;
+            }
+
+            // Ses sistemini başlat
+            await initAudio();
+            
+            // Diğer başlangıç ayarları...
+            updateAvatarState('idle');
+            
+            // Mülakata Başla/Mod butonu için event listener
+            document.getElementById('modeButton').addEventListener('click', async () => {
+                if (!interviewEnded) {
+                    if (document.getElementById('modeButton').classList.contains('interview-started')) {
+                        // Mod değiştirme
+                        if (isGPTSpeaking) {
+                            showError('Lütfen GPT konuşmasının bitmesini bekleyin');
+                            return;
+                        }
+                        
+                        isAutoMode = !isAutoMode;
+                        const modeButton = document.getElementById('modeButton');
+                        if (isAutoMode) {
+                            modeButton.innerHTML = '<i class="fas fa-microphone"></i> <span>Otomatik Mod</span>';
+                            updateStatus('Otomatik mod aktif', 'auto');
+                            updateAvatarState('listening');
+                            // Ses algılamayı başlat
+                            if (!isMediaRecorderReady) {
+                                await initAudio();
+                            }
+                            startVoiceDetection();
+                        } else {
+                            modeButton.innerHTML = '<i class="fas fa-hand"></i> <span>Manuel Mod</span>';
+                            updateStatus('Space tuşuna basılı tutarak konuşun', 'manual');
+                            updateAvatarState('idle');
+                            // Ses algılamayı durdur
+                            stopVoiceDetection();
+                            if (isRecording) {
+                                stopRecording();
+                            }
+                        }
+                    } else {
+                        // Mülakatı başlat
+                        const modeButton = document.getElementById('modeButton');
+                        modeButton.classList.add('interview-started');
+                        modeButton.innerHTML = '<i class="fas fa-hand"></i> <span>Manuel Mod</span>';
+                        isAutoMode = false; // Manuel modda başlat
+                        
+                        // Mülakatı başlat
+                        const initialized = await initializeInterview();
+                        if (!initialized) {
+                            return;
+                        }
+                        
+                        startTimer(); // Süre sayacını başlat
+                    }
+                }
+            });
+
+            // Manuel Mod butonu için event listener
+            document.getElementById('manualModeButton').addEventListener('click', () => {
+                if (!interviewEnded) {
+                    isAutoMode = false;
+                    updateAvatarState('idle');
+                    updateStatus('Manuel mod aktif', 'manual');
+                }
+            });
+
+            // Otomatik Mod butonu için event listener
+            document.getElementById('autoModeButton').addEventListener('click', () => {
+                if (!interviewEnded) {
+                    isAutoMode = true;
+                    startVoiceDetection();
+                    updateAvatarState('listening');
+                    updateStatus('Otomatik mod aktif', 'auto');
+                }
+            });
+
+            // Mülakatı Bitir butonu için event listener
+            document.getElementById('endInterviewButton').addEventListener('click', async () => {
+                if (!interviewEnded) {
+                    if (confirm('Mülakatı bitirmek istediğinize emin misiniz?')) {
+                        await endInterview();
+                    }
+                }
+            });
+
+            // Başlangıç butonu için event listener
+            if (document.getElementById('startInterviewBtn')) {
+                document.getElementById('startInterviewBtn').addEventListener('click', async () => {
+                    const initialized = await initializeInterview();
+                    if (initialized) {
+                        startTimer();
+                    }
+                });
+            }
+
+            // Space tuşu kontrolü
+            document.addEventListener('keydown', async (e) => {
+                if (e.code === 'Space' && !isAutoMode && !interviewEnded) {
+                    e.preventDefault();
+                    if (isGPTSpeaking) {
+                        showError('Lütfen GPT konuşmasının bitmesini bekleyin');
+                        return;
+                    }
+                    if (!isRecording) {
+                        if (!isMediaRecorderReady) {
+                            await initAudio();
+                        }
+                        startRecording();
+                        updateAvatarState('listening');
+                        updateStatus('Kaydediliyor...', 'recording');
+                    }
+                }
+            });
+
+            document.addEventListener('keyup', (e) => {
+                if (e.code === 'Space' && !isAutoMode && !interviewEnded) {
+                    e.preventDefault();
+                    if (isRecording) {
+                        stopRecording();
+                        updateAvatarState('idle');
+                        updateStatus('Space tuşuna basılı tutarak konuşun', 'manual');
+                    }
+                }
+            });
+
+            // Tarayıcı kapandığında rapor oluştur
+            window.addEventListener('beforeunload', async (event) => {
+                if (!interviewEnded) {
+                    // Sayfa yenileme veya kapatma durumunda rapor oluştur
+                    event.preventDefault();
+                    event.returnValue = '';
+                    
+                    try {
+                        // Mülakat durumunu kaydet
+                        await fetch('/save_interview_state', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                code: interviewCode,
+                                conversation_history: chatHistory,
+                                ended: true
+                            })
+                        });
+                        
+                        // Rapor oluştur
+                        await generateReport();
+                    } catch (error) {
+                        console.error('Mülakat sonlandırma hatası:', error);
+                    }
+                }
+            });
+        });
+
+        // Ses kaydını işleme fonksiyonunu güncelle
+        async function processAudio(audioBlob) {
+            try {
+                // Önceki kullanıcı mesajını temizle
+                const existingUserMessages = document.querySelectorAll('.chat-bubble.user-bubble');
+                existingUserMessages.forEach(msg => {
+                    msg.classList.add('fade-out');
+                    setTimeout(() => msg.remove(), 300);
+                });
+
+                updateStatus('Ses işleniyor...', 'processing');
+                updateAvatarState('processing');
+                await sendAudioToRealtime(audioBlob);
+            } catch (error) {
+                console.error('Ses işleme hatası:', error);
+                updateStatus('Bir hata oluştu', 'error');
+                updateAvatarState('idle');
+            }
+        }
+
+        // Ses seviyesi eşikleri
+        const SILENCE_THRESHOLD = 0.05;  // Sessizlik eşiği (app2.py'dan alındı)
+        const VOICE_THRESHOLD = 0.15;    // Konuşma başlangıç eşiği
+        const SILENCE_DURATION = 1500;   // Sessizlik süresi (ms)
+        const MIN_CONFIDENCE = 0.6;      // Minimum güven skoru
+
+        async function initAudio() {
+            try {
+                // Önceki ses akışını temizle
+                if (audioStream) {
+                    audioStream.getTracks().forEach(track => track.stop());
+                }
+                
+                // Önceki AudioContext'i kapat
+                if (audioContext) {
+                    await audioContext.close();
+                }
+                
+                // Yeni ses akışı al
+                audioStream = await navigator.mediaDevices.getUserMedia({
+                    audio: {
+                        echoCancellation: true,
+                        noiseSuppression: true,
+                        autoGainControl: true,
+                        channelCount: 1,
+                        sampleRate: 16000
+                    }
+                });
+
+                // Yeni AudioContext oluştur
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                analyser = audioContext.createAnalyser();
+                const source = audioContext.createMediaStreamSource(audioStream);
+                source.connect(analyser);
+                analyser.fftSize = 2048;
+
+                // MediaRecorder'ı yeniden oluştur
+                if (mediaRecorder) {
+                    mediaRecorder.ondataavailable = null;
+                    mediaRecorder.onstop = null;
+                }
+                
+                mediaRecorder = new MediaRecorder(audioStream, {
+                    mimeType: 'audio/webm;codecs=opus',
+                    audioBitsPerSecond: 16000
+                });
+                
+                mediaRecorder.ondataavailable = (event) => {
+                    if (!isGPTSpeaking && event.data.size > 0) {
+                        audioChunks.push(event.data);
+                    }
+                };
+                
+                mediaRecorder.onstop = async () => {
+                    if (!isGPTSpeaking && audioChunks.length > 0) {
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                        if (audioBlob.size > 0) {
+                            try {
+                                await sendAudioToServer(audioBlob);
+                            } catch (error) {
+                                console.error('Ses gönderme hatası:', error);
+                                showError('Ses işlenirken bir hata oluştu');
+                            }
+                        }
+                        audioChunks = [];
+                    }
+                };
+                
+                isMediaRecorderReady = true;
+                isAudioInitialized = true;
+                return true;
+            } catch (error) {
+                console.error('Ses sistemi başlatma hatası:', error);
+                showError('Mikrofon erişimi sağlanamadı');
+                isMediaRecorderReady = false;
+                isAudioInitialized = false;
+                return false;
+            }
+        }
+
+        async function stopAudioSystem() {
+            try {
+                if (mediaRecorder && mediaRecorder.state === 'recording') {
+                    mediaRecorder.stop();
+                }
+                
+                if (audioContext) {
+                    await audioContext.suspend();
+                }
+                
+                if (audioStream) {
+                    audioStream.getTracks().forEach(track => track.stop());
+                }
+                
+                isAudioInitialized = false;
+            } catch (error) {
+                console.error('Ses sistemi durdurma hatası:', error);
+            }
+        }
+
+        function startVoiceDetection() {
+            if (!analyser || !isAutoMode || interviewEnded) {
+                console.log('Ses algılama başlatılamıyor:', {
+                    analyserExists: !!analyser,
+                    isAutoMode,
+                    isGPTSpeaking,
+                    interviewEnded
+                });
+                return;
+            }
+
+            if (isGPTSpeaking) {
+                showError('Lütfen GPT konuşmasının bitmesini bekleyin');
+                return;
+            }
+            
+            console.log('Ses algılama başlatılıyor...');
+            const bufferLength = analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+            
+            function checkAudioLevel() {
+                if (!isAutoMode || isGPTSpeaking || interviewEnded) {
+                    console.log('Ses algılama durduruluyor:', {
+                    isAutoMode,
+                    isGPTSpeaking,
+                    interviewEnded
+                });
+                    return;
+                }
+                
+                analyser.getByteFrequencyData(dataArray);
+                const average = dataArray.reduce((a, b) => a + b) / bufferLength;
+                const volume = average / 128.0;
+                
+                updateVolumeIndicator(volume);
+                
+                if (!isRecording && !isGPTSpeaking && volume > VOICE_THRESHOLD) {
+                    console.log('Ses algılandı, kayıt başlatılıyor...');
+                    startRecording();
+                } else if (isRecording && volume < SILENCE_THRESHOLD) {
+                    if (!silenceStart) {
+                        silenceStart = Date.now();
+                    } else if (Date.now() - silenceStart > SILENCE_DURATION) {
+                        console.log('Sessizlik algılandı, kayıt durduruluyor...');
+                        stopRecording();
+                        silenceStart = null;
+                    }
+                } else {
+                    silenceStart = null;
+                }
+                
+                if (isAutoMode && !isGPTSpeaking && !interviewEnded) {
+                    requestAnimationFrame(checkAudioLevel);
+                } else {
+                    console.log('Ses algılama döngüsü sonlandırıldı:', {
+                        isAutoMode,
+                        isGPTSpeaking,
+                        interviewEnded
+                    });
+                }
+            }
+            
+            requestAnimationFrame(checkAudioLevel);
+        }
+
+        function updateVolumeIndicator(volume) {
+            const volumeWaves = document.querySelector('.volume-waves');
+            if (volumeWaves) {
+                volumeWaves.style.opacity = volume;
+            }
+            
+            const statusDot = document.getElementById('statusDot');
+            if (volume > VOICE_THRESHOLD) {
+                statusDot.style.backgroundColor = '#ef4444'; // Kırmızı
+            } else if (volume > SILENCE_THRESHOLD) {
+                statusDot.style.backgroundColor = '#22c55e'; // Yeşil
+            } else {
+                statusDot.style.backgroundColor = '#6b7280'; // Gri
+            }
+        }
+
+        function toggleRecording() {
+            if (!mediaRecorder) {
+                initAudio().then((initialized) => {
+                    if (initialized) {
+                        isAutoMode = true;
+                        startVoiceDetection();
+                        updateStatus('Otomatik mod aktif', 'auto');
+                    }
+                });
+                return;
+            }
+
+            if (isRecording) {
+                stopRecording();
+            } else {
+                isAutoMode = true;
+                startVoiceDetection();
+                updateStatus('Otomatik mod aktif', 'auto');
+            }
+        }
+
+        function startRecording() {
+            if (!mediaRecorder || isRecording) return;
+            
+            try {
+                if (mediaRecorder.state === 'recording') {
+                    console.log('MediaRecorder zaten kayıt yapıyor');
+                    return;
+                }
+                
+                if (!isMediaRecorderReady) {
+                    console.log('MediaRecorder hazır değil, yeniden başlatılıyor');
+                    initAudio().then((initialized) => {
+                        if (initialized) {
+                            mediaRecorder.start();
+                            isRecording = true;
+                            updateRecordingUI(true);
+                        }
+                    });
+                    return;
+                }
+                
+                mediaRecorder.start();
+                isRecording = true;
+                updateRecordingUI(true);
+                
+            } catch (error) {
+                console.error('Kayıt başlatma hatası:', error);
+                showError('Kayıt başlatılamadı');
+                isRecording = false;
+                isMediaRecorderReady = false;
+                updateRecordingUI(false);
+            }
+        }
+
+        function stopRecording() {
+            if (!mediaRecorder || !isRecording) return;
+            
+            try {
+                if (mediaRecorder.state === 'inactive') {
+                    console.log('MediaRecorder zaten durmuş');
+                    return;
+                }
+                
+                mediaRecorder.stop();
+                isRecording = false;
+                updateRecordingUI(false);
+                
+            } catch (error) {
+                console.error('Kayıt durdurma hatası:', error);
+                showError('Kayıt durdurulamadı');
+                isRecording = false;
+                updateRecordingUI(false);
+            }
+        }
+
+        function updateRecordingUI(isRecording) {
+            const statusDot = document.getElementById('statusDot');
+            const statusText = document.getElementById('statusText');
+            const avatar = document.getElementById('aivaAvatar');
+            
+            if (isRecording) {
+                statusDot.classList.add('listening');
+                statusText.textContent = 'Kaydediliyor...';
+                avatar.classList.add('speaking');
+            } else {
+                statusDot.classList.remove('listening');
+                statusText.textContent = isAutoMode ? 'Dinleniyor...' : 'Dinlemeye hazır';
+                avatar.classList.remove('speaking');
+            }
+        }
+
+        function updateStatus(text, mode) {
+            const statusText = document.getElementById('statusText');
+            const avatar = document.getElementById('aivaAvatar');
+            const statusDot = document.getElementById('statusDot');
+            
+            statusText.textContent = text;
+            
+            if (mode === 'auto') {
+                avatar.classList.add('auto-mode');
+                statusDot.style.backgroundColor = '#22c55e'; // Yeşil
+            } else if (mode === 'manual') {
+                avatar.classList.remove('auto-mode');
+                statusDot.style.backgroundColor = '#6b7280'; // Gri
+            } else if (mode === 'recording') {
+                statusDot.style.backgroundColor = '#ef4444'; // Kırmızı
+            } else if (mode === 'speaking') {
+                statusDot.style.backgroundColor = '#3b82f6'; // Mavi - GPT konuşurken
+                avatar.classList.add('speaking');
+            } else if (mode === 'paused') {
+                statusDot.style.backgroundColor = '#6b7280'; // Gri
+                avatar.classList.remove('speaking');
+            }
+        }
+
+        async function speakResponse(text) {
+            try {
+                // Ses dosyası için benzersiz isim oluştur
+                const timestamp = new Date().getTime();
+                const random = Math.floor(Math.random() * 1000000);
+                
+                // OpenAI TTS isteği gönder
+                const response = await fetch('/get_speech?text=' + encodeURIComponent(text), {
+                    method: 'GET'
+                });
+
+                if (!response.ok) {
+                    throw new Error('TTS isteği başarısız oldu');
+                }
+
+                // Ses verisini al ve oynat
+                const audioBlob = await response.blob();
+                const audioUrl = URL.createObjectURL(audioBlob);
+                const audio = new Audio(audioUrl);
+
+                return new Promise((resolve) => {
+                    audio.onplay = () => {
+                        console.log('GPT konuşmaya başladı');
+                        isSpeaking = true;
+                        isGPTSpeaking = true;
+                        updateStatus('GPT yanıt veriyor...', 'speaking');
+                        updateAvatarState('speaking');
+                    };
+
+                    audio.onended = async () => {
+                        console.log('GPT konuşması bitti');
+                        URL.revokeObjectURL(audioUrl);
+                        isSpeaking = false;
+                        isGPTSpeaking = false;
+
+                        if (isAutoMode) {
+                            updateStatus('Sesinizi bekliyorum...', 'auto');
+                            updateAvatarState('listening');
+                            await initAudio();
+                            startVoiceDetection();
+                        } else {
+                            updateStatus('Space tuşuna basılı tutarak konuşun', 'manual');
+                            updateAvatarState('idle');
+                            await initAudio();
+                        }
+
+                        resolve();
+                    };
+
+                    audio.onerror = (error) => {
+                        console.error('Ses oynatma hatası:', error);
+                        URL.revokeObjectURL(audioUrl);
+                        isSpeaking = false;
+                        isGPTSpeaking = false;
+                        updateStatus('Ses oynatma hatası', 'error');
+                        updateAvatarState('idle');
+                        resolve();
+                    };
+
+                    audio.play().catch((error) => {
+                        console.error('Ses oynatma başlatma hatası:', error);
+                        URL.revokeObjectURL(audioUrl);
+                        resolve();
+                    });
+                });
+            } catch (error) {
+                console.error('TTS hatası:', error);
+                isSpeaking = false;
+                isGPTSpeaking = false;
+                updateStatus('Ses oluşturma hatası', 'error');
+                updateAvatarState('idle');
+            }
+        }
+
+        async function initializeInterview() {
+            try {
+                // Mülakat kodunu al
+                const interviewCode = new URLSearchParams(window.location.search).get('code');
+                if (!interviewCode) {
+                    showError('Mülakat kodu bulunamadı');
+                    return false;
+                }
+                
+                // Avatar bileşenini göster
+                if (document.getElementById('aivaAvatar')) {
+                    document.getElementById('aivaAvatar').style.display = 'flex';
+                }
+                
+                // Mod butonlarını göster
+                if (document.getElementById('manualModeButton')) {
+                    document.getElementById('manualModeButton').style.display = 'flex';
+                }
+                if (document.getElementById('autoModeButton')) {
+                    document.getElementById('autoModeButton').style.display = 'flex';
+                }
+                if (document.getElementById('endInterviewButton')) {
+                    document.getElementById('endInterviewButton').style.display = 'flex';
+                }
+                
+                // Giriş formunu gizle
+                if (document.getElementById('startContainer')) {
+                    document.getElementById('startContainer').style.display = 'none';
+                }
+                
+                // Chat container'ı göster
+                if (document.getElementById('chatContainer')) {
+                    document.getElementById('chatContainer').style.display = 'block';
+                }
+                
+                // Mülakatı başlat
+                interviewStarted = true;
+                isAutoMode = false; // Manuel modda başlat
+                
+                // Kamera başlat
+                initCamera();
+                
+                return true;
+            } catch (error) {
+                console.error('Mülakat başlatma hatası:', error);
+                showError('Mülakat başlatma hatası: ' + error.message);
+                return false;
+            }
+        }
+        
+        // Kamera işlemleri
+        async function initCamera() {
+            try {
+                if (!cameraActive) {
+                    // Kamera erişimi için izin iste
+                    videoStream = await navigator.mediaDevices.getUserMedia({ 
+                        video: { 
+                            width: { ideal: 1280 },
+                            height: { ideal: 720 },
+                            facingMode: "user" 
+                        } 
+                    });
+                    
+                    const videoElement = document.getElementById('videoElement');
+                    if (videoElement) {
+                        videoElement.srcObject = videoStream;
+                    
+                        // Kamera konteynerini göster
+                        const cameraContainer = document.getElementById('cameraContainer');
+                        if (cameraContainer) {
+                            cameraContainer.style.display = 'block';
+                        }
+                        cameraActive = true;
+                        
+                        // Rastgele fotoğraf çekme zamanlamasını başlat
+                        startRandomPhotoCapture();
+                    }
+                }
+            } catch (error) {
+                console.error('Kamera erişim hatası:', error);
+                showError('Kamera erişimi sağlanamadı: ' + error.message);
+            }
+        }
+
+        async function sendAudioToServer(audioBlob) {
+            try {
+                if (isGPTSpeaking) {
+                    console.log('GPT konuşuyor, ses kaydı işlenmeyecek');
+                    return;
+                }
+
+                if (audioBlob.size === 0) {
+                    console.log('Boş ses kaydı, işlem yapılmayacak');
+                    return;
+                }
+
+                // İşlem aşamalarını göster
+                showProcessingSteps();
+                updateProcessingStep('transcribe', 'active');
+                updateAvatarState('processing');
+
+                const formData = new FormData();
+                formData.append('audio', audioBlob, 'audio.webm');
+                formData.append('code', interviewCode);
+
+                const response = await fetch('/process_audio', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    hideProcessingSteps();
+                    const errorText = await response.text();
+                    console.error('Sunucu yanıt detayı:', errorText);
+                    throw new Error(`HTTP error! status: ${response.status}, detail: ${errorText}`);
+                }
+                
+                const data = await response.json();
+                console.log('Sunucu yanıtı:', data);
+                
+                if (data.success) {
+                    // Ses tanıma tamamlandı
+                    updateProcessingStep('transcribe', 'completed');
+                    updateProcessingStep('evaluate', 'active');
+
+                    if (data.transcript) {
+                        // Önceki kullanıcı mesajlarını temizle
+                        const existingUserMessages = document.querySelectorAll('.chat-bubble.user-bubble');
+                        existingUserMessages.forEach(msg => {
+                            msg.classList.add('fade-out');
+                            setTimeout(() => msg.remove(), 300);
+                        });
+                        
+                        // Yeni kullanıcı mesajını ekle
+                        addMessageToChat('user', data.transcript);
+                    }
+
+                    // Değerlendirme tamamlandı
+                    updateProcessingStep('evaluate', 'completed');
+                    updateProcessingStep('respond', 'active');
+                    updateAvatarState('speaking');
+
+                    if (data.response) {
+                        // GPT konuşmaya başlamadan önce ses algılamayı durdur
+                        isGPTSpeaking = true;
+                        stopVoiceDetection();
+                        
+                        // Yanıt hazır
+                        updateProcessingStep('respond', 'completed');
+                        setTimeout(() => {
+                            hideProcessingSteps();
+                        }, 1000);
+
+                        // Önceki asistan mesajlarını temizle
+                        const existingAssistantMessages = document.querySelectorAll('.chat-bubble.assistant-bubble');
+                        existingAssistantMessages.forEach(msg => {
+                            msg.classList.add('fade-out');
+                            setTimeout(() => msg.remove(), 300);
+                        });
+
+                        // Önce sesi oynat, sonra mesajı göster
+                        await speakResponse(data.response);
+                        addMessageToChat('assistant', data.response);
+                    }
+                    
+                    if (data.interview_ended) {
+                        interviewEnded = true;
+                        await endInterview();
+                    }
+                } else {
+                    hideProcessingSteps();
+                    showError(data.error || 'Ses işlenemedi');
+                    
+                    if (data.continue_listening && !interviewEnded) {
+                        setTimeout(async () => {
+                            if (isAutoMode) {
+                                updateAvatarState('listening');
+                                updateStatus('Sesinizi bekliyorum...', 'auto');
+                                startVoiceDetection();
+                            }
+                        }, 1000);
+                    }
+                }
+            } catch (error) {
+                hideProcessingSteps();
+                console.error('Sunucu hatası:', error);
+                showError('Sunucu ile iletişim hatası: ' + error.message);
+                
+                if (!interviewEnded) {
+                    setTimeout(async () => {
+                        if (isAutoMode) {
+                            updateAvatarState('listening');
+                            updateStatus('Sesinizi bekliyorum...', 'auto');
+                            startVoiceDetection();
+                        }
+                    }, 1000);
+                }
+            }
+        }
+
+        function stopVoiceDetection() {
+            console.log('Ses algılama manuel olarak durduruluyor...');
+            if (mediaRecorder && mediaRecorder.state === 'recording') {
+                mediaRecorder.stop();
+            }
+            isRecording = false;
+            silenceStart = null;
+            
+            // Ses akışını tamamen durdur
+            if (audioStream) {
+                audioStream.getTracks().forEach(track => track.stop());
+            }
+            
+            // AudioContext'i askıya al
+            if (audioContext) {
+                audioContext.suspend();
+            }
+            
+            isAutoMode = false;
+            updateStatus('Manuel moda geçildi', 'manual');
+            updateAvatarState('idle');
+        }
+
+        function showProcessingSteps() {
+            if (!document.querySelector('.processing-steps')) {
+                const stepsDiv = document.createElement('div');
+                stepsDiv.className = 'processing-steps';
+                stepsDiv.innerHTML = `
+                    <div class="processing-step" data-step="transcribe">
+                        <i class="fas fa-microphone"></i>
+                        <span>Ses tanınıyor...</span>
+                    </div>
+                    <div class="processing-step" data-step="evaluate">
+                        <i class="fas fa-brain"></i>
+                        <span>Değerlendiriliyor...</span>
+                    </div>
+                    <div class="processing-step" data-step="respond">
+                        <i class="fas fa-comment"></i>
+                        <span>Yanıt hazırlanıyor...</span>
+                    </div>
+                `;
+                document.body.appendChild(stepsDiv);
+            }
+
+            const stepsElement = document.querySelector('.processing-steps');
+            stepsElement.style.display = 'block';
+            
+            // Status indicator'ı yukarı kaydır
+            const statusIndicator = document.querySelector('.status-indicator');
+            if (statusIndicator) {
+                statusIndicator.style.bottom = '160px';
+            }
+        }
+
+        function hideProcessingSteps() {
+            const stepsElement = document.querySelector('.processing-steps');
+            if (stepsElement) {
+                stepsElement.style.display = 'none';
+                // Tüm adımları sıfırla
+                document.querySelectorAll('.processing-step').forEach(step => {
+                    step.className = 'processing-step';
+                });
+                
+                // Status indicator'ı eski konumuna getir
+                const statusIndicator = document.querySelector('.status-indicator');
+                if (statusIndicator) {
+                    statusIndicator.style.bottom = '80px';
+                }
+            }
+        }
+
+        function updateProcessingStep(stepName, status) {
+            const step = document.querySelector(`.processing-step[data-step="${stepName}"]`);
+            if (step) {
+                // Önce mevcut sınıfları temizle
+                step.className = 'processing-step';
+                
+                // Yeni durumu ekle
+                step.classList.add(status);
+                
+                // İkonu güncelle
+                const icon = step.querySelector('i');
+                if (icon) {
+                    if (status === 'active') {
+                        icon.className = 'fas fa-spinner step-spinner';
+                    } else if (status === 'completed') {
+                        icon.className = 'fas fa-check text-green-500';
+                    } else {
+                        // Varsayılan ikonları geri yükle
+                        switch(stepName) {
+                            case 'transcribe':
+                                icon.className = 'fas fa-microphone';
+                                break;
+                            case 'evaluate':
+                                icon.className = 'fas fa-brain';
+                                break;
+                            case 'respond':
+                                icon.className = 'fas fa-comment';
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+
+        // WebM'den WAV'a dönüştürme fonksiyonu
+        async function convertToWav(webmBlob) {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const arrayBuffer = await webmBlob.arrayBuffer();
+            const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+            
+            const numberOfChannels = 1;
+            const length = audioBuffer.length;
+            const sampleRate = 16000;
+            const buffer = audioContext.createBuffer(numberOfChannels, length, sampleRate);
+            
+            // Ses verilerini kopyala
+            const channelData = audioBuffer.getChannelData(0);
+            buffer.copyToChannel(channelData, 0);
+            
+            // WAV formatına dönüştür
+            const wavData = audioBufferToWav(buffer);
+            return new Blob([wavData], { type: 'audio/wav' });
+        }
+
+        // AudioBuffer'ı WAV formatına dönüştürme
+        function audioBufferToWav(buffer) {
+            const numberOfChannels = 1;
+            const sampleRate = 16000;
+            const format = 1; // PCM
+            const bitDepth = 16;
+            
+            const bytesPerSample = bitDepth / 8;
+            const blockAlign = numberOfChannels * bytesPerSample;
+            
+            const buffer32 = new Int32Array(44 + buffer.length * bytesPerSample);
+            const view = new DataView(buffer32.buffer);
+            
+            // WAV header
+            writeString(view, 0, 'RIFF');
+            view.setUint32(4, 36 + buffer.length * bytesPerSample, true);
+            writeString(view, 8, 'WAVE');
+            writeString(view, 12, 'fmt ');
+            view.setUint32(16, 16, true);
+            view.setUint16(20, format, true);
+            view.setUint16(22, numberOfChannels, true);
+            view.setUint32(24, sampleRate, true);
+            view.setUint32(28, sampleRate * blockAlign, true);
+            view.setUint16(32, blockAlign, true);
+            view.setUint16(34, bitDepth, true);
+            writeString(view, 36, 'data');
+            view.setUint32(40, buffer.length * bytesPerSample, true);
+            
+            // Ses verilerini yaz
+            const data = buffer.getChannelData(0);
+            let offset = 44;
+            for (let i = 0; i < data.length; i++, offset += 2) {
+                const sample = Math.max(-1, Math.min(1, data[i]));
+                view.setInt16(offset, sample < 0 ? sample * 0x8000 : sample * 0x7FFF, true);
+            }
+            
+            return buffer32.buffer;
+        }
+
+        function writeString(view, offset, string) {
+            for (let i = 0; i < string.length; i++) {
+                view.setUint8(offset + i, string.charCodeAt(i));
+            }
+        }
+
+        function addMessageToChat(role, message) {
+            // Mesajı geçmişe ekle
+            chatHistory.push({
+                role: role,
+                content: message
+            });
+
+            // Önceki mesajları temizle
+            const existingMessages = document.querySelectorAll(`.chat-bubble.${role}-bubble`);
+            existingMessages.forEach(msg => {
+                msg.classList.add('fade-out');
+                setTimeout(() => msg.remove(), 300);
+            });
+
+            // Yeni mesaj oluştur
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-bubble ${role}-bubble`;
+            
+            // Mesaj içeriği
+            const content = document.createElement('div');
+            content.className = 'message-content';
+            
+            // İkon container
+            const iconContainer = document.createElement('div');
+            iconContainer.className = 'message-icon';
+            iconContainer.innerHTML = `<i class="fas fa-${role === 'assistant' ? 'robot' : 'user'} text-lg"></i>`;
+            
+            // Mesaj metni
+            const textContainer = document.createElement('div');
+            textContainer.className = 'message-text';
+            textContainer.textContent = message;
+            
+            // Elementleri birleştir
+            content.appendChild(iconContainer);
+            content.appendChild(textContainer);
+            messageDiv.appendChild(content);
+            
+            // Mesajı ekle
+            const chatContainer = document.getElementById('messages');
+            chatContainer.appendChild(messageDiv);
+            
+            // Animasyon için timeout
+            requestAnimationFrame(() => {
+                messageDiv.classList.add('active');
+            });
+
+            // Robot animasyonunu güncelle
+            if (role === 'assistant') {
+                updateAvatarState('speaking');
+            }
+        }
+
+        function showError(message) {
+            // Hata mesajını göster
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+            errorDiv.textContent = message;
+            document.body.appendChild(errorDiv);
+            
+            setTimeout(() => {
+                errorDiv.remove();
+            }, 3000);
+        }
+
+        async function endInterview() {
+            if (interviewEnded) return;
+            
+            try {
+                updateStatus('Mülakat sonlandırılıyor...', 'processing');
+                
+                // Tüm kaynakları temizle
+                if (isRecording) {
+                    await stopRecording();
+                }
+                
+                // Kamerayı kapat
+                stopCamera();
+                
+                // Mülakatı sonlandır
+                interviewEnded = true;
+                
+                // Mod butonlarını gizle
+                document.getElementById('manualModeButton').style.display = 'none';
+                document.getElementById('autoModeButton').style.display = 'none';
+                document.getElementById('endInterviewButton').style.display = 'none';
+                
+                // Mülakat durumunu kaydet
+                await fetch('/save_interview_state', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        code: interviewCode,
+                        conversation_history: chatHistory,
+                        ended: true
+                    })
+                });
+                
+                // Son mesajı kontrol et
+                let lastMessage = '';
+                if (chatHistory.length > 0) {
+                    lastMessage = chatHistory[chatHistory.length - 1].content || '';
+                }
+                
+                // Tamamlanma mesajını göster
+                addMessageToChat('assistant', 'Mülakat tamamlandı. Teşekkür ederiz. Raporunuz oluşturuluyor...');
+                await speakResponse('Mülakat tamamlandı. Teşekkür ederiz. Raporunuz oluşturuluyor...');
+                
+                // Rapor oluştur
+                const reportResult = await generateReport();
+                
+                updateStatus('Mülakat tamamlandı', 'completed');
+                document.getElementById('aivaAvatar').classList.add('completed');
+                
+                // Sonuç mesajını göster
+                const resultContainer = document.createElement('div');
+                resultContainer.className = 'flex items-center justify-center my-8';
+                resultContainer.innerHTML = `
+                    <div class="bg-green-50 border border-green-200 rounded-lg p-6 text-center max-w-lg">
+                        <div class="text-green-600 text-5xl mb-4">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h2 class="text-xl font-bold text-green-800 mb-2">Mülakat Tamamlandı!</h2>
+                        <p class="text-green-700 mb-4">Rapor başarıyla oluşturuldu.</p>
+                        <a href="/reports/${interviewCode}_report.pdf" target="_blank" 
+                           class="inline-block bg-gradient-to-r from-green-500 to-green-600 
+                                  hover:from-green-600 hover:to-green-700 text-white 
+                                  font-medium py-2 px-6 rounded-lg transition-all duration-300">
+                            <i class="fas fa-file-pdf mr-2"></i>Raporu Görüntüle
+                        </a>
+                    </div>
+                `;
+                document.getElementById('messages').appendChild(resultContainer);
+                
+            } catch (error) {
+                console.error('Mülakat bitirme hatası:', error);
+                showError('Mülakat sonlandırılırken bir hata oluştu: ' + error.message);
+            }
+        }
+
+        async function generateReport() {
+            try {
+                console.log('Rapor oluşturma başlatılıyor...', chatHistory);
+                
+                // Rapor oluşturma isteği gönder
+                const response = await fetch('/generate_report', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        interview_code: interviewCode,
+                        conversation_history: chatHistory
+                    })
+                });
+
+                const data = await response.json();
+                console.log('Rapor yanıtı:', data);
+
+                if (data.success) {
+                    showSuccess('Rapor başarıyla oluşturuldu!');
+                    return true;
+                } else {
+                    throw new Error(data.error || 'Rapor oluşturma hatası');
+                }
+            } catch (error) {
+                console.error('Rapor oluşturma hatası:', error);
+                showError('Rapor oluşturulurken bir hata oluştu: ' + error.message);
+                return false;
+            }
+        }
+
+        function addDownloadButton(reportUrl) {
+            const container = document.querySelector('.chat-container');
+            const downloadDiv = document.createElement('div');
+            downloadDiv.className = 'fixed bottom-4 right-4 flex gap-4';
+            
+            const downloadButton = document.createElement('button');
+            downloadButton.className = 'bg-indigo-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-indigo-700 transition-colors';
+            downloadButton.innerHTML = '<i class="fas fa-download mr-2"></i>Raporu İndir';
+            downloadButton.onclick = () => {
+                const link = document.createElement('a');
+                link.href = reportUrl;
+                link.download = `mulakat_raporu_${new Date().toISOString().slice(0,10)}.pdf`;
+                link.click();
+            };
+            
+            downloadDiv.appendChild(downloadButton);
+            container.appendChild(downloadDiv);
+        }
+
+        function showSuccess(message) {
+            const successDiv = document.createElement('div');
+            successDiv.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+            successDiv.textContent = message;
+            document.body.appendChild(successDiv);
+            
+            setTimeout(() => {
+                successDiv.remove();
+            }, 5000);
+        }
+
+        // Modal işlemleri için yeni fonksiyonlar
+        function showModal() {
+            document.getElementById('infoModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('infoModal').style.display = 'none';
+        }
+
+        function updateAvatarState(state) {
+            const avatar = document.getElementById('aivaAvatar');
+            const effect = document.getElementById('avatarEffect');
+            const statusIndicator = document.querySelector('.status-indicator');
+            
+            // Tüm durumları temizle
+            avatar.classList.remove('speaking', 'listening', 'idle');
+            effect.classList.remove('speaking', 'listening', 'idle');
+            statusIndicator.classList.remove('speaking', 'listening', 'idle');
+            
+            // Yeni durumu ekle
+            avatar.classList.add(state);
+            effect.classList.add(state);
+            statusIndicator.classList.add(state);
+            
+            // Durum metnini güncelle
+            const statusText = document.getElementById('statusText');
+            switch(state) {
+                case 'speaking':
+                    statusText.textContent = 'GPT konuşuyor...';
+                    break;
+                case 'listening':
+                    statusText.textContent = isAutoMode ? 'Dinleniyor...' : 'Manuel mod aktif';
+                    break;
+                case 'idle':
+                    statusText.textContent = 'Dinlemeye hazır';
+                    break;
+            }
+        }
+
+        // Gerçek zamanlı sohbet için SSE kullanımı
+        async function startRealtimeChat(message) {
+            try {
+                const response = await fetch('/realtime_chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('interview_token')}`
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        session_id: localStorage.getItem('interview_session_id')
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+
+                while (true) {
+                    const {value, done} = await reader.read();
+                    if (done) break;
+
+                    const chunk = decoder.decode(value);
+                    const lines = chunk.split('\n');
+
+                    for (const line of lines) {
+                        if (line.startsWith('data: ')) {
+                            try {
+                                const data = JSON.parse(line.slice(6));
+                                if (data.text) {
+                                    addMessageToChat('assistant', data.text);
+                                    await speakResponse(data.text);
+                                }
+                            } catch (e) {
+                                console.error('JSON parse hatası:', e);
+                            }
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Gerçek zamanlı sohbet hatası:', error);
+                showError('Bağlantı hatası: ' + error.message);
+            }
+        }
+
+        // Süre sayacı fonksiyonları
+        function startTimer() {
+            interviewStartTime = new Date();
+            updateTimer();
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        function stopTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+        }
+
+        function updateTimer() {
+            if (!interviewStartTime) return;
+            
+            const now = new Date();
+            const diff = now - interviewStartTime;
+            const minutes = Math.floor(diff / 60000);
+            const seconds = Math.floor((diff % 60000) / 1000);
+            
+            document.getElementById('interviewTimer').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // Kamera işlemleri
+        async function initCamera() {
+            try {
+                if (!cameraActive) {
+                    // Kamera erişimi için izin iste
+                    videoStream = await navigator.mediaDevices.getUserMedia({ 
+                        video: { 
+                            width: { ideal: 1280 },
+                            height: { ideal: 720 },
+                            facingMode: "user" 
+                        } 
+                    });
+                    
+                    const videoElement = document.getElementById('videoElement');
+                    if (videoElement) {
+                        videoElement.srcObject = videoStream;
+                    
+                        // Kamera konteynerini göster
+                        const cameraContainer = document.getElementById('cameraContainer');
+                        if (cameraContainer) {
+                            cameraContainer.style.display = 'block';
+                        }
+                        cameraActive = true;
+                        
+                        // Rastgele fotoğraf çekme zamanlamasını başlat
+                        startRandomPhotoCapture();
+                    }
+                }
+            } catch (error) {
+                console.error('Kamera erişim hatası:', error);
+                showError('Kamera erişimi sağlanamadı: ' + error.message);
+            }
+        }
+        
+        function startRandomPhotoCapture() {
+            // Rastgele zamanlarda fotoğraf çekme
+            photoInterval = setInterval(() => {
+                // 10-30 saniye arasında rastgele bir süre sonra fotoğraf çek
+                const randomDelay = Math.floor(Math.random() * 20000) + 10000; // 10-30 saniye arası
+                
+                // Son fotoğraftan bu yana yeterli süre geçtiyse
+                const now = Date.now();
+                if (now - lastPhotoTime > randomDelay) {
+                    capturePhoto();
+                    lastPhotoTime = now;
+                }
+            }, 5000); // 5 saniyede bir kontrol et
+        }
+        
+        function capturePhoto() {
+            if (!cameraActive) return;
+            
+            const video = document.getElementById('videoElement');
+            const canvas = document.getElementById('photoCanvas');
+            const photoFlash = document.getElementById('photoFlash');
+            
+            // Canvas boyutunu video boyutuna ayarla
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            
+            // Fotoğraf çek
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            // Flaş efekti
+            photoFlash.classList.add('active');
+            setTimeout(() => {
+                photoFlash.classList.remove('active');
+            }, 300);
+            
+            // Fotoğrafı base64 formatına çevir
+            const photoData = canvas.toDataURL('image/jpeg');
+            
+            // Fotoğrafı sunucuya gönder
+            sendPhotoToServer(photoData);
+            
+            photoCounter++;
+        }
+        
+        async function sendPhotoToServer(photoData) {
+            try {
+                const response = await fetch('/save_photo', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        code: interviewCode,
+                        photo: photoData,
+                        timestamp: new Date().toISOString()
+                    })
+                });
+                
+                const data = await response.json();
+                if (!data.success) {
+                    console.error('Fotoğraf kaydedilemedi:', data.error);
+                }
+            } catch (error) {
+                console.error('Fotoğraf gönderme hatası:', error);
+            }
+        }
+        
+        // Kamerayı kapat
+        function stopCamera() {
+            if (videoStream) {
+                videoStream.getTracks().forEach(track => track.stop());
+                videoStream = null;
+            }
+            
+            if (photoInterval) {
+                clearInterval(photoInterval);
+                photoInterval = null;
+            }
+            
+            document.getElementById('cameraContainer').style.display = 'none';
+            cameraActive = false;
+        }
+
+    </script>
+</body>
+</html> 

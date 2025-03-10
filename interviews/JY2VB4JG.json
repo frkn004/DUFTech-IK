@@ -1,0 +1,60 @@
+{
+  "code": "JY2VB4JG",
+  "candidate_name": "FURKAN SEVİNÇ",
+  "position": "CEO",
+  "requirements": [],
+  "questions": [
+    "- \"Furkan Bey, sizinle tanışmak çok keyifli. Kariyer yolculuğunuzda bugüne kadar hangi deneyimlerin sizin için en değerli olduğunu düşünüyorsunuz ve bu deneyimlerin CEO pozisyonuna nasıl bir katkısı olacağını düşünüyorsunuz?\"",
+    "- \"CEO olarak hangi teknik alanlarda kendinizi güçlü hissediyorsunuz ve bu pozisyonda hangi teknik bilgilerin daha çok ön plana çıkacağını düşünüyorsunuz?\"",
+    "- \"Bir önceki pozisyonunuzda karşılaştığınız en karmaşık problem neydi ve bunu nasıl çözdünüz? Bu problem karşısında izlediğiniz yol ve çözüm süreci hakkında biraz konuşabilir miyiz?\"",
+    "- \"Çalıştığınız takımlarda, sizin liderliğiniz altında çeşitlilik ve farklılıkların yönetilmesi konusunda ne tür stratejiler uyguladınız veya uygulamayı planlıyorsunuz? Bu konuda bize biraz daha detay verebilir misiniz?\"",
+    "- \"Bir CEO olarak, şirket içindeki farklı departmanlar ve takımlar arasındaki iletişimi nasıl yönetmeyi planlıyorsunuz? Bu konuda daha önce deneyimlediğiniz veya uyguladığınız başarılı stratejileri paylaşabilir misiniz?\""
+  ],
+  "created_at": "2025-03-10T22:18:49.959551",
+  "status": "completed",
+  "started_at": "2025-03-10T22:18:51.651996",
+  "photos": [
+    {
+      "filename": "20250310221858.jpg",
+      "timestamp": "2025-03-10T19:18:58.087Z",
+      "path": "JY2VB4JG_photos/20250310221858.jpg"
+    },
+    {
+      "filename": "20250310221923.jpg",
+      "timestamp": "2025-03-10T19:19:23.090Z",
+      "path": "JY2VB4JG_photos/20250310221923.jpg"
+    }
+  ],
+  "conversation_history": [
+    {
+      "role": "user",
+      "content": "bir sonraki tarifte görüşürüz, hoşçakalın"
+    },
+    {
+      "role": "user",
+      "content": "Merhaba"
+    },
+    {
+      "role": "assistant",
+      "content": "Mülakata başlamak için 'Başlayalım' diyebilirsiniz."
+    },
+    {
+      "role": "assistant",
+      "content": "Mülakata başlamak için 'Başlayalım' diyebilirsiniz."
+    },
+    {
+      "role": "user",
+      "content": "Altyazı M.K."
+    },
+    {
+      "role": "assistant",
+      "content": "Mülakata başlamak için 'Başlayalım' diyebilirsiniz."
+    },
+    {
+      "role": "user",
+      "content": "Hoşça kalın."
+    }
+  ],
+  "ended": true,
+  "ended_at": "2025-03-10T22:19:37.623600"
+}

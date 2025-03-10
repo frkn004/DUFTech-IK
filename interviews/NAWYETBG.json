@@ -1,0 +1,29 @@
+{
+  "code": "NAWYETBG",
+  "candidate_name": "Nisa Duru",
+  "position": "Part-Time AI Engineer",
+  "requirements": [],
+  "questions": [
+    "Maren Robotics'te part-time AI Engineer olarak görev alırken hangi projelerde yer aldınız ve bu projelerin sonuçları ne oldu? Bulunduğunuz pozisyonda yaptığınız işler ve projeler hakkında örnekler verir misiniz? Bu projelerde hangi teknolojileri kullandınız ve bu teknolojilerin seçimi sizin kararınız mıydı?",
+    "Maren Robotics'teki pozisyonunuzda hangi AI teknolojileri ve altyapılarıyla çalıştınız? Python, C/C++, JavaScript ve MySQL gibi teknolojileri kullanarak ne tür çözümler geliştirdiniz? Bu dilleri ve teknolojileri kullanma konusundaki yetkinliğiniz ve deneyiminiz hakkında daha fazla bilgi verebilir misiniz?",
+    "AIVA Tech'te AI Technical and Software Engineer olarak görev alırken hangi projelerde yer aldınız ve bu projelerin sonuçları ne oldu? Bulunduğunuz pozisyonda yaptığınız işler ve projeler hakkında örnekler verir misiniz? Bu projelerde hangi teknolojileri kullandınız ve bu teknolojilerin seçimi sizin kararınız mıydı?",
+    "AIVA Tech'teki pozisyonunuzda hangi AI teknolojileri ve altyapılarıyla çalıştınız? Python, C/C++, JavaScript ve MySQL gibi teknolojileri kullanarak ne tür çözümler geliştirdiniz? Bu dilleri ve teknolojileri kullanma konusundaki yetkinliğiniz ve deneyiminiz hakkında daha fazla bilgi verebilir misiniz?",
+    "Microsoft Office becerilerinizin, özellikle de Excel'in, günlük işlerinizi yürütme ve projelerinizi yönetme konusunda nasıl bir rol oynadığını bize anlatabilir misiniz?",
+    "OSTİM Teknik Üniversitesi'nde aldığınız eğitimin, AI Engineer olarak kariyerinizi şekillendirmede nasıl bir etkisi oldu? Üniversitedeki hangi dersler veya projeler, şu anki beceri setinizi ve bilgi birikiminizi en çok etkiledi? Bu deneyim, AI mühendisi olarak kariyerinizi nasıl şekillendirdi?"
+  ],
+  "created_at": "2025-03-11T00:35:36.550425",
+  "status": "completed",
+  "started_at": "2025-03-11T00:35:40.459397",
+  "conversation_history": [
+    {
+      "role": "user",
+      "content": "Dışarıda vurmadım."
+    },
+    {
+      "role": "assistant",
+      "content": "Mülakata başlamak için 'Başlayalım' diyebilirsiniz."
+    }
+  ],
+  "ended": true,
+  "ended_at": "2025-03-11T00:40:50.785047"
+}

@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <!-- Background -->
+  <rect width="400" height="300" fill="#ffffff" rx="10" ry="10" />
+  
+  <!-- Shadow for 3D Effect -->
+  <g opacity="0.2" transform="translate(6, 6)">
+    <!-- D Shadow -->
+    <path d="M120,70 h45 q40,0 40,50 v60 q0,50 -40,50 h-45 v-160 z" 
+          fill="#333333" />
+    
+    <!-- U Shadow -->
+    <path d="M160,70 v115 q0,35 35,35 t35,-35 v-115" 
+          fill="#333333" />
+    
+    <!-- F Shadow -->
+    <path d="M195,70 v160 M195,70 h60 M195,130 h45" 
+          fill="none"
+          stroke="#333333" 
+          stroke-width="12"
+          stroke-linecap="round"/>
+  </g>
+  
+  <!-- Gradient Definitions -->
+  <defs>
+    <linearGradient id="gradD" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00CED1" />
+      <stop offset="100%" stop-color="#008B8B" />
+    </linearGradient>
+    
+    <linearGradient id="gradU" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C8A2C8" />
+      <stop offset="100%" stop-color="#9370DB" />
+    </linearGradient>
+    
+    <linearGradient id="gradF" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="20%" stop-color="#00CED1" />
+      <stop offset="80%" stop-color="#008B8B" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Interlocked D Letter with 3D Effect -->
+  <path d="M120,70 h45 q40,0 40,50 v60 q0,50 -40,50 h-45 v-160 z" 
+        fill="url(#gradD)" />
+  
+  <!-- Interlocked U Letter with 3D Effect -->
+  <path d="M160,70 v115 q0,35 35,35 t35,-35 v-115" 
+        fill="url(#gradU)" />
+  
+  <!-- Interlocked F Letter with 3D Effect -->
+  <path d="M195,70 v160 M195,70 h60 M195,130 h45" 
+        fill="none"
+        stroke="url(#gradF)" 
+        stroke-width="12"
+        stroke-linecap="round"/>
+  
+  <!-- Highlights for 3D Effect -->
+  <path d="M120,70 h45 q40,0 40,50 v10" 
+        fill="none"
+        stroke="white" 
+        stroke-width="2"
+        opacity="0.5"/>
+  
+  <path d="M160,70 v20" 
+        fill="none"
+        stroke="white" 
+        stroke-width="2"
+        opacity="0.5"/>
+  
+  <!-- Tech Text with Shadow -->
+  <text x="202" y="262" 
+        font-family="Times New Roman, serif" 
+        font-size="32" 
+        font-weight="normal" 
+        text-anchor="middle" 
+        fill="#333333"
+        opacity="0.2">Tech</text>
+  
+  <text x="200" y="260" 
+        font-family="Times New Roman, serif" 
+        font-size="32" 
+        font-weight="normal" 
+        text-anchor="middle" 
+        fill="#333333">Tech</text>
+</svg>

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <!-- Background -->
+  <rect width="400" height="300" fill="#ffffff" rx="10" ry="10" />
+  
+  <!-- Modern Minimalist Design -->
+  <g transform="translate(100, 60)">
+    <!-- Abstract Tech Symbol -->
+    <path d="M50,50 
+             a50,50 0 1,0 100,0 
+             a50,50 0 1,0 -100,0 
+             Z" 
+          fill="none" 
+          stroke="#00CED1" 
+          stroke-width="4"
+          stroke-dasharray="1, 6" />
+    
+    <!-- Inner Element -->
+    <path d="M80,50 
+             a20,20 0 1,0 40,0 
+             a20,20 0 1,0 -40,0 
+             Z" 
+          fill="#C8A2C8" 
+          opacity="0.8" />
+    
+    <!-- Dynamic Elements -->
+    <circle cx="150" cy="30" r="8" fill="#00CED1" />
+    <circle cx="50" cy="70" r="8" fill="#00CED1" />
+    <circle cx="150" cy="70" r="8" fill="#00CED1" />
+    
+    <!-- Connecting Arcs -->
+    <path d="M100,50 Q125,20 150,30" stroke="#C8A2C8" stroke-width="2" fill="none" />
+    <path d="M100,50 Q75,70 50,70" stroke="#C8A2C8" stroke-width="2" fill="none" />
+    <path d="M100,50 Q125,70 150,70" stroke="#C8A2C8" stroke-width="2" fill="none" />
+  </g>
+  
+  <!-- Company Name with Updated Typography -->
+  <text x="200" y="190" font-family="Times New Roman, serif" font-size="38" text-anchor="middle" fill="#333333">
+    <tspan font-weight="bold">DUF</tspan><tspan font-weight="normal">Tech</tspan>
+  </text>
+  
+  <!-- More Elegant Decorative Element -->
+  <path d="M130,215 Q200,200 270,215" stroke="#00CED1" stroke-width="1.5" fill="none" opacity="0.6" />
+  <path d="M140,222 Q200,212 260,222" stroke="#C8A2C8" stroke-width="1.5" fill="none" opacity="0.6" />
+</svg>
