@@ -1,0 +1,26 @@
+{
+  "code": "MIZOWYFN",
+  "candidate_name": "Nisa Duru",
+  "position": "Part-Time AI Engineer",
+  "requirements": [],
+  "questions": [
+    "- Merhaba Nisa, hoş geldiniz. Öncelikle Maren Robotics'de Part-Time AI Engineer olarak çalıştığınız dönemde gerçekleştirdiğiniz bir projeyi anlatır mısınız? Bu proje sırasında hangi AI teknolojilerini kullandınız ve hangi zorluklarla karşılaştınız?",
+    "- Özellikle Python ve C/C++ gibi dillerde AI mühendisliği üzerine yaptığınız çalışmalar hakkında biraz daha bilgi verir misiniz? Bu dilleri kullanırken hangi AI kütüphaneleri ile çalışmayı tercih ediyorsunuz ve neden?",
+    "- Genellikle karşılaştığınız bir problemi nasıl çözerdiniz? Özellikle karşılaştığınız bir zorluk ve bu zorluğun üstesinden nasıl geldiğiniz hakkında bizimle bir deneyim paylaşabilir misiniz?",
+    "- Bir sonraki adımınızın part-time bir pozisyon olmasının belirli bir nedeni var mı? Bu pozisyonda nasıl bir kariyer hedefiniz olduğunu bizimle paylaşabilir misiniz?",
+    "- Takım çalışmaları hakkında ne düşünüyorsunuz? Daha önceki deneyimlerinizde takımınıza nasıl bir katkı sağladığınızı ve takım içinde hangi rolü üstlendiğinizi anlatabilir misiniz?"
+  ],
+  "created_at": "2025-03-11T10:42:56.609606",
+  "status": "completed",
+  "started_at": "2025-03-11T10:43:00.060646",
+  "photos": [
+    {
+      "filename": "20250311104347.jpg",
+      "timestamp": "2025-03-11T07:43:47.840Z",
+      "path": "MIZOWYFN_photos/20250311104347.jpg"
+    }
+  ],
+  "conversation_history": [],
+  "ended": true,
+  "ended_at": "2025-03-11T10:43:49.194624"
+}

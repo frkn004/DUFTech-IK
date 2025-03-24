@@ -1,0 +1,11 @@
+{
+  "position": "YAPAY ZEKA STAJERİ",
+  "interview_code": {
+    "0": {},
+    "1": {}
+  },
+  "quiz_type": "both",
+  "cv_context": "Adayın becerileri: Programming, C, C++, Python, R, JavaScript, HTML, Scikit-Learn, TensorFlow, Keras, Pandas, Numpy, Matplotlib\n\nAdayın deneyimleri:\n- AI Intern at Limak Cement: Fine-tuned a ChatBot using OpenAI API and developed a Computer Vision model to monitor safety compliance, streamlined data retrieval using OCR for text extraction.\n- AI Intern (Remote) at AIVA Tech: Contributed to AI-based automation systems for business process optimization through active research and AI algorithm applications.\n- AI Intern at Limak Cement: Managed extensive data cleaning and preparation for ML applications, using PostgreSQL and Python.\n- Intern at OSTIMTech Technology Transfer Office: Involved in coordinating business development projects for university-industry partnerships.\n\nAdayın eğitimi:\n- Bachelor of Engineering in Alan, OSTIM Technical University\n\n",
+  "created_at": "2025-03-17T16:43:00.548307",
+  "questions": []
+}

@@ -3,10 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DUF Tech - Mülakat Oluştur</title>
+    <title>Mülakat Oluştur | DUF Tech Mülakat Sistemi</title>
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css">
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -99,12 +103,20 @@
                     <label for="position" class="block text-sm font-medium text-gray-700 mb-2">
                         Pozisyon
                     </label>
-                    <input type="text" 
-                           id="position" 
-                           class="w-full px-4 py-3 rounded-xl input-field 
-                                  text-gray-700"
-                           placeholder="Başvurulan Pozisyonu Girin">
-                    <p class="mt-1 text-xs text-gray-500">Pozisyon adını buraya yazın. Otomatik oluşturulacak sorular bu pozisyona göre şekillenecektir.</p>
+                    <div class="mb-2">
+                        <select id="position-selector" class="w-full px-4 py-3 rounded-xl input-field text-gray-700">
+                            <option value="">Pozisyon Seçin</option>
+                            <!-- Pozisyonlar JS ile yüklenecek -->
+                            <option value="custom">Diğer (Manuel Giriş)</option>
+                        </select>
+                    </div>
+                    <div id="custom-position-div" class="hidden">
+                        <input type="text" 
+                               id="position" 
+                               class="w-full px-4 py-3 rounded-xl input-field text-gray-700"
+                               placeholder="Başvurulan Pozisyonu Girin">
+                    </div>
+                    <p class="mt-1 text-xs text-gray-500">Pozisyon adı, otomatik oluşturulacak soruların şekillenmesini sağlayacaktır.</p>
                 </div>
 
                 <div>
@@ -167,6 +179,9 @@
                             <button id="continueToInterviewBtn" class="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors ml-2">
                                 <i class="fas fa-arrow-right mr-2"></i>Mülakata Devam Et
                             </button>
+                            <button id="createQuizFromCVBtn" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors mt-3">
+                                <i class="fas fa-question-circle mr-2"></i>Çoktan Seçmeli Sınav Oluştur
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -223,6 +238,104 @@
                         <i class="fas fa-link mr-2"></i>
                         Mülakata Katıl
                     </a>
+                    <span class="mx-2 text-gray-400">|</span>
+                    <a href="/quiz_entry" class="text-purple-600 hover:text-purple-800 transition-colors">
+                        <i class="fas fa-clipboard-list mr-2"></i>
+                        Sınava Katıl
+                    </a>
+                </div>
+
+                <div id="interviewDetails" class="hidden">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Mülakat Detayları</h3>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-600 mb-2">
+                            Mülakat Kodu
+                        </label>
+                        <div class="flex items-center space-x-2">
+                            <input type="text" 
+                                   id="interviewCode" 
+                                   class="flex-1 px-4 py-3 rounded-xl input-field
+                                          bg-gray-50 text-gray-700" 
+                                   readonly>
+                            <button onclick="copyToClipboard('interviewCode')" 
+                                    class="p-3 text-teal-600 hover:text-teal-800 
+                                           rounded-xl hover:bg-teal-50 transition-colors">
+                                <i class="fas fa-copy text-xl"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-2">
+                            Mülakat Linki
+                        </label>
+                        <div class="flex items-center space-x-2">
+                            <input type="text" 
+                                   id="interviewLink" 
+                                   class="flex-1 px-4 py-3 rounded-xl input-field
+                                          bg-gray-50 text-gray-700" 
+                                   readonly>
+                            <button onclick="copyToClipboard('interviewLink')" 
+                                    class="p-3 text-teal-600 hover:text-teal-800 
+                                           rounded-xl hover:bg-teal-50 transition-colors">
+                                <i class="fas fa-copy text-xl"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Çoktan Seçmeli Soru Oluşturma -->
+                    <div class="mt-6 p-4 border border-purple-200 rounded-xl bg-purple-50">
+                        <h4 class="text-lg font-semibold text-purple-800 mb-3">Çoktan Seçmeli Sorular</h4>
+                        
+                        <p class="text-sm text-gray-600 mb-4">
+                            Bu pozisyon için çoktan seçmeli teknik sorular oluşturabilirsiniz. 
+                            Sorular pozisyona özel olarak hazırlanacaktır.
+                        </p>
+                        
+                        <div class="flex items-center mb-3">
+                            <label class="text-sm font-medium text-gray-700 mr-3">Soru Sayısı:</label>
+                            <select id="questionCount" class="px-3 py-2 rounded input-field text-gray-700">
+                                <option value="5">5 Soru</option>
+                                <option value="10" selected>10 Soru</option>
+                                <option value="15">15 Soru</option>
+                                <option value="20">20 Soru</option>
+                            </select>
+                        </div>
+                        
+                        <button id="createQuizBtn" 
+                                class="w-full py-2 bg-purple-600 text-white rounded-lg 
+                                       hover:bg-purple-700 transition-colors flex items-center justify-center">
+                            <i class="fas fa-question-circle mr-2"></i>
+                            Çoktan Seçmeli Sınav Oluştur
+                        </button>
+                        
+                        <div id="quizLinkContainer" class="mt-4 hidden">
+                            <label class="block text-sm font-medium text-gray-600 mb-2">
+                                Sınav Linki
+                            </label>
+                            <div class="flex items-center space-x-2">
+                                <input type="text" 
+                                       id="quizLink" 
+                                       class="flex-1 px-4 py-2 rounded-xl input-field
+                                              bg-gray-50 text-gray-700" 
+                                       readonly>
+                                <button onclick="copyToClipboard('quizLink')" 
+                                        class="p-2 text-purple-600 hover:text-purple-800 
+                                               rounded-xl hover:bg-purple-50 transition-colors">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Başlat Butonu -->
+                    <div class="text-center mt-6">
+                        <button onclick="startInterview()" 
+                                class="gradient-btn text-white px-8 py-3 rounded-xl 
+                                       hover:shadow-xl transition-all duration-300">
+                            <i class="fas fa-play mr-2"></i>
+                            Mülakatı Başlat
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -314,7 +427,460 @@
                 e.preventDefault();
                 createInterview();
             });
+
+            // Çoktan seçmeli quiz oluşturma
+            const createQuizBtn = document.getElementById('createQuizBtn');
+            if (createQuizBtn) {
+                createQuizBtn.addEventListener('click', createMultipleChoiceQuiz);
+            }
+            
+            // CV ile quiz oluşturma butonu tıklama
+            const createQuizFromCVBtn = document.getElementById('createQuizFromCVBtn');
+            if (createQuizFromCVBtn) {
+                createQuizFromCVBtn.addEventListener('click', function() {
+                    // CV var mı kontrol et
+                    if (!window.cvData) {
+                        showError('Lütfen önce CV yükleyin.');
+                        return;
+                    }
+                    
+                    createMultipleChoiceQuiz();
+                });
+            }
+            
+            // "Bu Soruları Kullan" butonu
+            document.getElementById('useAutoQuestionsBtn').addEventListener('click', function() {
+                if (!window.autoQuestions || window.autoQuestions.length === 0) {
+                    showError('Otomatik oluşturulan sorular bulunamadı');
+                    return;
+                }
+                
+                useAutoGeneratedQuestions(window.autoQuestions);
+            });
+            
+            // "Mülakata Devam Et" butonu
+            document.getElementById('continueToInterviewBtn').addEventListener('click', function() {
+                if (!window.cvData) {
+                    showError('CV analiz sonuçları bulunamadı');
+                    return;
+                }
+                
+                // Doğrudan mülakat oluştur
+                createInterviewWithCVData();
+            });
+
+            // Pozisyon seçici ve özel pozisyon girişi
+            const positionSelector = document.getElementById('position-selector');
+            const customPositionDiv = document.getElementById('custom-position-div');
+            const positionInput = document.getElementById('position');
+
+            // LocalStorage'dan pozisyonları yükleme
+            function loadPositionsToDropdown() {
+                const savedPositions = localStorage.getItem('duftech_positions');
+                
+                if (savedPositions) {
+                    try {
+                        const positions = JSON.parse(savedPositions);
+                        
+                        // Mevcut seçenekleri koruyarak yeni pozisyonları ekleyelim
+                        // Önce mevcut pozisyonları temizleyelim (ilk ve son seçeneği koruyarak)
+                        const firstOption = positionSelector.firstElementChild;
+                        const lastOption = positionSelector.lastElementChild;
+                        positionSelector.innerHTML = '';
+                        positionSelector.appendChild(firstOption);
+                        
+                        // Pozisyonları ekleyelim
+                        positions.forEach(position => {
+                            const option = document.createElement('option');
+                            option.value = position.name;
+                            option.textContent = `${position.name} (${position.department})`;
+                            positionSelector.appendChild(option);
+                        });
+                        
+                        // "Diğer" seçeneğini tekrar ekleyelim
+                        positionSelector.appendChild(lastOption);
+                    } catch (error) {
+                        console.error('Pozisyonlar yüklenirken hata oluştu:', error);
+                    }
+                }
+            }
+
+            // Pozisyon seçici değiştiğinde
+            positionSelector.addEventListener('change', function() {
+                if (this.value === 'custom') {
+                    customPositionDiv.classList.remove('hidden');
+                    positionInput.focus();
+                    positionInput.value = ''; // Özel girişi temizleyelim
+                } else {
+                    customPositionDiv.classList.add('hidden');
+                    positionInput.value = this.value; // Seçilen değeri gizli input'a yazalım
+                }
+            });
+
+            // Sayfa yüklendiğinde pozisyonları yükleyelim
+            loadPositionsToDropdown();
         });
+        
+        // CV verilerini kullanarak mülakat oluştur
+        function createInterviewWithCVData() {
+            // Form verilerini al
+            const candidateName = document.getElementById('candidateName').value.trim() || window.cvData.personal_info?.name || '';
+            const position = getSelectedPosition(); // Güncellenmiş pozisyon alma yöntemi
+            
+            if (!candidateName || !position) {
+                showError('Lütfen aday adı ve pozisyon giriniz.');
+                return;
+            }
+            
+            // Otomatik soruları kullan
+            const questionsToUse = window.autoQuestions || [];
+            
+            // Yükleniyor mesajı göster
+            Swal.fire({
+                title: 'Mülakat Oluşturuluyor',
+                text: 'Lütfen bekleyin...',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+            
+            // Mülakat oluştur
+            fetch('/create_interview', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    candidate_name: candidateName,
+                    position: position,
+                    custom_questions: questionsToUse,
+                    cv_data: window.cvData
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                Swal.close();
+                
+                if (data.success) {
+                    // Mülakat detaylarını göster
+                    document.getElementById('interviewCode').value = data.interview_code;
+                    document.getElementById('interviewLink').value = window.location.origin + '/interview?code=' + data.interview_code;
+                    document.getElementById('interviewDetails').classList.remove('hidden');
+                    window.interviewCode = data.interview_code;
+                    
+                    // Başarı mesajı göster
+                    Swal.fire({
+                        title: 'Mülakat Oluşturuldu!',
+                        text: 'Mülakat başarıyla oluşturuldu. Kodu ve linki adaya iletebilirsiniz.',
+                        icon: 'success',
+                        confirmButtonText: 'Tamam'
+                    });
+                } else {
+                    showError(data.error || 'Mülakat oluşturulurken bir hata oluştu.');
+                }
+            })
+            .catch(error => {
+                Swal.close();
+                console.error('Mülakat oluşturma hatası:', error);
+                showError('Mülakat oluşturulurken bir hata oluştu.');
+            });
+        }
+        
+        // Otomatik oluşturulan soruları kullan
+        function useAutoGeneratedQuestions(questions) {
+            if (!questions || questions.length === 0) return;
+            
+            // Özel sorular checkbox'ı aktifleştir
+            document.getElementById('useCustomQuestions').checked = true;
+            document.getElementById('customQuestionsContainer').classList.remove('hidden');
+            
+            // Mevcut soruları temizle
+            document.getElementById('questionsList').innerHTML = '';
+            questionCounter = 1;
+            
+            // Otomatik oluşturulan soruları ekle
+            questions.forEach(question => {
+                const questionsList = document.getElementById('questionsList');
+                const questionItem = document.createElement('div');
+                questionItem.className = 'question-item';
+                questionItem.innerHTML = `
+                    <div class="flex items-center">
+                        <span class="question-count">${questionCounter}</span>
+                        <textarea 
+                            class="w-full px-3 py-2 rounded input-field text-gray-700 pr-10" 
+                            rows="2"
+                        >${question}</textarea>
+                        <span class="remove-question" onclick="removeQuestion(this)">
+                            <i class="fas fa-times"></i>
+                        </span>
+                    </div>
+                `;
+                questionsList.appendChild(questionItem);
+                questionCounter++;
+            });
+            
+            // Soru kısmına scrolla
+            document.getElementById('customQuestionsContainer').scrollIntoView({ behavior: 'smooth' });
+            
+            // Başarı mesajı göster
+            Swal.fire({
+                title: 'Sorular Eklendi',
+                text: 'Otomatik oluşturulan sorular başarıyla eklendi.',
+                icon: 'success',
+                confirmButtonText: 'Tamam'
+            });
+        }
+        
+        // Çoktan seçmeli quiz oluşturma
+        function createMultipleChoiceQuiz() {
+            const position = getSelectedPosition(); // Güncellenmiş pozisyon alma yöntemi
+            
+            if (!position) {
+                showError('Lütfen pozisyon bilgisi giriniz.');
+                return;
+            }
+            
+            // Mülakat kodu kontrolü
+            const interviewCode = document.getElementById('interviewCode').value.trim();
+            if (!interviewCode) {
+                Swal.fire({
+                    title: 'Mülakat Oluşturulmalı',
+                    text: 'Çoktan seçmeli sınav oluşturmak için önce mülakat oluşturulmalıdır. Devam etmek istiyor musunuz?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Evet, Oluştur',
+                    cancelButtonText: 'İptal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        createInterviewThenQuiz();
+                    }
+                });
+                return;
+            }
+            
+            // Quiz türü seçimi için SweetAlert2 modal penceresi
+            Swal.fire({
+                title: 'Çoktan Seçmeli Sınav Oluştur',
+                html: `
+                    <p class="mb-4 text-sm text-gray-600">Bu pozisyon için çoktan seçmeli sınav oluşturulacak. Nasıl soru oluşturmak istersiniz?</p>
+                    <div class="flex flex-col gap-3 text-left">
+                        <div>
+                            <input type="radio" id="position-only" name="quiz-type" value="position" class="mr-2" checked>
+                            <label for="position-only" class="text-base text-gray-800">Sadece pozisyona göre soru oluştur</label>
+                            <p class="ml-6 text-sm text-gray-600">Pozisyon için genel teknik sorular oluşturulur.</p>
+                        </div>
+                        ${window.cvData ? `
+                        <div>
+                            <input type="radio" id="cv-only" name="quiz-type" value="cv" class="mr-2">
+                            <label for="cv-only" class="text-base text-gray-800">Sadece CV'ye göre soru oluştur</label>
+                            <p class="ml-6 text-sm text-gray-600">Adayın CV'sindeki beceri ve deneyimlerine göre kişiselleştirilmiş sorular oluşturulur.</p>
+                        </div>
+                        <div>
+                            <input type="radio" id="both" name="quiz-type" value="both" class="mr-2">
+                            <label for="both" class="text-base text-gray-800">Hem CV hem pozisyona göre soru oluştur</label>
+                            <p class="ml-6 text-sm text-gray-600">Hem pozisyon gereksinimlerine hem de CV'deki bilgilere göre dengeli sorular oluşturulur.</p>
+                        </div>
+                        ` : ''}
+                    </div>
+                    <div class="mt-4 text-left">
+                        <label for="question-count-select" class="block text-base text-gray-800 mb-1">Soru Sayısı:</label>
+                        <select id="question-count-select" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                            <option value="5">5 Soru</option>
+                            <option value="10" selected>10 Soru</option>
+                            <option value="15">15 Soru</option>
+                            <option value="20">20 Soru</option>
+                        </select>
+                    </div>
+                `,
+                showCancelButton: true,
+                confirmButtonText: 'Oluştur',
+                cancelButtonText: 'İptal',
+                preConfirm: () => {
+                    const quizType = document.querySelector('input[name="quiz-type"]:checked').value;
+                    const questionCount = document.getElementById('question-count-select').value;
+                    return { quizType, questionCount };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    createQuizWithOptions(result.value.quizType, result.value.questionCount);
+                }
+            });
+        }
+        
+        // Önce mülakat oluştur, sonra quiz
+        function createInterviewThenQuiz() {
+            const candidateName = document.getElementById('candidateName').value.trim() || window.cvData?.personal_info?.name || 'İsimsiz Aday';
+            const position = getSelectedPosition(); // Güncellenmiş pozisyon alma yöntemi
+            
+            if (!position) {
+                showError('Lütfen pozisyon bilgisi giriniz.');
+                return;
+            }
+            
+            // Yükleniyor göster
+            Swal.fire({
+                title: 'Mülakat ve Sınav Oluşturuluyor',
+                text: 'Lütfen bekleyin...',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+            
+            // Pozisyon ve CV bilgilerini al
+            fetch('/create_interview', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    candidate_name: candidateName,
+                    position: position,
+                    cv_data: window.cvData || {}
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Mülakat kodu sakla
+                    window.interviewCode = data.interview_code;
+                    
+                    // Quiz tipi ve soru sayısını al
+                    Swal.fire({
+                        title: 'Sınav Tipi Seçin',
+                        html: `
+                            <p class="mb-4 text-sm text-gray-600">Bu pozisyon için çoktan seçmeli sınav oluşturulacak. Nasıl soru oluşturmak istersiniz?</p>
+                            <div class="flex flex-col gap-3 text-left">
+                                <div>
+                                    <input type="radio" id="position-only-new" name="quiz-type-new" value="position" class="mr-2" checked>
+                                    <label for="position-only-new" class="text-base text-gray-800">Sadece pozisyona göre soru oluştur</label>
+                                    <p class="ml-6 text-sm text-gray-600">Pozisyon için genel teknik sorular oluşturulur.</p>
+                                </div>
+                                ${window.cvData ? `
+                                <div>
+                                    <input type="radio" id="cv-only-new" name="quiz-type-new" value="cv" class="mr-2">
+                                    <label for="cv-only-new" class="text-base text-gray-800">Sadece CV'ye göre soru oluştur</label>
+                                    <p class="ml-6 text-sm text-gray-600">Adayın CV'sindeki beceri ve deneyimlerine göre kişiselleştirilmiş sorular oluşturulur.</p>
+                                </div>
+                                <div>
+                                    <input type="radio" id="both-new" name="quiz-type-new" value="both" class="mr-2">
+                                    <label for="both-new" class="text-base text-gray-800">Hem CV hem pozisyona göre soru oluştur</label>
+                                    <p class="ml-6 text-sm text-gray-600">Hem pozisyon gereksinimlerine hem de CV'deki bilgilere göre dengeli sorular oluşturulur.</p>
+                                </div>
+                                ` : ''}
+                            </div>
+                            <div class="mt-4 text-left">
+                                <label for="question-count-select-new" class="block text-base text-gray-800 mb-1">Soru Sayısı:</label>
+                                <select id="question-count-select-new" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                                    <option value="5">5 Soru</option>
+                                    <option value="10" selected>10 Soru</option>
+                                    <option value="15">15 Soru</option>
+                                    <option value="20">20 Soru</option>
+                                </select>
+                            </div>
+                        `,
+                        showCancelButton: true,
+                        confirmButtonText: 'Oluştur',
+                        cancelButtonText: 'İptal',
+                        preConfirm: () => {
+                            const quizType = document.querySelector('input[name="quiz-type-new"]:checked').value;
+                            const questionCount = document.getElementById('question-count-select-new').value;
+                            return { quizType, questionCount };
+                        }
+                    }).then((quizResult) => {
+                        if (quizResult.isConfirmed) {
+                            // Yükleniyor göster
+                            Swal.fire({
+                                title: 'Sorular Oluşturuluyor',
+                                text: 'Lütfen bekleyin, bu işlem biraz zaman alabilir...',
+                                allowOutsideClick: false,
+                                didOpen: () => {
+                                    Swal.showLoading();
+                                }
+                            });
+                            
+                            // Quiz oluşturma isteği
+                            fetch('/create_multiple_choice', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    position: position,
+                                    question_count: quizResult.value.questionCount,
+                                    interview_code: data.interview_code,
+                                    quiz_type: quizResult.value.quizType,
+                                    cv_data: quizResult.value.quizType !== 'position' ? window.cvData : null
+                                })
+                            })
+                            .then(response => response.json())
+                            .then(quizData => {
+                                // Yükleniyor mesajını kapat
+                                Swal.close();
+                                
+                                if (quizData.success) {
+                                    // Mülakat ve sınav bilgilerini göster
+                                    document.getElementById('interviewCode').value = data.interview_code;
+                                    document.getElementById('interviewLink').value = window.location.origin + '/interview?code=' + data.interview_code;
+                                    document.getElementById('interviewDetails').classList.remove('hidden');
+                                    
+                                    // Sınav linkini göster
+                                    document.getElementById('quizLink').value = window.location.origin + quizData.quiz_url;
+                                    document.getElementById('quizLinkContainer').classList.remove('hidden');
+                                    
+                                    // Başarı mesajı göster
+                                    Swal.fire({
+                                        title: 'Mülakat ve Sınav Oluşturuldu!',
+                                        html: `
+                                            Mülakat ve sınav başarıyla oluşturuldu.<br><br>
+                                            <div class="text-left">
+                                                <strong>Mülakat Kodu:</strong> ${data.interview_code}<br>
+                                                <strong>Sınav Bağlantısı:</strong> <a href="${window.location.origin + quizData.quiz_url}" class="text-blue-600" target="_blank">${window.location.origin + quizData.quiz_url}</a>
+                                            </div>
+                                        `,
+                                        icon: 'success',
+                                        confirmButtonText: 'Tamam'
+                                    });
+                                } else {
+                                    // Mülakat oluşturuldu ama sınav oluşturulamadı
+                                    document.getElementById('interviewCode').value = data.interview_code;
+                                    document.getElementById('interviewLink').value = window.location.origin + '/interview?code=' + data.interview_code;
+                                    document.getElementById('interviewDetails').classList.remove('hidden');
+                                    
+                                    showError(quizData.error || 'Sınav oluşturulurken bir hata oluştu, ancak mülakat başarıyla oluşturuldu.');
+                                }
+                            })
+                            .catch(error => {
+                                Swal.close();
+                                console.error('Sınav oluşturma hatası:', error);
+                                showError('Sınav oluşturulurken bir hata oluştu, ancak mülakat başarıyla oluşturuldu.');
+                            });
+                        } else {
+                            // Sadece mülakat oluşturuldu, quiz iptal edildi
+                            document.getElementById('interviewCode').value = data.interview_code;
+                            document.getElementById('interviewLink').value = window.location.origin + '/interview?code=' + data.interview_code;
+                            document.getElementById('interviewDetails').classList.remove('hidden');
+                            
+                            Swal.fire({
+                                title: 'Mülakat Oluşturuldu',
+                                text: 'Sınav oluşturma iptal edildi, ancak mülakat başarıyla oluşturuldu.',
+                                icon: 'info',
+                                confirmButtonText: 'Tamam'
+                            });
+                        }
+                    });
+                } else {
+                    Swal.close();
+                    showError(data.error || 'Mülakat oluşturulurken bir hata oluştu.');
+                }
+            })
+            .catch(error => {
+                Swal.close();
+                console.error('Mülakat oluşturma hatası:', error);
+                showError('Mülakat oluşturulurken bir hata oluştu.');
+            });
+        }
 
         function addQuestion() {
             const questionsList = document.getElementById('questionsList');
@@ -372,149 +938,157 @@
             return questions.length > 0 ? questions : null;
         }
 
-        async function createInterview() {
+        function createInterview() {
+            // Form verilerini al
             const candidateName = document.getElementById('candidateName').value.trim();
-            const position = document.getElementById('position').value.trim();
-            const maxQuestions = document.getElementById('maxQuestions').value;
-            const customQuestions = getCustomQuestions();
-
+            const position = getSelectedPosition(); // Güncellenmiş pozisyon alma yöntemi
+            const maxQuestions = 5; // Sabit soru sayısı
+            
+            // Soruları al
+            let customQuestions = [];
+            if (document.getElementById('useCustomQuestions').checked) {
+                document.querySelectorAll('#questionsList .question-item textarea').forEach(textarea => {
+                    const questionText = textarea.value.trim();
+                    if (questionText) {
+                        customQuestions.push(questionText);
+                    }
+                });
+            }
+            
+            // Validasyon
             if (!candidateName || !position) {
-                showError('Lütfen tüm alanları doldurun');
+                showError('Lütfen aday adı ve pozisyon giriniz.');
                 return;
             }
-
-            // Yükleme durumunu göster
-            showLoading(true);
-
-            try {
-                const requestData = {
-                    candidate_name: candidateName,
-                    position: position,
-                    max_questions: parseInt(maxQuestions)
-                };
-                
-                if (customQuestions) {
-                    requestData.custom_questions = customQuestions;
-                }
-                
-                // CV verilerini ekle
-                if (window.cvData) {
-                    requestData.cv_data = window.cvData;
-                }
-                
-                const response = await fetch('/create_interview', {
+            
+            // CV verilerini al (eğer analiz edildiyse)
+            const cvData = window.cvData || {};
+            
+            // AJAX isteği gönder
+            fetch('/create_interview', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(requestData)
-                });
-
-                const data = await response.json();
+                body: JSON.stringify({
+                    candidate_name: candidateName,
+                    position: position,
+                    max_questions: maxQuestions,
+                    custom_questions: customQuestions,
+                    cv_data: cvData
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
                 if (data.success) {
-                    showResult(data);
+                    // Mülakat linkini ve kodunu görüntüle
+                    document.getElementById('interviewCode').value = data.interview_code;
+                    document.getElementById('interviewLink').value = window.location.origin + '/interview?code=' + data.interview_code;
+                    
+                    // Mülakat detaylarını göster
+                    document.getElementById('interviewDetails').classList.remove('hidden');
+                    
+                    // Saklı bilgiyi güncelle
+                    window.interviewCode = data.interview_code;
+                    
+                    // Quiz oluşturma seçeneği göster
+                    if (data.show_quiz_option) {
+                        Swal.fire({
+                            title: 'CV Analizi Tamamlandı',
+                            text: 'CV analizi başarıyla tamamlandı. Şimdi ne yapmak istersiniz?',
+                            icon: 'success',
+                            showCancelButton: true,
+                            showDenyButton: true,
+                            confirmButtonText: 'Mülakat Oluştur',
+                            denyButtonText: 'Quiz Oluştur',
+                            cancelButtonText: 'Sadece Analiz Göster'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // Mülakat oluştur
+                                createInterview();
+                            } else if (result.isDenied) {
+                                // Quiz oluşturma fonksiyonunu çağır
+                                createMultipleChoiceQuiz();
+                            }
+                        });
+                        
+                        // Seçenekleri ayrıca ekranda butonlar olarak da göster
+                        const actionButtons = document.createElement('div');
+                        actionButtons.className = 'mt-4 flex flex-wrap gap-3 justify-center';
+                        actionButtons.innerHTML = `
+                            <button class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-full flex items-center" id="createInterviewBtn">
+                                <i class="fas fa-user-tie mr-2"></i> Mülakat Oluştur
+                            </button>
+                            <button class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full flex items-center" id="createQuizBtn">
+                                <i class="fas fa-question-circle mr-2"></i> Çoktan Seçmeli Sınav Oluştur
+                            </button>
+                            <button class="bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-full flex items-center" id="useSuggestedQuestionsBtn">
+                                <i class="fas fa-clipboard-list mr-2"></i> Önerilen Soruları Kullan
+                            </button>
+                        `;
+                        
+                        // Eğer zaten eklenmişse, ekleme
+                        if (!document.getElementById('actionButtons')) {
+                            actionButtons.id = 'actionButtons';
+                            document.getElementById('cvSummaryContainer').appendChild(actionButtons);
+                            
+                            // Buton event listenerları
+                            document.getElementById('createInterviewBtn').addEventListener('click', createInterview);
+                            document.getElementById('createQuizBtn').addEventListener('click', createMultipleChoiceQuiz);
+                            document.getElementById('useSuggestedQuestionsBtn').addEventListener('click', function() {
+                                if (window.autoQuestions && window.autoQuestions.length > 0) {
+                                    useAutoGeneratedQuestions(window.autoQuestions);
+                                } else {
+                                    showError('Önerilen sorular bulunamadı');
+                                }
+                            });
+                        }
+                    }
+                    
+                    // Global olarak CV verilerini sakla
+                    window.cvData = data;
+                    
+                    // Başarı mesajı göster
+                    Swal.fire({
+                        title: 'Mülakat Oluşturuldu!',
+                        text: 'Mülakat başarıyla oluşturuldu. Kodu ve linki adaya iletebilirsiniz.',
+                        icon: 'success',
+                        confirmButtonText: 'Tamam'
+                    });
                 } else {
-                    showError(data.error || 'Mülakat oluşturulurken bir hata oluştu');
+                    showError(data.error || 'Mülakat oluşturulurken bir hata oluştu.');
                 }
-            } catch (error) {
-                showError('Bir hata oluştu');
-            } finally {
-                showLoading(false);
-            }
+            })
+            .catch(error => {
+                console.error('Mülakat oluşturma hatası:', error);
+                showError('Mülakat oluşturulurken bir hata oluştu.');
+            });
         }
-
-        function showResult(data) {
-            const resultBox = document.getElementById('resultBox');
-            const errorBox = document.getElementById('errorBox');
-            const interviewCode = document.getElementById('interviewCode');
-            const interviewLink = document.getElementById('interviewLink');
-            const questionsList = document.getElementById('resultsQuestionsList');
-
-            errorBox.classList.add('hidden');
-            resultBox.classList.remove('hidden');
-
-            interviewCode.value = data.code;
-            interviewLink.value = data.urls.main;
-
-            // Soruları göster
-            questionsList.innerHTML = '';
-            if (data.questions && data.questions.length > 0) {
-                data.questions.forEach((question, index) => {
-                    const questionDiv = document.createElement('div');
-                    questionDiv.className = 'p-3 bg-white rounded-lg shadow-sm border border-purple-100 mb-2';
-                    questionDiv.innerHTML = `
-                        <div class="flex items-center">
-                            <span class="text-teal-600 font-medium mr-2">${index + 1}.</span>
-                            <p class="text-gray-700">${question}</p>
-                        </div>
-                    `;
-                    questionsList.appendChild(questionDiv);
-                });
-            } else {
-                questionsList.innerHTML = '<p class="text-gray-500 italic">Sorular yüklenemedi</p>';
-            }
-
-            // Başarı mesajı göster
-            showMessage('Mülakat başarıyla oluşturuldu!', 'success');
-        }
-
-        function showLoading(show) {
-            const createButton = document.querySelector('.gradient-btn');
-            if (show) {
-                createButton.disabled = true;
-                createButton.innerHTML = `
-                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Mülakat Oluşturuluyor...
-                `;
-            } else {
-                createButton.disabled = false;
-                createButton.innerHTML = `
-                    <i class="fas fa-plus-circle text-2xl mr-2"></i>
-                    <span>Mülakat Oluştur</span>
-                `;
-            }
-        }
-
-        function showMessage(message, type = 'info') {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 ${
-                type === 'success' ? 'bg-green-500' :
-                type === 'error' ? 'bg-red-500' :
-                'bg-blue-500'
-            } text-white`;
-            messageDiv.textContent = message;
-            document.body.appendChild(messageDiv);
+        
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            element.select();
+            document.execCommand('copy');
+            
+            // Kopyalandı bildirimi
+            const tooltip = document.createElement('div');
+            tooltip.textContent = 'Kopyalandı!';
+            tooltip.className = 'copy-tooltip';
+            document.body.appendChild(tooltip);
             
             setTimeout(() => {
-                messageDiv.remove();
-            }, 3000);
+                document.body.removeChild(tooltip);
+            }, 1500);
         }
 
         function showError(message) {
             const errorBox = document.getElementById('errorBox');
             errorBox.textContent = message;
             errorBox.classList.remove('hidden');
-            document.getElementById('resultBox').classList.add('hidden');
-        }
-
-        async function copyToClipboard(elementId) {
-            const element = document.getElementById(elementId);
-            try {
-                await navigator.clipboard.writeText(element.value);
-                const button = element.nextElementSibling;
-                const icon = button.querySelector('i');
-                
-                // Kopya işlemi başarılı
-                icon.className = 'fas fa-check text-green-500';
-                setTimeout(() => {
-                    icon.className = 'fas fa-copy';
-                }, 2000);
-            } catch (err) {
-                console.error('Kopyalama işlemi başarısız: ', err);
-            }
+            
+            setTimeout(() => {
+                errorBox.classList.add('hidden');
+            }, 5000);
         }
 
         async function startInterview() {
@@ -537,118 +1111,255 @@
         });
 
         // CV Yükleme ve Analiz İşlemleri
-        document.getElementById('cvUpload').addEventListener('change', handleCVUpload);
-        
-        function handleCVUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
+        document.getElementById('cvUpload').addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name || 'CV dosyasını sürükleyin veya seçin';
+            document.getElementById('fileNameDisplay').textContent = fileName;
             
-            // Dosya adını göster
-            document.getElementById('fileNameDisplay').textContent = file.name;
-            
-            // Dosya tipini kontrol et
-            const validTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/msword'];
-            if (!validTypes.includes(file.type)) {
-                showMessage('Lütfen PDF veya DOCX formatında bir dosya yükleyin.', 'error');
-                return;
+            if (e.target.files.length > 0) {
+                analyzeCv(e.target.files[0]);
             }
-            
-            // CV analizi başlat
-            analyzeCVFile(file);
-        }
+        });
         
-        async function analyzeCVFile(file) {
-            try {
-                // Analiz durumunu göster
-                document.getElementById('cvAnalysisStatus').classList.remove('hidden');
-                document.getElementById('cvSummaryContainer').classList.add('hidden');
-                
-                // Pozisyon bilgisini al
-                const position = document.getElementById('position').value.trim();
-                
+        function analyzeCv(file) {
                 const formData = new FormData();
                 formData.append('cv_file', file);
-                if (position) {
+            
+            // Pozisyon değerini al
+            const position = document.getElementById('position').value.trim();
                     formData.append('position', position);
-                }
+            
+            // Analiz durumunu göster
+            document.getElementById('cvAnalysisStatus').classList.remove('hidden');
+            
+            fetch('/analyze_cv', {
+                    method: 'POST',
+                    body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Konsola veriyi yazdır (hata ayıklama için)
+                console.log("CV analizi cevabı:", data);
                 
-                console.log("CV analizi başlatılıyor...");
+                // Analiz durumunu gizle
+                document.getElementById('cvAnalysisStatus').classList.add('hidden');
                 
-                // CV dosyasını sunucuya yükle ve analiz et
-                try {
-                    const response = await fetch('/analyze_cv', {
-                        method: 'POST',
-                        body: formData
+                if (data.needs_position) {
+                    // Pozisyon girişi isteğini göster
+                    Swal.fire({
+                        title: 'Pozisyon Belirtin',
+                        text: data.message,
+                        input: 'text',
+                        inputPlaceholder: 'Pozisyon adını girin',
+                        showCancelButton: true,
+                        confirmButtonText: 'Analiz Et',
+                        cancelButtonText: 'İptal',
+                        inputValidator: (value) => {
+                            if (!value) {
+                                return 'Pozisyon adını girmelisiniz!';
+                            }
+                        }
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Pozisyon bilgisini güncelle ve yeniden analiz et
+                            document.getElementById('position').value = result.value;
+                            analyzeCv(file);
+                        }
                     });
-                    
-                    // Yanıtı kontrol et
-                    if (!response.ok) {
-                        const errorText = await response.text();
-                        console.error('Sunucu yanıtı başarısız:', response.status, errorText);
-                        throw new Error(`CV analizi sırasında bir hata oluştu (${response.status}): ${errorText}`);
-                    }
-                    
-                    // JSON yanıtını parse et
-                    const result = await response.json();
-                    console.log("CV analiz sonucu:", result);
-                    
-                    if (result.success) {
-                        // CV analiz sonucunu göster
-                        document.getElementById('cvAnalysisStatus').classList.add('hidden');
-                        document.getElementById('cvSummaryContainer').classList.remove('hidden');
-                        
-                        // CV verilerini sakla
-                        window.cvData = result.cv_data;
-                        
-                        // CV özetini oluştur
-                        displayCVSummary(result.cv_data);
-                        
-                        // Kişisel bilgileri forma doldur
-                        populateFormFromCV(result.cv_data);
-                        
-                        // Pozisyon uyum analizini göster
-                        analyzePositionMatch(result.cv_data);
-                        
-                        // Otomatik sorular oluştur
-                        displayGeneratedQuestions(result.cv_data);
-                        
-                        // Başarı mesajı göster
-                        showMessage('CV başarıyla analiz edildi', 'success');
-                    } else {
-                        console.error('CV analiz hatası:', result.error);
-                        throw new Error(result.error || 'CV analizi başarısız oldu');
-                    }
-                } catch (fetchError) {
-                    console.error('Fetch işlemi hatası:', fetchError);
-                    throw fetchError;
+                    return;
                 }
-            } catch (error) {
+                
+                if (data.success) {
+                    // CV özeti konteynerini görünür yap
+                    document.getElementById('cvSummaryContainer').classList.remove('hidden');
+                    
+                    // CV özeti göster
+                    displayAnalysisResults(data);
+                    
+                    // CV verilerini global değişkene kaydet
+                    window.cvData = data;
+                    
+                    // Eğer generatedQuestions varsa, bunları autoQuestions olarak işle
+                    if (data.generated_questions && data.generated_questions.length > 0) {
+                        window.autoQuestions = data.generated_questions;
+                        
+                        // Otomatik oluşturulan soruları göster
+                        const cvBasedQuestions = document.getElementById('cvBasedQuestions');
+                        cvBasedQuestions.innerHTML = '';
+                        
+                        data.generated_questions.forEach(question => {
+                            const li = document.createElement('li');
+                            li.className = 'text-gray-700';
+                            li.textContent = question;
+                            cvBasedQuestions.appendChild(li);
+                        });
+                        
+                        // CV tabanlı sorular konteynerini görünür yap
+                        document.getElementById('cvBasedQuestionsContainer').classList.remove('hidden');
+                    }
+                    
+                    // Uyumluluk analizini göster (eğer pozisyon belirtilmişse)
+                    if (position) {
+                        analyzePositionMatch(data);
+                    }
+                    
+                    // Quiz oluşturma seçeneği göster
+                    if (data.show_quiz_option) {
+                        Swal.fire({
+                            title: 'CV Analizi Tamamlandı',
+                            text: 'CV analizi başarıyla tamamlandı. Şimdi ne yapmak istersiniz?',
+                            icon: 'success',
+                            showCancelButton: true,
+                            showDenyButton: true,
+                            confirmButtonText: 'Mülakat Oluştur',
+                            denyButtonText: 'Quiz Oluştur',
+                            cancelButtonText: 'Sadece Analiz Göster'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // Mülakat oluştur
+                                createInterview();
+                            } else if (result.isDenied) {
+                                // Quiz oluşturma fonksiyonunu çağır
+                                createMultipleChoiceQuiz();
+                            }
+                        });
+                        
+                        // Seçenekleri ayrıca ekranda butonlar olarak da göster
+                        const actionButtons = document.createElement('div');
+                        actionButtons.className = 'mt-4 flex flex-wrap gap-3 justify-center';
+                        actionButtons.innerHTML = `
+                            <button class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-full flex items-center" id="createInterviewBtn">
+                                <i class="fas fa-user-tie mr-2"></i> Mülakat Oluştur
+                            </button>
+                            <button class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full flex items-center" id="createQuizBtn">
+                                <i class="fas fa-question-circle mr-2"></i> Çoktan Seçmeli Sınav Oluştur
+                            </button>
+                            <button class="bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-full flex items-center" id="useSuggestedQuestionsBtn">
+                                <i class="fas fa-clipboard-list mr-2"></i> Önerilen Soruları Kullan
+                            </button>
+                        `;
+                        
+                        // Eğer zaten eklenmişse, ekleme
+                        if (!document.getElementById('actionButtons')) {
+                            actionButtons.id = 'actionButtons';
+                            document.getElementById('cvSummaryContainer').appendChild(actionButtons);
+                            
+                            // Buton event listenerları
+                            document.getElementById('createInterviewBtn').addEventListener('click', createInterview);
+                            document.getElementById('createQuizBtn').addEventListener('click', createMultipleChoiceQuiz);
+                            document.getElementById('useSuggestedQuestionsBtn').addEventListener('click', function() {
+                                if (window.autoQuestions && window.autoQuestions.length > 0) {
+                                    useAutoGeneratedQuestions(window.autoQuestions);
+                                } else {
+                                    showError('Önerilen sorular bulunamadı');
+                                }
+                            });
+                        }
+                    }
+                } else {
+                    // Hata mesajı göster
+                    showError(data.error || 'CV analiz edilirken bir hata oluştu.');
+                }
+            })
+            .catch(error => {
                 console.error('CV analiz hatası:', error);
                 document.getElementById('cvAnalysisStatus').classList.add('hidden');
-                showMessage(error.message || 'CV analizi sırasında beklenmeyen bir hata oluştu', 'error');
-            }
+                showError('CV analizi sırasında bir hata oluştu.');
+            });
         }
         
-        function displayCVSummary(cvData) {
+        // CV analiz sonuçlarını göster
+        function displayAnalysisResults(data) {
+            // Analiz sonucunu göster
+            document.getElementById('cvSummaryContainer').classList.remove('hidden');
+
+            // CV özeti göster
+            displayCvSummary(data);
+            
+            // Form'a veri doldur
+            populateFormFromCV(data);
+            
+            // Pozisyon uyumluluğunu analiz et
+            analyzePositionMatch(data);
+            
+            // Güçlü yönler ve geliştirilecek alanları göster (eğer varsa)
+            if (data.strengths && data.strengths.length > 0 || 
+                data.areas_to_improve && data.areas_to_improve.length > 0) {
+                
+                const strengthsHTML = `
+                    <div class="mb-3">
+                        <p class="font-medium text-purple-900">Güçlü Yönler</p>
+                        <ul class="list-disc pl-5 mt-1 text-sm">
+                            ${(data.strengths || []).map(strength => `<li>${strength}</li>`).join('')}
+                        </ul>
+                    </div>
+                    
+                    ${data.areas_to_improve && data.areas_to_improve.length > 0 ? `
+                    <div class="mb-3">
+                        <p class="font-medium text-purple-900">Geliştirilecek Alanlar</p>
+                        <ul class="list-disc pl-5 mt-1 text-sm">
+                            ${data.areas_to_improve.map(area => `<li>${area}</li>`).join('')}
+                        </ul>
+                    </div>
+                    ` : ''}
+                `;
+                
+                // Özel bir alan oluştur veya mevcut bir alana ekle
+                if (document.getElementById('strengthsAnalysis')) {
+                    document.getElementById('strengthsAnalysis').innerHTML = strengthsHTML;
+                } else {
+                    const strengthsDiv = document.createElement('div');
+                    strengthsDiv.id = 'strengthsAnalysis';
+                    strengthsDiv.innerHTML = strengthsHTML;
+                    document.getElementById('cvSummary').appendChild(strengthsDiv);
+                }
+            }
+            
+            // Global olarak CV verilerini sakla
+            window.cvData = data;
+        }
+
+        // Mülakat detayları
+        function displayInterviewDetails(data) {
+            const detailsSection = document.getElementById('interviewDetails');
+            if (!detailsSection) return;
+            
+            detailsSection.innerHTML = `
+                <h2 class="text-lg font-semibold mb-2">Mülakat Detayları</h2>
+                <p><strong>Mülakat Kodu</strong><br>${data.interview_code || 'Kod oluşturuluyor...'}</p>
+            `;
+            
+            // Mülakat kodunu gizli input'a da ekle
+            if (document.getElementById('interviewCode')) {
+                document.getElementById('interviewCode').value = data.interview_code || '';
+            }
+            
+            // Detay bölümünü görünür yap
+            detailsSection.classList.remove('hidden');
+        }
+
+        function displayCvSummary(data) {
+            // CV özeti konteynerini görünür yap
+            document.getElementById('cvSummaryContainer').classList.remove('hidden');
+            
             const summaryContainer = document.getElementById('cvSummary');
             summaryContainer.innerHTML = '';
             
             // Kişisel bilgiler
-            const personalInfo = cvData.personal_info || {};
+            const personalInfo = data.personal_info || {};
             const fullName = personalInfo.name || '';
             const email = personalInfo.email || '';
             const phone = personalInfo.phone || '';
             const location = personalInfo.location || '';
             
             // Özet
-            const summary = cvData.summary || 'Özet bilgisi bulunamadı';
+            const summary = data.summary || 'Özet bilgisi bulunamadı';
             
             // Deneyim özeti
-            const experience = cvData.experience || [];
-            const skills = cvData.skills || [];
-            const education = cvData.education || [];
-            const languages = cvData.languages || [];
-            const certificates = cvData.certificates || [];
+            const experience = data.experience || [];
+            const skills = data.skills || [];
+            const education = data.education || [];
+            const languages = data.languages || [];
+            const certificates = data.certificates || [];
             
             // Özet bilgileri oluştur
             const summaryHTML = `
@@ -664,7 +1375,7 @@
                 
                 <div class="mb-3">
                     <p class="font-medium text-purple-900">Profil Özeti</p>
-                    <p class="text-sm mt-1">${cvData.profile_summary || summary}</p>
+                    <p class="text-sm mt-1">${data.profile_summary || summary}</p>
                 </div>
                 
                 <div class="mb-3">
@@ -722,6 +1433,45 @@
             `;
             
             summaryContainer.innerHTML = summaryHTML;
+            
+            // CV içeriğine göre formu doldur
+            if (fullName) {
+                document.getElementById('candidateName').value = fullName;
+            }
+            
+            // Pozisyon bilgisini doldur (eğer daha önce bir değer girildiyse değiştirme)
+            const positionInput = document.getElementById('position');
+            const positionSelector = document.getElementById('position-selector');
+
+            if ((!positionInput.value || positionInput.value === '') && cvData.experience && cvData.experience.length > 0) {
+                const detectedPosition = cvData.experience[0].title || '';
+                
+                // Önce dropdown listesinde bu pozisyon var mı kontrol et
+                let positionFound = false;
+                for (let i = 0; i < positionSelector.options.length; i++) {
+                    if (positionSelector.options[i].value.toLowerCase() === detectedPosition.toLowerCase()) {
+                        positionSelector.selectedIndex = i;
+                        positionInput.value = detectedPosition;
+                        positionFound = true;
+                        break;
+                    }
+                }
+                
+                // Eğer pozisyon dropdown'da bulunamadıysa, "Diğer" seçeneğini seç ve manuel giriş yap
+                if (!positionFound && detectedPosition) {
+                    // "Diğer" seçeneğini seç
+                    for (let i = 0; i < positionSelector.options.length; i++) {
+                        if (positionSelector.options[i].value === 'custom') {
+                            positionSelector.selectedIndex = i;
+                            break;
+                        }
+                    }
+                    
+                    // Manuel giriş alanını göster ve değeri ata
+                    document.getElementById('custom-position-div').classList.remove('hidden');
+                    positionInput.value = detectedPosition;
+                }
+            }
         }
         
         function populateFormFromCV(cvData) {
@@ -740,47 +1490,81 @@
             }
         }
         
-        function analyzePositionMatch(cvData) {
-            const positionInput = document.getElementById('position').value.trim();
-            if (!positionInput) {
+        function analyzePositionMatch(data) {
+            const position = getSelectedPosition(); // Güncellenmiş pozisyon alma yöntemi
+            
+            if (!position) {
                 document.getElementById('matchAnalysis').innerHTML = '<p class="text-amber-600">Pozisyon adını girin, bir uyumluluk analizi yapmak için.</p>';
                 return;
             }
             
-            const skills = cvData.skills || [];
-            const experience = cvData.experience || [];
+            // Position match özellikle kontrol edilebilir
+            if (data.position_match && typeof data.position_match.match_percentage === 'number') {
+                displayPositionMatchFromAPI(data.position_match, position);
+                return;
+            }
             
-            // Pozisyon adındaki anahtar kelimeleri çıkar
-            const positionKeywords = positionInput.toLowerCase().split(/\s+/).filter(word => word.length > 3);
+            // Basit bir pozisyon eşleşmesi hesaplayalım
+            const skills = data.skills || [];
+            const allSkillsText = skills.join(' ').toLowerCase();
             
-            // Becerilerde uyuşma sayısını hesapla
+            const positionKeywords = position.toLowerCase().split(/\s+/).filter(word => word.length > 3);
+            
+            // Eğer pozisyon anahtar kelimeleri bulunamazsa, varsayılan anahtar kelimeler kullan
+            if (positionKeywords.length === 0) {
+                positionKeywords.push('developer', 'engineer', 'specialist');
+            }
+            
+            // Pozisyonla eşleşen beceriler
             const matchingSkills = skills.filter(skill => 
                 positionKeywords.some(keyword => skill.toLowerCase().includes(keyword))
             );
             
-            // Deneyimlerde pozisyonla ilgili olanları bul
-            const relevantExperience = experience.filter(exp => 
-                positionKeywords.some(keyword => 
-                    (exp.title || '').toLowerCase().includes(keyword) || 
-                    (exp.description || '').toLowerCase().includes(keyword)
-                )
-            );
+            // Uyum yüzdesi
+            let matchPercentage = 0;
             
-            // Uyumluluk yüzdesi hesapla
-            const skillMatchPercentage = skills.length > 0 ? Math.round((matchingSkills.length / skills.length) * 100) : 0;
+            // Eğer CV'deki herhangi bir beceri pozisyon ile eşleşiyorsa, temel bir uyum vardır
+            if (positionKeywords.some(keyword => allSkillsText.includes(keyword))) {
+                matchPercentage = 50; // Temel uyum
+                
+                // Eşleşen beceri sayısına göre uyum yüzdesini artıralım
+                if (matchingSkills.length > 0) {
+                    matchPercentage += Math.min(50, matchingSkills.length * 10); // Her eşleşen beceri %10 ekler, maksimum %100
+                }
+            } else {
+                // Basit eşleşme: Deneyimdeki anahtar kelimeleri kontrol et
+                const experiences = data.experience || [];
+                const experienceTexts = experiences.map(exp => `${exp.title} ${exp.company} ${exp.description}`).join(' ').toLowerCase();
+                
+                if (positionKeywords.some(keyword => 
+                    experienceTexts.includes(keyword)
+                )) {
+                    matchPercentage = 30; // Deneyimde bir eşleşme var
+                }
+            }
             
-            // Sonucu göster
+            // Eşleşmeyi göster
+            displayPositionMatch(matchPercentage, matchingSkills, positionKeywords);
+        }
+        
+        function displayPositionMatchFromAPI(positionMatch, position) {
+            // API'den gelen pozisyon uyum bilgisini göster
+            const matchPercentage = positionMatch.match_percentage || 0;
+            const matchingSkills = positionMatch.matching_skills || [];
+            const missingSkills = positionMatch.missing_skills || [];
+            const recommendations = positionMatch.recommendations || [];
+            
             let matchHTML = `
                 <div class="p-3 bg-white rounded-lg border border-purple-100">
                     <div class="flex items-center justify-between mb-2">
                         <p class="font-medium">Pozisyon Uyumu</p>
                         <div class="flex items-center">
                             <div class="w-24 h-3 bg-gray-200 rounded-full mr-2">
-                                <div class="h-full rounded-full ${skillMatchPercentage > 70 ? 'bg-green-500' : skillMatchPercentage > 40 ? 'bg-yellow-500' : 'bg-red-500'}" 
-                                     style="width: ${skillMatchPercentage}%"></div>
+                                <div class="h-full rounded-full ${matchPercentage > 70 ? 'bg-green-500' : matchPercentage > 40 ? 'bg-yellow-500' : 'bg-red-500'}" 
+                                     style="width: ${matchPercentage}%"></div>
                             </div>
-                            <span class="text-sm font-medium ${skillMatchPercentage > 70 ? 'text-green-700' : skillMatchPercentage > 40 ? 'text-yellow-700' : 'text-red-700'}">
-                                %${skillMatchPercentage}
+                            <span class="text-sm font-medium ${matchPercentage > 70 ? 'text-green-700' : matchPercentage > 40 ? 'text-yellow-700' : 'text-red-700'}">
+                                %${matchPercentage}
                             </span>
                         </div>
                     </div>
@@ -791,18 +1575,27 @@
                             ${matchingSkills.length > 0 ? matchingSkills.join(', ') : 'Eşleşen beceri bulunamadı.'}
                         </p>
                         
+                        ${missingSkills.length > 0 ? `
                         <p class="mt-1">
-                            <span class="font-medium">İlgili Deneyim:</span> 
-                            ${relevantExperience.length > 0 ? 
-                                relevantExperience.map(exp => `${exp.title} - ${exp.company || ''}`).join(', ') : 
-                                'İlgili deneyim bulunamadı.'}
+                            <span class="font-medium">Eksik Beceriler:</span> 
+                            ${missingSkills.join(', ')}
                         </p>
+                        ` : ''}
                         
-                        <p class="mt-2 ${skillMatchPercentage > 70 ? 'text-green-700' : skillMatchPercentage > 40 ? 'text-yellow-700' : 'text-red-700'}">
-                            <i class="fas ${skillMatchPercentage > 70 ? 'fa-check-circle' : skillMatchPercentage > 40 ? 'fa-info-circle' : 'fa-exclamation-circle'} mr-1"></i>
-                            ${skillMatchPercentage > 70 ? 
+                        ${recommendations.length > 0 ? `
+                        <p class="mt-1">
+                            <span class="font-medium">Öneriler:</span>
+                            <ul class="list-disc ml-5 mt-1">
+                                ${recommendations.map(rec => `<li>${rec}</li>`).join('')}
+                            </ul>
+                        </p>
+                        ` : ''}
+                        
+                        <p class="mt-2 ${matchPercentage > 70 ? 'text-green-700' : matchPercentage > 40 ? 'text-yellow-700' : 'text-red-700'}">
+                            <i class="fas ${matchPercentage > 70 ? 'fa-check-circle' : matchPercentage > 40 ? 'fa-info-circle' : 'fa-exclamation-circle'} mr-1"></i>
+                            ${matchPercentage > 70 ? 
                                 'Aday pozisyon için çok uygun görünüyor.' : 
-                                skillMatchPercentage > 40 ? 
+                                matchPercentage > 40 ? 
                                 'Aday pozisyon için potansiyel uygunlukta.' : 
                                 'Aday pozisyon için uygunluğu düşük olabilir.'}
                         </p>
@@ -812,204 +1605,146 @@
             
             document.getElementById('matchAnalysis').innerHTML = matchHTML;
         }
-        
-        function displayGeneratedQuestions(cvData) {
-            const questionsContainer = document.getElementById('cvBasedQuestions');
-            questionsContainer.innerHTML = '';
-            
-            // CV verilerinden oluşturulan soruları göster
-            const generatedQuestions = cvData.generated_questions || [];
-            
-            if (generatedQuestions.length > 0) {
-                generatedQuestions.forEach((question, index) => {
-                    const li = document.createElement('li');
-                    li.className = 'text-gray-700';
-                    li.textContent = question;
-                    questionsContainer.appendChild(li);
-                });
-                
-                // Soruları global olarak sakla
-                window.generatedQuestions = generatedQuestions;
-            } else {
-                // Otomatik sorular oluşturamıyorsa, manuel oluşturma yöntemini kullan
-                generateQuestionsFromCV(cvData);
-            }
-            
-            // "Bu Soruları Kullan" butonuna event listener ekle (sadece ilk kez)
-            if (!document.getElementById('useAutoQuestionsBtn').hasListener) {
-                document.getElementById('useAutoQuestionsBtn').addEventListener('click', function() {
-                    if (!window.generatedQuestions || window.generatedQuestions.length === 0) return;
-                    
-                    // Özel sorular checkbox'ı aktifleştir
-                    document.getElementById('useCustomQuestions').checked = true;
-                    document.getElementById('customQuestionsContainer').classList.remove('hidden');
-                    
-                    // Mevcut soruları temizle
-                    document.getElementById('questionsList').innerHTML = '';
-                    questionCounter = 1;
-                    
-                    // Otomatik oluşturulan soruları ekle
-                    window.generatedQuestions.forEach(question => {
-                        const questionsList = document.getElementById('questionsList');
-                        const questionItem = document.createElement('div');
-                        questionItem.className = 'question-item';
-                        questionItem.innerHTML = `
-                            <div class="flex items-center">
-                                <span class="question-count">${questionCounter}</span>
-                                <textarea 
-                                    class="w-full px-3 py-2 rounded input-field text-gray-700 pr-10" 
-                                    rows="2"
-                                >${question}</textarea>
-                                <span class="remove-question" onclick="removeQuestion(this)">
-                                    <i class="fas fa-times"></i>
-                                </span>
-                            </div>
-                        `;
-                        questionsList.appendChild(questionItem);
-                        questionCounter++;
-                    });
-                    
-                    // Soru kısmına scrolla
-                    document.getElementById('customQuestionsContainer').scrollIntoView({ behavior: 'smooth' });
-                    
-                    showMessage('Otomatik sorular eklendi', 'success');
-                });
-                document.getElementById('useAutoQuestionsBtn').hasListener = true;
-            }
-            
-            // "Mülakata Devam Et" butonuna event listener ekle (sadece ilk kez)
-            if (!document.getElementById('continueToInterviewBtn').hasListener) {
-                document.getElementById('continueToInterviewBtn').addEventListener('click', function() {
-                    // Eğer özel sorular kullanıldıysa onları, kullanılmadıysa otomatik soruları kullan
-                    let questionsToUse;
-                    if (document.getElementById('useCustomQuestions').checked) {
-                        // Özel soruları al
-                        const textareas = document.querySelectorAll('#questionsList textarea');
-                        questionsToUse = Array.from(textareas).map(textarea => textarea.value.trim()).filter(val => val);
-                    } else {
-                        // Otomatik soruları kullan
-                        questionsToUse = window.generatedQuestions || [];
-                    }
-                    
-                    // Mülakat oluştur ve CV verilerini ekle
-                    createInterviewWithQuestionsAndCV(questionsToUse);
-                });
-                document.getElementById('continueToInterviewBtn').hasListener = true;
-            }
-        }
-        
-        // CV verilerinden manuel soru oluşturma fonksiyonu
-        function generateQuestionsFromCV(cvData) {
+
+        // Çoktan seçmeli quiz oluşturma
+        function createQuizWithOptions(quizType, questionCount) {
             const position = document.getElementById('position').value.trim();
-            const skills = cvData.skills || [];
-            const experience = cvData.experience || [];
-            const education = cvData.education || [];
-            const languages = cvData.languages || [];
+            const interviewCode = document.getElementById('interviewCode').value.trim();
             
-            let questions = [];
-            
-            // Genel sorular
-            questions.push(`${cvData.personal_info?.name || 'Aday'}, bize kendinizden ve kariyer hedeflerinizden bahseder misiniz?`);
-            questions.push(`${position} pozisyonuna neden başvurdunuz?`);
-            
-            // Beceri soruları
-            if (skills.length > 0) {
-                const topSkills = skills.slice(0, 3);
-                topSkills.forEach(skill => {
-                    questions.push(`${skill} konusundaki deneyimlerinizi ve projelerinizi detaylandırabilir misiniz?`);
-                });
-            }
-            
-            // Deneyim soruları
-            if (experience.length > 0) {
-                const latestExp = experience[0];
-                if (latestExp.title && latestExp.company) {
-                    questions.push(`${latestExp.company}'da ${latestExp.title} olarak çalışırken karşılaştığınız en büyük zorluk neydi ve bunu nasıl aştınız?`);
-                }
-                
-                if (experience.length > 1) {
-                    questions.push("Farklı şirketlerdeki deneyimlerinizi karşılaştırdığınızda, size en çok katkı sağlayan hangisiydi ve neden?");
-                }
-            }
-            
-            // Eğitim soruları
-            if (education.length > 0 && education[0].degree && education[0].institution) {
-                questions.push(`${education[0].institution}'daki eğitiminiz sırasında edindiğiniz hangi bilgiler şu anki kariyerinizde en çok işinize yarıyor?`);
-            }
-            
-            // Yabancı dil soruları
-            if (languages.length > 0 && languages.some(lang => lang.toLowerCase() !== 'türkçe' && lang.toLowerCase() !== 'turkish')) {
-                const foreignLanguages = languages.filter(lang => lang.toLowerCase() !== 'türkçe' && lang.toLowerCase() !== 'turkish');
-                if (foreignLanguages.length > 0) {
-                    questions.push(`${foreignLanguages.join(', ')} dillerindeki yetkinliğinizi nasıl değerlendirirsiniz ve bu dilleri iş ortamında nasıl kullanıyorsunuz?`);
-                }
-            }
-            
-            // Genel mülakat soruları
-            questions.push("Takım çalışması hakkında neler düşünüyorsunuz? Daha önce takım çalışmasında yaşadığınız zorluklar nelerdi?");
-            questions.push("Baskı altında çalışma konusunda nasıl bir yaklaşımınız var?");
-            questions.push("Güçlü yönleriniz ve geliştirmeye açık alanlarınız nelerdir?");
-            questions.push("Kariyerinizde 5 yıl sonra kendinizi nerede görüyorsunuz?");
-            
-            // Maksimum 10 soru göster
-            if (questions.length > 10) {
-                questions = questions.slice(0, 10);
-            }
-            
-            // Soruları UI'da göster
-            const questionsContainer = document.getElementById('cvBasedQuestions');
-            questions.forEach((question, index) => {
-                const li = document.createElement('li');
-                li.className = 'text-gray-700';
-                li.textContent = question;
-                questionsContainer.appendChild(li);
-            });
-            
-            // Soruları global olarak sakla
-            window.generatedQuestions = questions;
-        }
-        
-        async function createInterviewWithQuestionsAndCV(questions) {
-            const candidateName = document.getElementById('candidateName').value.trim();
-            const position = document.getElementById('position').value.trim();
-            
-            if (!candidateName || !position) {
-                showError('Lütfen aday adını ve pozisyonu doldurun');
+            if (!position) {
+                showError('Lütfen pozisyon bilgisi giriniz.');
                 return;
             }
             
-            // Yükleme durumunu göster
-            showLoading(true);
+            if (quizType !== 'position' && !window.cvData) {
+                showError('CV yüklenmeden CV bazlı soru oluşturulamaz.');
+                return;
+            }
             
-            try {
-                const requestData = {
-                    candidate_name: candidateName,
-                    position: position,
-                    custom_questions: questions,
-                    cv_data: window.cvData || {}
-                };
-                
-                const response = await fetch('/create_interview', {
+            // Yükleniyor göster
+            Swal.fire({
+                title: 'Sorular Oluşturuluyor',
+                text: 'Lütfen bekleyin, bu işlem biraz zaman alabilir...',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+            
+            // Quiz oluşturma isteği
+            fetch('/create_multiple_choice', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(requestData)
-                });
-                
-                const data = await response.json();
+                body: JSON.stringify({
+                    position: position,
+                    question_count: questionCount,
+                    interview_code: interviewCode,
+                    quiz_type: quizType,
+                    cv_data: quizType !== 'position' ? window.cvData : null
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Yükleniyor mesajını kapat
+                Swal.close();
                 
                 if (data.success) {
-                    showResult(data);
+                    // Sınav linkini göster
+                    if (document.getElementById('quizLink')) {
+                        document.getElementById('quizLink').value = window.location.origin + data.quiz_url;
+                        document.getElementById('quizLinkContainer').classList.remove('hidden');
+                    }
+                    
+                    // Başarı mesajı göster
+                    Swal.fire({
+                        title: 'Sınav Oluşturuldu!',
+                        html: `
+                            ${data.message}<br><br>
+                            <div class="text-left">
+                                <strong>Sınava erişim:</strong><br>
+                                - Sınav bağlantısı: <a href="${window.location.origin + data.quiz_url}" class="text-blue-600" target="_blank">${window.location.origin + data.quiz_url}</a><br>
+                                - Veya <strong>"${interviewCode}"</strong> kodunu kullanarak quiz sayfasına giriş yapabilir.
+                            </div>
+                        `,
+                        icon: 'success',
+                        confirmButtonText: 'Tamam'
+                    });
                 } else {
-                    showError(data.error || 'Mülakat oluşturulurken bir hata oluştu');
+                    showError(data.error || 'Sınav oluşturulurken bir hata oluştu.');
                 }
-            } catch (error) {
-                console.error('Mülakat oluşturma hatası:', error);
-                showError('Bir hata oluştu: ' + error.message);
-            } finally {
-                showLoading(false);
+            })
+            .catch(error => {
+                Swal.close();
+                console.error('Sınav oluşturma hatası:', error);
+                showError('Sınav oluşturulurken bir hata oluştu.');
+            });
+        }
+
+        // Formu göndermeden önce pozisyon değerini kontrol edelim
+        function getSelectedPosition() {
+            if (positionSelector.value === 'custom') {
+                return positionInput.value.trim();
             }
+            return positionSelector.value;
+        }
+
+        // Mevcut form gönderme kodunu güncelle
+        document.getElementById('createInterviewForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const candidateName = document.getElementById('candidateName').value.trim();
+            const position = getSelectedPosition();
+            
+            if (!candidateName || !position) {
+                // ... existing validation code ...
+            }
+            
+            // ... existing form submission code ...
+        });
+
+        // Pozisyon eşleşmesini ekranda görüntüle
+        function displayPositionMatch(matchPercentage, matchingSkills, positionKeywords) {
+            // Sonucu göster
+            let matchHTML = `
+                <div class="p-3 bg-white rounded-lg border border-purple-100">
+                    <div class="flex items-center justify-between mb-2">
+                        <p class="font-medium">Pozisyon Uyumu</p>
+                        <div class="flex items-center">
+                            <div class="w-24 h-3 bg-gray-200 rounded-full mr-2">
+                                <div class="h-full rounded-full ${matchPercentage > 70 ? 'bg-green-500' : matchPercentage > 40 ? 'bg-yellow-500' : 'bg-red-500'}" 
+                                    style="width: ${matchPercentage}%"></div>
+                            </div>
+                            <span class="text-sm font-medium ${matchPercentage > 70 ? 'text-green-700' : matchPercentage > 40 ? 'text-yellow-700' : 'text-red-700'}">
+                                %${matchPercentage}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="text-sm">
+                        <p>
+                            <span class="font-medium">Eşleşen Beceriler:</span> 
+                            ${matchingSkills.length > 0 ? matchingSkills.join(', ') : 'Pozisyona özel beceriler belirlenemedi.'}
+                        </p>
+                        
+                        <p class="mt-1">
+                            <span class="font-medium">Aranan Anahtar Kelimeler:</span> 
+                            ${positionKeywords.join(', ')}
+                        </p>
+                        
+                        <p class="mt-2 ${matchPercentage > 70 ? 'text-green-700' : matchPercentage > 40 ? 'text-yellow-700' : 'text-red-700'}">
+                            <i class="fas ${matchPercentage > 70 ? 'fa-check-circle' : matchPercentage > 40 ? 'fa-info-circle' : 'fa-exclamation-circle'} mr-1"></i>
+                            ${matchPercentage > 70 ? 
+                                'Aday pozisyon için çok uygun görünüyor.' : 
+                                matchPercentage > 40 ? 
+                                'Aday pozisyon için potansiyel uygunlukta.' : 
+                                'Aday pozisyon için uygunluğu düşük olabilir.'}
+                        </p>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('matchAnalysis').innerHTML = matchHTML;
         }
     </script>
 </body>

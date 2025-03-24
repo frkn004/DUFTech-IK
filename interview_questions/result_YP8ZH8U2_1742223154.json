@@ -1,0 +1,172 @@
+{
+  "interview_code": "YP8ZH8U2",
+  "position": "yapay zeka mühendisliği",
+  "timestamp": "2025-03-17 17:52:34",
+  "score": {
+    "correct": 2,
+    "total": 20,
+    "percentage": 10
+  },
+  "results": [
+    {
+      "id": "1",
+      "question": "Python programlama dilinde bir listeyi tersine çevirmek için hangi metot kullanılır?",
+      "user_answer": "D",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "Python'da bir listeyi tersine çevirmek için \"reverse()\" metodu kullanılır. Bu metot listeyi yerinde tersine çevirir."
+    },
+    {
+      "id": "2",
+      "question": "C++ dilinde bir sınıfın tüm veri üyelerine erişimi kısıtlamak için hangi erişim belirleyicisi kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "C++ dilinde \"private\" erişim belirleyicisi, sınıfın veri üyelerine sadece sınıfın kendisinden erişilmesine izin verir."
+    },
+    {
+      "id": "3",
+      "question": "SQL'de bir tablodaki tüm kayıtları silmek için hangi komut kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "\"TRUNCATE\" komutu bir tablodaki tüm kayıtları siler, ancak tablo yapısını ve özelliklerini korur."
+    },
+    {
+      "id": "4",
+      "question": "JavaScript'te hangi yöntem bir diziye yeni bir eleman eklemek için kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "JavaScript'te \"push()\" metodu, bir diziye yeni eleman eklemek için kullanılır."
+    },
+    {
+      "id": "5",
+      "question": "HTML'de bir sayfanın başlığını belirtmek için hangi etiket kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "<title> etiketi, HTML belgesinin başlığını belirtmek için kullanılır ve tarayıcı sekmesinde görüntülenir."
+    },
+    {
+      "id": "6",
+      "question": "MySQL'de bir sütunun benzersiz olmasını sağlamak için hangi anahtar kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "\"UNIQUE\" anahtarı, bir sütundaki tüm değerlerin benzersiz olmasını sağlar."
+    },
+    {
+      "id": "7",
+      "question": "Python'da bir dosyayı okuma modunda açmak için hangi yöntem kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Python'da \"open\" fonksiyonu, bir dosyayı okuma modunda açmak için \"r\" parametresi ile kullanılır."
+    },
+    {
+      "id": "8",
+      "question": "C++ dilinde bir sınıfın yapıcı fonksiyonunun adı nasıl belirlenir?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "C++ dilinde bir sınıfın yapıcı fonksiyonu, sınıfın adı ile aynı olmalıdır."
+    },
+    {
+      "id": "9",
+      "question": "SQL'de bir tablodan belirli bir sütunu seçmek için hangi komut kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "\"SELECT\" komutu, SQL'de bir tablodan belirli sütunları seçmek için kullanılır."
+    },
+    {
+      "id": "10",
+      "question": "JavaScript'te bir objenin bir özelliğine erişmek için hangi operatör kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "JavaScript'te bir objenin özelliğine erişmek için nokta (.) operatörü kullanılır."
+    },
+    {
+      "id": "11",
+      "question": "HTML'de bir bağlantı oluşturmak için hangi etiket kullanılır?",
+      "user_answer": "D",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "<a> etiketi, HTML'de bir bağlantı (anchor) oluşturmak için kullanılır."
+    },
+    {
+      "id": "12",
+      "question": "Python'da bir sözlükten bir anahtar-değer çifti silmek için hangi yöntem kullanılır?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Python'da \"pop()\" metodu, bir sözlükten belirtilen anahtar-değer çiftini silmek için kullanılır."
+    },
+    {
+      "id": "13",
+      "question": "C++ dilinde bir sınıfın veri üyelerinin varsayılan değerlerini atamak için hangi yapı kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "C++ dilinde bir sınıfın veri üyelerine varsayılan değerler atamak için yapıcı fonksiyon kullanılır."
+    },
+    {
+      "id": "14",
+      "question": "SQL'de bir tablodaki kayıtları belirli bir koşula göre güncellemek için hangi komut kullanılır?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "\"UPDATE\" komutu, SQL'de bir tablodaki kayıtları belirli bir koşula göre güncellemek için kullanılır."
+    },
+    {
+      "id": "15",
+      "question": "JavaScript'te bir dizinin uzunluğunu belirlemek için hangi özelliği kullanılır?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "JavaScript'te bir dizinin uzunluğunu belirlemek için \"length\" özelliği kullanılır."
+    },
+    {
+      "id": "16",
+      "question": "HTML'de bir resim eklemek için hangi etiket kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "<img> etiketi, HTML'de bir resim eklemek için kullanılır."
+    },
+    {
+      "id": "17",
+      "question": "Python'da bir döngüyü sonlandırmak için hangi anahtar kelime kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Python'da \"break\" anahtar kelimesi, bir döngüyü sonlandırmak için kullanılır."
+    },
+    {
+      "id": "18",
+      "question": "C++ dilinde bir sınıfın yıkıcı fonksiyonunun adı nasıl belirlenir?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "C++ dilinde bir sınıfın yıkıcı fonksiyonu, sınıfın adı önünde tilde (~) işareti ile belirlenir."
+    },
+    {
+      "id": "19",
+      "question": "SQL'de bir tablodan belirli bir koşula uyan kayıtları silmek için hangi komut kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "\"DELETE\" komutu, SQL'de bir tablodan belirli bir koşula uyan kayıtları silmek için kullanılır."
+    },
+    {
+      "id": "20",
+      "question": "JavaScript'te bir fonksiyonun tanımlanması için hangi anahtar kelime kullanılır?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "JavaScript'te bir fonksiyonun tanımlanması için \"function\" anahtar kelimesi kullanılır."
+    }
+  ]
+}

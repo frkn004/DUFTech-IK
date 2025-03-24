@@ -1,0 +1,249 @@
+{
+  "position": "yapay zeka mühendisliği",
+  "interview_code": "YP8ZH8U2",
+  "quiz_type": "both",
+  "cv_context": "Adayın becerileri: Microsoft Office (Excel, Word, PowerPoint), Python, C/C++, JavaScript, MySQL, HTML & CSS, SQL\n\nAdayın deneyimleri:\n- Part-Time AI Engineer at Maren Robotics: Developed vision-based detection systems for aquatic safety and emergency responses, and AI models for embedded systems in aquatic environments.\n- AI Technical and Software Engineer at AIVA Tech: Developed automation systems in HR and project management, enhanced NLP applications, and provided AI solution support.\n- AI Intern at Limak Cement: Performed data preparation and integrated machine learning models to optimize energy usage and enhance safety.\n- AI Intern at OSTİM Organized Industrial Zone Directorate: Developed a machine learning-based revenue forecasting tool.\n- Intern at OSTİMTech Technology Transfer Office: Contributed to operations and academic-industrial collaborations.\n\nAdayın eğitimi:\n- Bachelor of Engineering in Alan, OSTİM Technical University\n\n",
+  "created_at": "2025-03-17T17:49:19.988645",
+  "questions": [
+    {
+      "id": "1",
+      "question": "Python programlama dilinde bir listeyi tersine çevirmek için hangi metot kullanılır?",
+      "options": {
+        "A": "reverse()",
+        "B": "invert()",
+        "C": "flip()",
+        "D": "swap()"
+      },
+      "correct_answer": "A",
+      "explanation": "Python'da bir listeyi tersine çevirmek için \"reverse()\" metodu kullanılır. Bu metot listeyi yerinde tersine çevirir."
+    },
+    {
+      "id": "2",
+      "question": "C++ dilinde bir sınıfın tüm veri üyelerine erişimi kısıtlamak için hangi erişim belirleyicisi kullanılır?",
+      "options": {
+        "A": "public",
+        "B": "private",
+        "C": "protected",
+        "D": "internal"
+      },
+      "correct_answer": "A",
+      "explanation": "C++ dilinde \"private\" erişim belirleyicisi, sınıfın veri üyelerine sadece sınıfın kendisinden erişilmesine izin verir."
+    },
+    {
+      "id": "3",
+      "question": "SQL'de bir tablodaki tüm kayıtları silmek için hangi komut kullanılır?",
+      "options": {
+        "A": "DELETE",
+        "B": "DROP",
+        "C": "REMOVE",
+        "D": "TRUNCATE"
+      },
+      "correct_answer": "B",
+      "explanation": "\"TRUNCATE\" komutu bir tablodaki tüm kayıtları siler, ancak tablo yapısını ve özelliklerini korur."
+    },
+    {
+      "id": "4",
+      "question": "JavaScript'te hangi yöntem bir diziye yeni bir eleman eklemek için kullanılır?",
+      "options": {
+        "A": "add()",
+        "B": "insert()",
+        "C": "append()",
+        "D": "push()"
+      },
+      "correct_answer": "A",
+      "explanation": "JavaScript'te \"push()\" metodu, bir diziye yeni eleman eklemek için kullanılır."
+    },
+    {
+      "id": "5",
+      "question": "HTML'de bir sayfanın başlığını belirtmek için hangi etiket kullanılır?",
+      "options": {
+        "A": "<meta>",
+        "B": "<title>",
+        "C": "<header>",
+        "D": "<head>"
+      },
+      "correct_answer": "A",
+      "explanation": "<title> etiketi, HTML belgesinin başlığını belirtmek için kullanılır ve tarayıcı sekmesinde görüntülenir."
+    },
+    {
+      "id": "6",
+      "question": "MySQL'de bir sütunun benzersiz olmasını sağlamak için hangi anahtar kullanılır?",
+      "options": {
+        "A": "PRIMARY KEY",
+        "B": "UNIQUE",
+        "C": "FOREIGN KEY",
+        "D": "INDEX"
+      },
+      "correct_answer": "D",
+      "explanation": "\"UNIQUE\" anahtarı, bir sütundaki tüm değerlerin benzersiz olmasını sağlar."
+    },
+    {
+      "id": "7",
+      "question": "Python'da bir dosyayı okuma modunda açmak için hangi yöntem kullanılır?",
+      "options": {
+        "A": "open(\"file.txt\", \"r\")",
+        "B": "open(\"file.txt\", \"w\")",
+        "C": "open(\"file.txt\", \"a\")",
+        "D": "open(\"file.txt\", \"x\")"
+      },
+      "correct_answer": "D",
+      "explanation": "Python'da \"open\" fonksiyonu, bir dosyayı okuma modunda açmak için \"r\" parametresi ile kullanılır."
+    },
+    {
+      "id": "8",
+      "question": "C++ dilinde bir sınıfın yapıcı fonksiyonunun adı nasıl belirlenir?",
+      "options": {
+        "A": "className",
+        "B": "constructorName",
+        "C": "classConstructor",
+        "D": "initClass"
+      },
+      "correct_answer": "B",
+      "explanation": "C++ dilinde bir sınıfın yapıcı fonksiyonu, sınıfın adı ile aynı olmalıdır."
+    },
+    {
+      "id": "9",
+      "question": "SQL'de bir tablodan belirli bir sütunu seçmek için hangi komut kullanılır?",
+      "options": {
+        "A": "SELECT",
+        "B": "CHOOSE",
+        "C": "PICK",
+        "D": "GET"
+      },
+      "correct_answer": "C",
+      "explanation": "\"SELECT\" komutu, SQL'de bir tablodan belirli sütunları seçmek için kullanılır."
+    },
+    {
+      "id": "10",
+      "question": "JavaScript'te bir objenin bir özelliğine erişmek için hangi operatör kullanılır?",
+      "options": {
+        "A": ":",
+        "B": ".",
+        "C": "@",
+        "D": "#"
+      },
+      "correct_answer": "C",
+      "explanation": "JavaScript'te bir objenin özelliğine erişmek için nokta (.) operatörü kullanılır."
+    },
+    {
+      "id": "11",
+      "question": "HTML'de bir bağlantı oluşturmak için hangi etiket kullanılır?",
+      "options": {
+        "A": "<link>",
+        "B": "<a>",
+        "C": "<href>",
+        "D": "<url>"
+      },
+      "correct_answer": "D",
+      "explanation": "<a> etiketi, HTML'de bir bağlantı (anchor) oluşturmak için kullanılır."
+    },
+    {
+      "id": "12",
+      "question": "Python'da bir sözlükten bir anahtar-değer çifti silmek için hangi yöntem kullanılır?",
+      "options": {
+        "A": "remove()",
+        "B": "delete()",
+        "C": "pop()",
+        "D": "discard()"
+      },
+      "correct_answer": "A",
+      "explanation": "Python'da \"pop()\" metodu, bir sözlükten belirtilen anahtar-değer çiftini silmek için kullanılır."
+    },
+    {
+      "id": "13",
+      "question": "C++ dilinde bir sınıfın veri üyelerinin varsayılan değerlerini atamak için hangi yapı kullanılır?",
+      "options": {
+        "A": "Yapıcı fonksiyon",
+        "B": "Yıkıcı fonksiyon",
+        "C": "Üye fonksiyon",
+        "D": "Sabit fonksiyon"
+      },
+      "correct_answer": "B",
+      "explanation": "C++ dilinde bir sınıfın veri üyelerine varsayılan değerler atamak için yapıcı fonksiyon kullanılır."
+    },
+    {
+      "id": "14",
+      "question": "SQL'de bir tablodaki kayıtları belirli bir koşula göre güncellemek için hangi komut kullanılır?",
+      "options": {
+        "A": "MODIFY",
+        "B": "CHANGE",
+        "C": "UPDATE",
+        "D": "ALTER"
+      },
+      "correct_answer": "A",
+      "explanation": "\"UPDATE\" komutu, SQL'de bir tablodaki kayıtları belirli bir koşula göre güncellemek için kullanılır."
+    },
+    {
+      "id": "15",
+      "question": "JavaScript'te bir dizinin uzunluğunu belirlemek için hangi özelliği kullanılır?",
+      "options": {
+        "A": "size",
+        "B": "length",
+        "C": "count",
+        "D": "total"
+      },
+      "correct_answer": "B",
+      "explanation": "JavaScript'te bir dizinin uzunluğunu belirlemek için \"length\" özelliği kullanılır."
+    },
+    {
+      "id": "16",
+      "question": "HTML'de bir resim eklemek için hangi etiket kullanılır?",
+      "options": {
+        "A": "<picture>",
+        "B": "<img>",
+        "C": "<graphic>",
+        "D": "<photo>"
+      },
+      "correct_answer": "A",
+      "explanation": "<img> etiketi, HTML'de bir resim eklemek için kullanılır."
+    },
+    {
+      "id": "17",
+      "question": "Python'da bir döngüyü sonlandırmak için hangi anahtar kelime kullanılır?",
+      "options": {
+        "A": "stop",
+        "B": "exit",
+        "C": "break",
+        "D": "end"
+      },
+      "correct_answer": "C",
+      "explanation": "Python'da \"break\" anahtar kelimesi, bir döngüyü sonlandırmak için kullanılır."
+    },
+    {
+      "id": "18",
+      "question": "C++ dilinde bir sınıfın yıkıcı fonksiyonunun adı nasıl belirlenir?",
+      "options": {
+        "A": "classDestructor",
+        "B": "className~",
+        "C": "~className",
+        "D": "destroyClass"
+      },
+      "correct_answer": "B",
+      "explanation": "C++ dilinde bir sınıfın yıkıcı fonksiyonu, sınıfın adı önünde tilde (~) işareti ile belirlenir."
+    },
+    {
+      "id": "19",
+      "question": "SQL'de bir tablodan belirli bir koşula uyan kayıtları silmek için hangi komut kullanılır?",
+      "options": {
+        "A": "REMOVE",
+        "B": "DELETE",
+        "C": "ERASE",
+        "D": "TRUNCATE"
+      },
+      "correct_answer": "B",
+      "explanation": "\"DELETE\" komutu, SQL'de bir tablodan belirli bir koşula uyan kayıtları silmek için kullanılır."
+    },
+    {
+      "id": "20",
+      "question": "JavaScript'te bir fonksiyonun tanımlanması için hangi anahtar kelime kullanılır?",
+      "options": {
+        "A": "func",
+        "B": "define",
+        "C": "function",
+        "D": "method"
+      },
+      "correct_answer": "A",
+      "explanation": "JavaScript'te bir fonksiyonun tanımlanması için \"function\" anahtar kelimesi kullanılır."
+    }
+  ]
+}

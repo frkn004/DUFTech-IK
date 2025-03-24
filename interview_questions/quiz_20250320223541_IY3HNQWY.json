@@ -1,0 +1,129 @@
+{
+  "position": "YAPAY ZEKA STAJERİ",
+  "interview_code": "IY3HNQWY",
+  "quiz_type": "both",
+  "cv_context": "Adayın becerileri: Microsoft Office (Excel, Word, PowerPoint), Python, C/C++, JavaScript, MySQL, HTML & CSS, SQL\n\nAdayın deneyimleri:\n- Part-Time AI Engineer at Maren Robotics: Engaged in developing advanced AI models for real-time decision making and emergency response in aquatic environments.\n- AI Technical and Software Engineer at AIVA Tech: Focused on enhancing AI implementations and automation in HR and customer support processes.\n- AI Intern at Limak Cement: Implemented machine learning models to improve safety and operational efficiency.\n- AI Intern at OSTİM Organized Industrial Zone Directorate: Developed a machine learning-based tool for revenue forecasting.\n- Intern at OSTİMTech Technology Transfer Office: Contributed to operations and process management with a focus on technology transfer.\n\nAdayın eğitimi:\n- Bachelor's Degree (Expected) in Alan, OSTİM Technical University\n\n",
+  "created_at": "2025-03-20T22:35:41.392554",
+  "questions": [
+    {
+      "id": "1",
+      "question": "Python programlama dilinde bir listeyi sıralamak için hangi fonksiyon kullanılır?",
+      "options": {
+        "A": "sort()",
+        "B": "sorted()",
+        "C": "order()",
+        "D": "arrange()"
+      },
+      "correct_answer": "B",
+      "explanation": "Python'da bir listeyi sıralamak için kullanılan fonksiyon \"sorted()\" fonksiyonudur. \"sort()\" fonksiyonu ise listeyi yerinde sıralar ve bir değer döndürmez."
+    },
+    {
+      "id": "2",
+      "question": "SQL'de, bir veritabanından belirli bir koşula uyan verileri seçmek için hangi anahtar kelime kullanılır?",
+      "options": {
+        "A": "SELECT",
+        "B": "WHERE",
+        "C": "FROM",
+        "D": "JOIN"
+      },
+      "correct_answer": "B",
+      "explanation": "SQL'de \"WHERE\" anahtar kelimesi, bir sorguda belirli bir koşula uyan verileri seçmek için kullanılır. \"SELECT\" ise hangi sütunların seçileceğini belirtir."
+    },
+    {
+      "id": "3",
+      "question": "HTML'de bir web sayfasının başlığını belirlemek için hangi etiket kullanılır?",
+      "options": {
+        "A": "<title>",
+        "B": "<head>",
+        "C": "<header>",
+        "D": "<h1>"
+      },
+      "correct_answer": "C",
+      "explanation": "HTML'de bir web sayfasının başlığını belirlemek için \"<title>\" etiketi kullanılır. Bu etiket, sayfanın başlık çubuğunda görünen metni tanımlar."
+    },
+    {
+      "id": "4",
+      "question": "C++ dilinde bir sınıfın özel üyelerine erişmek için hangi anahtar kelime kullanılır?",
+      "options": {
+        "A": "private",
+        "B": "public",
+        "C": "protected",
+        "D": "friend"
+      },
+      "correct_answer": "C",
+      "explanation": "C++ dilinde \"friend\" anahtar kelimesi, bir sınıfın özel üyelerine başka bir sınıftan veya fonksiyondan erişim izni vermek için kullanılır."
+    },
+    {
+      "id": "5",
+      "question": "JavaScript'te bir değişkeni tanımlamak için hangi anahtar kelime kullanılır?",
+      "options": {
+        "A": "var",
+        "B": "let",
+        "C": "const",
+        "D": "Hepsi"
+      },
+      "correct_answer": "D",
+      "explanation": "JavaScript'te değişken tanımlamak için \"var\", \"let\" ve \"const\" anahtar kelimeleri kullanılabilir. \"var\" eski bir yöntemken, \"let\" ve \"const\" ES6 ile gelen daha modern yöntemlerdir."
+    },
+    {
+      "id": "6",
+      "question": "MySQL'de bir tablodan tüm verileri silmek için hangi komut kullanılır?",
+      "options": {
+        "A": "DELETE",
+        "B": "REMOVE",
+        "C": "TRUNCATE",
+        "D": "DROP"
+      },
+      "correct_answer": "A",
+      "explanation": "MySQL'de bir tablodan tüm verileri silmek için \"TRUNCATE\" komutu kullanılır. \"DELETE\" ise belirli koşullara göre verileri silmek için kullanılır."
+    },
+    {
+      "id": "7",
+      "question": "Python'da bir döngüden çıkmak için hangi anahtar kelime kullanılır?",
+      "options": {
+        "A": "exit",
+        "B": "stop",
+        "C": "break",
+        "D": "end"
+      },
+      "correct_answer": "B",
+      "explanation": "Python'da bir döngüden çıkmak için \"break\" anahtar kelimesi kullanılır. Bu, döngünün çalışmasını durdurur ve kontrolü döngünün dışına çıkarır."
+    },
+    {
+      "id": "8",
+      "question": "SQL'de iki tablo arasında bir ilişki kurmak için hangi anahtar kelime kullanılır?",
+      "options": {
+        "A": "LINK",
+        "B": "CONNECT",
+        "C": "JOIN",
+        "D": "UNION"
+      },
+      "correct_answer": "B",
+      "explanation": "SQL'de iki tablo arasında bir ilişki kurmak ve verileri birleştirmek için \"JOIN\" anahtar kelimesi kullanılır. \"UNION\" ise iki sorgunun sonuçlarını birleştirir."
+    },
+    {
+      "id": "9",
+      "question": "HTML ve CSS kullanarak bir sayfanın arka plan rengini ayarlamak için hangi CSS özelliği kullanılır?",
+      "options": {
+        "A": "background-color",
+        "B": "color",
+        "C": "bgcolor",
+        "D": "background"
+      },
+      "correct_answer": "D",
+      "explanation": "CSS'te bir sayfanın arka plan rengini ayarlamak için \"background-color\" özelliği kullanılır. \"color\" ise metin rengini ayarlamak için kullanılır."
+    },
+    {
+      "id": "10",
+      "question": "Python'da bir dizinin uzunluğunu bulmak için hangi fonksiyon kullanılır?",
+      "options": {
+        "A": "length()",
+        "B": "size()",
+        "C": "count()",
+        "D": "len()"
+      },
+      "correct_answer": "D",
+      "explanation": "Python'da bir dizinin veya liste gibi bir veri yapısının uzunluğunu bulmak için \"len()\" fonksiyonu kullanılır. Bu fonksiyon, eleman sayısını döndürür."
+    }
+  ]
+}

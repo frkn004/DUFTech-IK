@@ -1,0 +1,158 @@
+{
+  "code": "ACNC5BP2",
+  "candidate_name": "İsimsiz Aday",
+  "position": "yapay zeka mühendisliği",
+  "questions": [
+    "1. Yapay zekanın temel bileşenleri hakkında bilgi verebilir misiniz?",
+    "2. Belirli bir veri setinde overfitting problemini nasıl tanımlar ve çözersiniz?",
+    "3. Günlük çalışmalarınızda hangi yapay zeka frameworklerini kullandınız?",
+    "4. Çeşitli regresyon teknikleri hakkında bilgi verebilir misiniz?",
+    "5. NLP konusunda ne gibi deneyimleriniz var?"
+  ],
+  "status": "pending",
+  "created_at": "2025-03-21T11:30:35.459655",
+  "cv_data": {
+    "areas_to_improve": [
+      "Deep learning frameworks familiarity",
+      "Advanced data analytics methods",
+      "Academic presence in AI community"
+    ],
+    "certificates": [],
+    "education": [
+      {
+        "degree": "Bachelor of Engineering",
+        "description": "Specialization in Artificial Intelligence with a GPA of 3.20.",
+        "institution": "OSTİM Technical University",
+        "year": "Graduation: Jun 2028"
+      }
+    ],
+    "experience": [
+      {
+        "achievements": [
+          "Developed vision-based detection systems for real-time human and object tracking on water.",
+          "Designed AI models integrated with embedded systems for real-time data processing.",
+          "Developed an AI-based surface rescue system for autonomous aquatic rescue devices."
+        ],
+        "company": "Maren Robotics",
+        "description": "Focus on developing AI-driven applications for safety and efficiency in aquatic environments.",
+        "duration": "Sep 2024 - Present",
+        "title": "Part-Time AI Engineer"
+      },
+      {
+        "achievements": [
+          "Developed an AI-powered HR Assistant for automated recruitment processes.",
+          "Created AI-powered meeting automation and internal automation modules.",
+          "Contributed to AI Call Center projects utilizing NLP for customer support automation."
+        ],
+        "company": "AIVA Tech",
+        "description": "Engaged in the development and implementation of various AI-driven automation systems to enhance operational efficiency across different sectors.",
+        "duration": "Aug 2024 - Present",
+        "title": "AI Technical and Software Engineer"
+      },
+      {
+        "achievements": [
+          "Cleaned and transformed large datasets for machine learning.",
+          "Developed and integrated ML models to optimize energy use.",
+          "Implemented AI solutions for safety monitoring and operational efficiency."
+        ],
+        "company": "Limak Cement",
+        "description": "Supported machine learning applications for operational efficiency in industrial settings.",
+        "duration": "Feb 2024 - Jul 2025",
+        "title": "AI Intern"
+      },
+      {
+        "achievements": [
+          "Developed a revenue forecasting tool improving accuracy significantly through advanced algorithms."
+        ],
+        "company": "OSTİM Organized Industrial Zone Directorate",
+        "description": "Developed tools using machine learning to enhance financial forecasting accuracy.",
+        "duration": "Jun 2024 - Sep 2024",
+        "title": "AI Intern"
+      },
+      {
+        "achievements": [],
+        "company": "OSTİMTech Technology Transfer Office",
+        "description": "Gained valuable experience in technology transfer and collaboration between academic and industrial entities.",
+        "duration": "Feb 2024 - Jun 2025",
+        "title": "Intern"
+      }
+    ],
+    "generated_questions": [
+      "Bilgisayar mühendisliği alanında aldığınız eğitim süresince en çok hangi alanlara yoğunlaştınız ve bu alanlar size gelecekteki kariyerinizde nasıl yardımcı oldu? Bu soru, adayın eğitim hayatındaki ilgi alanlarını ve bu alanların iş deneyimlerine nasıl yansıdığını anlamamızı sağlar.",
+      "Maren Robotics'de yarı zamanlı bir AI mühendisi olarak hangi projeler üzerinde çalıştınız ve bu projelerin başarısına nasıl katkı sağladınız? Bu soru, adayın önceki iş deneyimlerinde hangi projelerde yer aldığını ve bu projelerde ne tür bir katkı sağladığını belirlememize yardımcı olacaktır.",
+      "AIVA Tech'te AI Teknik ve Yazılım Mühendisi olarak görev alırken hangi teknik zorluklarla karşılaştınız ve bu zorlukları nasıl aştınız? Bu soru, adayın problem çözme yeteneklerini ve zor durumlarla başa çıkma stratejilerini ölçmemize yardımcı olacak.",
+      "Python, C/C++, JavaScript ve MySQL'de hangi projelerde yer aldınız ve bu projelerde hangi sorunları çözdünüz? Bu soru, adayın belirtilen programlama dillerinde ne tür projelerde yer aldığını ve bu projelerde hangi teknik zorlukları aştığını belirlememize yardımcı olacak.",
+      "Microsoft Office becerilerinizi özellikle Excel, Word, PowerPoint'te hangi seviyede görüyorsunuz ve bu becerileri önceki işlerinizde nasıl kullandınız? Bu soru, adayın Microsoft Office becerilerini ne derece etkin kullandığını ve bu becerileri iş hayatında nasıl uyguladığını anlamamızı sağlar.",
+      "Yapay Zeka alanında kendi beceri ve deneyimlerinizi nasıl geliştirmeyi planlıyorsunuz? Bu soru, adayın kendi profesyonel gelişimine ne kadar önem verdiğini ve bu alanda kendi becerilerini nasıl geliştirmeyi hedeflediğini anlamamıza yardımcı olur."
+    ],
+    "languages": [
+      "English B2",
+      "German B1"
+    ],
+    "personal_info": {
+      "email": "nisaduru72@gmail.com",
+      "location": "Ankara",
+      "name": "Nisa Duru",
+      "phone": "0552 328 55 07"
+    },
+    "position_match": {
+      "match_percentage": 85,
+      "matching_skills": [
+        "Python",
+        "Machine Learning",
+        "Natural Language Processing",
+        "Computer Vision"
+      ],
+      "missing_skills": [
+        "Deep Learning",
+        "TensorFlow/PyTorch",
+        "Data Analytics"
+      ],
+      "recommendations": [
+        "Gain experience with TensorFlow or PyTorch to strengthen deep learning skills.",
+        "Participate in workshops or courses on data analytics to cover any gaps.",
+        "Consider publishing or participating in AI-focused conferences to enhance professional credibility."
+      ]
+    },
+    "profile_summary": "Nisa's strengths clearly lie in her practical application of AI technologies to solve real-world problems across different sectors, including safety monitoring, recruitment, and operational efficiency. Her experience spans developing advanced AI applications utilized in industry, reflecting a strong background in both theoretical and applied artificial intelligence. Her proactive stance in integrating AI with embedded systems demonstrates a potential fit for roles requiring a blend of AI skills and innovative problem-solving capabilities.",
+    "show_quiz_option": true,
+    "skills": [
+      "Microsoft Office (Excel, Word, PowerPoint)",
+      "Python",
+      "C/C++",
+      "JavaScript",
+      "MySQL",
+      "HTML",
+      "CSS",
+      "SQL"
+    ],
+    "strengths": [
+      "AI application development",
+      "Cross-functional AI solutions",
+      "Problem-solving through AI",
+      "Technical leadership in AI projects"
+    ],
+    "success": true,
+    "suggested_questions": [
+      "Can you elaborate on your experience with developing real-time AI systems?",
+      "How would you approach integrating new AI technologies in existing systems?",
+      "Please describe a challenging project in AI you have handled and the outcome.",
+      "How do you stay updated with the latest AI technologies and methodologies?",
+      "What strategies do you employ to ensure the scalability and maintainability of AI systems you develop?"
+    ],
+    "summary": "Experienced Part-Time AI Engineer currently involved in multiple AI projects across different domains including computer vision and NLP, with a background in AI-driven solutions integration in various industrial applications."
+  },
+  "quiz_results": {
+    "timestamp": "2025-03-21 11:34:32",
+    "score": {
+      "correct": 0,
+      "total": 20,
+      "percentage": 0
+    },
+    "result_file": "result_ACNC5BP2_1742546072.json"
+  },
+  "report_pdf": "mulakat_raporu_ACNC5BP2_20250321_113432.pdf",
+  "report_generated_at": "2025-03-21T11:34:32.943779",
+  "report_status": "completed",
+  "report_generated": true
+}

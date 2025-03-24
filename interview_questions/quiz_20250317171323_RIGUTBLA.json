@@ -1,0 +1,129 @@
+{
+  "position": "YAPAY ZEKA STAJERİ",
+  "interview_code": "RIGUTBLA",
+  "quiz_type": "both",
+  "cv_context": "Adayın becerileri: Programming, C, C++, Python, R, JavaScript, HTML, Scikit-Learn, TensorFlow, Keras, Pandas, Numpy, Matplotlib\n\nAdayın deneyimleri:\n- AI Intern at Limak Cement: Fine-tuned a ChatBot using OpenAI API with the ChatGPT-3.5 Turbo model to provide training recommendations; developed a computer vision model using YOLOv8n and CUDA for worker safety compliance; created a document extraction and summarization tool using OCR.\n- AI Intern (Remote) at AIVA Tech: Integrated and optimized AI-based systems, focusing on AI and automation solutions in various projects, including data analysis and reporting process optimizations.\n- AI Intern at Limak Cement: Processed and cleaned a large-scale dataset, conducted various statistical analyses, and prepared the data for ML applications using PostgreSQL and Python.\n- Intern at OSTIMTech Technology Transfer Office: Collaborated with the business development team on university-industry partnership projects.\n\nAdayın eğitimi:\n- Bachelor of Engineering in Alan, OSTIM Technical University\n\n",
+  "created_at": "2025-03-17T17:13:23.102494",
+  "questions": [
+    {
+      "id": "1",
+      "question": "Python dilinde veri analizi yaparken hangi kütüphane veri manipülasyonu ve analizi için en yaygın olarak kullanılır?",
+      "options": {
+        "A": "TensorFlow",
+        "B": "Pandas",
+        "C": "Keras",
+        "D": "Matplotlib"
+      },
+      "correct_answer": "D",
+      "explanation": "Pandas, Python dilinde veri manipülasyonu ve analizi için en yaygın kullanılan kütüphanelerden biridir. Veri çerçeveleri ve serilerle çalışmak için çeşitli araçlar sunar."
+    },
+    {
+      "id": "2",
+      "question": "Aşağıdaki kütüphanelerden hangisi derin öğrenme modelleri oluşturmak ve eğitmek için kullanılır?",
+      "options": {
+        "A": "Scikit-Learn",
+        "B": "Numpy",
+        "C": "Keras",
+        "D": "HTML"
+      },
+      "correct_answer": "D",
+      "explanation": "Keras, derin öğrenme modelleri oluşturmak ve eğitmek için kullanılan yüksek seviyeli bir API'dir ve genellikle TensorFlow ile birlikte kullanılır."
+    },
+    {
+      "id": "3",
+      "question": "YOLOv8n modeli hangi alanda kullanılır?",
+      "options": {
+        "A": "Doğal dil işleme",
+        "B": "Bilgisayarla görü",
+        "C": "Veri görselleştirme",
+        "D": "Web geliştirme"
+      },
+      "correct_answer": "D",
+      "explanation": "YOLO (You Only Look Once), bilgisayarla görü alanında nesne tespiti için kullanılan bir modeldir. YOLOv8n, bu modelin yeni bir versiyonudur."
+    },
+    {
+      "id": "4",
+      "question": "OpenAI API ile hangi tür uygulamalar geliştirilebilir?",
+      "options": {
+        "A": "Web sayfası tasarımı",
+        "B": "Grafik tasarımı",
+        "C": "Chatbot ve dil işleme uygulamaları",
+        "D": "Veri tabanı yönetimi"
+      },
+      "correct_answer": "A",
+      "explanation": "OpenAI API, doğal dil işleme ve chatbot uygulamaları geliştirmek için yaygın olarak kullanılır. ChatGPT-3.5 Turbo gibi modeller, dil tabanlı görevlerde etkilidir."
+    },
+    {
+      "id": "5",
+      "question": "TensorFlow kütüphanesi hangi amaçla kullanılır?",
+      "options": {
+        "A": "Web geliştirme",
+        "B": "Derin öğrenme modelleri oluşturma ve eğitme",
+        "C": "Veri tabanı sorgulama",
+        "D": "Grafik tasarımı"
+      },
+      "correct_answer": "D",
+      "explanation": "TensorFlow, Google tarafından geliştirilen bir açık kaynaklı kütüphanedir ve derin öğrenme modelleri oluşturmak ve eğitmek için kullanılır."
+    },
+    {
+      "id": "6",
+      "question": "Aşağıdaki dillerden hangisi web sayfası yapısının oluşturulmasında kullanılır?",
+      "options": {
+        "A": "Python",
+        "B": "C++",
+        "C": "HTML",
+        "D": "R"
+      },
+      "correct_answer": "B",
+      "explanation": "HTML (HyperText Markup Language), web sayfalarının yapısını oluşturmak için kullanılan bir işaretleme dilidir."
+    },
+    {
+      "id": "7",
+      "question": "Aşağıdaki kütüphanelerden hangisi grafik ve veri görselleştirme için kullanılır?",
+      "options": {
+        "A": "Pandas",
+        "B": "Matplotlib",
+        "C": "Scikit-Learn",
+        "D": "TensorFlow"
+      },
+      "correct_answer": "C",
+      "explanation": "Matplotlib, Python'da grafik ve veri görselleştirme için kullanılan bir kütüphanedir. Çizimler ve grafikler oluşturmak için geniş bir araç seti sunar."
+    },
+    {
+      "id": "8",
+      "question": "C++ dilinde bir programın derlenmesi için hangi araç gereklidir?",
+      "options": {
+        "A": "Interpreter",
+        "B": "Compiler",
+        "C": "Debugger",
+        "D": "Assembler"
+      },
+      "correct_answer": "A",
+      "explanation": "C++ gibi derleme gerektiren dillerde, kaynak kodu makine diline çevirmek için bir derleyici (compiler) kullanılır."
+    },
+    {
+      "id": "9",
+      "question": "Python'da veri analizi için hangi kütüphane, büyük veri kümeleri üzerinde hızlı matematiksel işlemler yapmayı sağlar?",
+      "options": {
+        "A": "Matplotlib",
+        "B": "Pandas",
+        "C": "Numpy",
+        "D": "Keras"
+      },
+      "correct_answer": "A",
+      "explanation": "Numpy, Python'da büyük veri kümeleri üzerinde hızlı matematiksel işlemler yapmayı sağlayan bir kütüphanedir. Çok boyutlu diziler ve matrisler üzerinde çalışmak için çeşitli fonksiyonlar sunar."
+    },
+    {
+      "id": "10",
+      "question": "Scikit-Learn kütüphanesi hangi tür uygulamalar için kullanılır?",
+      "options": {
+        "A": "Web geliştirme",
+        "B": "Makine öğrenimi",
+        "C": "Grafik tasarımı",
+        "D": "Veri tabanı yönetimi"
+      },
+      "correct_answer": "D",
+      "explanation": "Scikit-Learn, Python'da makine öğrenimi uygulamaları geliştirmek için kullanılan bir kütüphanedir. Sınıflandırma, regresyon ve kümeleme gibi çeşitli algoritmalar içerir."
+    }
+  ]
+}

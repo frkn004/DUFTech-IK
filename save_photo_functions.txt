@@ -1,0 +1,23 @@
+        
+    except Exception as e:
+        logger.error(f"Mülakat durumu kaydetme hatası: {str(e)}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/save_photo', methods=['POST'])
+def save_photo():
+    try:
+        data = request.json
+        code = data.get('code')
+        photo_data = data.get('photo')
+--
+    
+    except Exception as e:
+        logging.error(f"Çoktan seçmeli sınav gösterme hatası: {str(e)}")
+        return render_template('error.html', message=f"Sınav gösterilirken bir hata oluştu: {str(e)}")
+
+@app.route('/save_photo', methods=['POST'])
+def save_photo():
+    try:
+        data = request.json
+        code = data.get('code')
+        photo_data = data.get('photo')

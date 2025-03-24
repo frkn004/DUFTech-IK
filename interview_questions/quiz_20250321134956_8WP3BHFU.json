@@ -1,0 +1,249 @@
+{
+  "position": "yapay zeka mühendisliği",
+  "interview_code": "8WP3BHFU",
+  "quiz_type": "both",
+  "cv_context": "Adayın becerileri: python, javascript, c++, arduino, html-css\n\nAdayın deneyimleri:\n- Stajyer at Keydata Bilgi İşlem Teknoloji Sistemleri: Keçiören Etlik Hastanesi bilgi sistemi için HTML, CSS ve JavaScript kullanarak sezgisel bir ön yüz arayüzü geliştirdik.\n- Stajyer at Keydata Bilgi İşlem Teknoloji Sistemleri: Python programlama dili ve OpenCV kütüphanesini kullanarak, görüntü işleme alanında kafa ve el hareketleri ile bilgisayar üzerinde çeşitli komutlar vererek çalışmayı kolaylaştıran bir yazılım geliştirdim.\n\nAdayın eğitimi:\n- None in Alan, Ostim Teknik Üniversitesi\n\n",
+  "created_at": "2025-03-21T13:49:56.108760",
+  "questions": [
+    {
+      "id": "1",
+      "question": "Python'da bir listeyi tersine çevirmek için hangi yöntem en uygun ve hızlıdır?",
+      "options": {
+        "A": "list.reverse()",
+        "B": "list[::-1]",
+        "C": "reversed(list)",
+        "D": "for döngüsü ile elle tersine çevirme"
+      },
+      "correct_answer": "A",
+      "explanation": "`list.reverse()` metodu, listeyi yerinde tersine çevirir ve bu da hafıza kullanımı açısından en verimli yöntemdir."
+    },
+    {
+      "id": "2",
+      "question": "JavaScript'te bir değişken tanımlamak için hangi anahtar kelime kullanılmaz?",
+      "options": {
+        "A": "var",
+        "B": "let",
+        "C": "const",
+        "D": "def"
+      },
+      "correct_answer": "D",
+      "explanation": "JavaScript'te `var`, `let` ve `const` değişken tanımlamak için kullanılırken, `def` Python'da fonksiyon tanımlamak için kullanılır."
+    },
+    {
+      "id": "3",
+      "question": "C++ dilinde bir sınıfın özel üyelerine erişmek için hangi anahtar kelime kullanılır?",
+      "options": {
+        "A": "public",
+        "B": "private",
+        "C": "protected",
+        "D": "friend"
+      },
+      "correct_answer": "A",
+      "explanation": "`friend` anahtar kelimesi, bir sınıfın özel ve korumalı üyelerine başka bir sınıf veya fonksiyonun erişebilmesini sağlar."
+    },
+    {
+      "id": "4",
+      "question": "HTML'de bir form elemanını göndermek için hangi etiket kullanılır?",
+      "options": {
+        "A": "<button>",
+        "B": "<input>",
+        "C": "<form>",
+        "D": "<submit>"
+      },
+      "correct_answer": "A",
+      "explanation": "`<form>` etiketi, form elemanlarını kapsar ve gönderme işlemi bu etiketle gerçekleştirilir."
+    },
+    {
+      "id": "5",
+      "question": "CSS'de bir elemanın arka plan rengini değiştirmek için hangi özellik kullanılır?",
+      "options": {
+        "A": "color",
+        "B": "background-color",
+        "C": "border-color",
+        "D": "text-color"
+      },
+      "correct_answer": "B",
+      "explanation": "`background-color` özelliği, bir elemanın arka plan rengini ayarlamak için kullanılır."
+    },
+    {
+      "id": "6",
+      "question": "Python'da bir görüntüyü OpenCV ile okumak için hangi fonksiyon kullanılır?",
+      "options": {
+        "A": "cv2.read()",
+        "B": "cv2.load()",
+        "C": "cv2.imread()",
+        "D": "cv2.open()"
+      },
+      "correct_answer": "B",
+      "explanation": "`cv2.imread()` fonksiyonu, bir görüntüyü okumak için kullanılır."
+    },
+    {
+      "id": "7",
+      "question": "JavaScript'te bir fonksiyonun kendisini çağırmasına ne ad verilir?",
+      "options": {
+        "A": "Recursion",
+        "B": "Iteration",
+        "C": "Looping",
+        "D": "Callback"
+      },
+      "correct_answer": "B",
+      "explanation": "Bir fonksiyonun kendisini çağırması, recursion (özyineleme) olarak adlandırılır."
+    },
+    {
+      "id": "8",
+      "question": "C++'da bir sınıfın varsayılan yapıcısını tanımlamak için hangi ifade doğrudur?",
+      "options": {
+        "A": "ClassName() {}",
+        "B": "~ClassName() {}",
+        "C": "ClassName(int x) {}",
+        "D": "void ClassName() {}"
+      },
+      "correct_answer": "D",
+      "explanation": "`ClassName() {}` ifadesi, bir sınıfın varsayılan yapıcısını tanımlar."
+    },
+    {
+      "id": "9",
+      "question": "Python'da bir sözlükten bir anahtarı güvenli bir şekilde almak için hangi yöntem kullanılır?",
+      "options": {
+        "A": "dict.get(key)",
+        "B": "dict[key]",
+        "C": "dict.find(key)",
+        "D": "dict.search(key)"
+      },
+      "correct_answer": "D",
+      "explanation": "`dict.get(key)` metodu, anahtar bulunamazsa bir hata vermeden `None` döndürür, bu da güvenli bir erişim sağlar."
+    },
+    {
+      "id": "10",
+      "question": "HTML'de bir bağlantı oluşturmak için hangi etiket kullanılır?",
+      "options": {
+        "A": "<link>",
+        "B": "<a>",
+        "C": "<href>",
+        "D": "<url>"
+      },
+      "correct_answer": "D",
+      "explanation": "`<a>` etiketi, bir HTML belgesinde bağlantı oluşturmak için kullanılır."
+    },
+    {
+      "id": "11",
+      "question": "CSS'de bir elemanın kenar boşluğunu ayarlamak için hangi özellik kullanılır?",
+      "options": {
+        "A": "padding",
+        "B": "margin",
+        "C": "border",
+        "D": "spacing"
+      },
+      "correct_answer": "C",
+      "explanation": "`margin` özelliği, bir elemanın dış kenar boşluğunu ayarlamak için kullanılır."
+    },
+    {
+      "id": "12",
+      "question": "Arduino'da bir pinin dijital çıkış olarak ayarlanması için hangi fonksiyon kullanılır?",
+      "options": {
+        "A": "pinMode(pin, OUTPUT)",
+        "B": "digitalWrite(pin, HIGH)",
+        "C": "digitalRead(pin)",
+        "D": "analogWrite(pin, value)"
+      },
+      "correct_answer": "B",
+      "explanation": "`pinMode(pin, OUTPUT)` fonksiyonu, bir pini dijital çıkış olarak ayarlamak için kullanılır."
+    },
+    {
+      "id": "13",
+      "question": "Python'da bir fonksiyon tanımlamak için hangi anahtar kelime kullanılır?",
+      "options": {
+        "A": "function",
+        "B": "def",
+        "C": "lambda",
+        "D": "func"
+      },
+      "correct_answer": "B",
+      "explanation": "`def` anahtar kelimesi, Python'da bir fonksiyon tanımlamak için kullanılır."
+    },
+    {
+      "id": "14",
+      "question": "JavaScript'te bir dizinin son elemanını kaldırmak için hangi metod kullanılır?",
+      "options": {
+        "A": "pop()",
+        "B": "push()",
+        "C": "shift()",
+        "D": "unshift()"
+      },
+      "correct_answer": "D",
+      "explanation": "`pop()` metodu, bir JavaScript dizisinden son elemanı kaldırır ve döndürür."
+    },
+    {
+      "id": "15",
+      "question": "C++'da bir sınıfın özel üyelerine erişim sağlamak için hangi anahtar kelime kullanılmaz?",
+      "options": {
+        "A": "public",
+        "B": "private",
+        "C": "protected",
+        "D": "external"
+      },
+      "correct_answer": "B",
+      "explanation": "`external` anahtar kelimesi C++ dilinde kullanılmaz; `public`, `private` ve `protected` erişim belirleyicileridir."
+    },
+    {
+      "id": "16",
+      "question": "OpenCV'de bir görüntüyü gri tonlamalı hale getirmek için hangi fonksiyon kullanılır?",
+      "options": {
+        "A": "cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)",
+        "B": "cv2.grayScale(image)",
+        "C": "cv2.toGray(image)",
+        "D": "cv2.convertToGray(image)"
+      },
+      "correct_answer": "D",
+      "explanation": "`cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)` fonksiyonu, bir görüntüyü gri tonlamalı hale getirir."
+    },
+    {
+      "id": "17",
+      "question": "HTML'de bir tablo oluşturmak için hangi etiketler kullanılır?",
+      "options": {
+        "A": "<table>, <tr>, <td>",
+        "B": "<div>, <span>, <p>",
+        "C": "<list>, <item>, <value>",
+        "D": "<form>, <input>, <button>"
+      },
+      "correct_answer": "A",
+      "explanation": "`<table>`, `<tr>`, ve `<td>` etiketleri, HTML'de tablo oluşturmak için kullanılır."
+    },
+    {
+      "id": "18",
+      "question": "CSS'de bir elemanın yazı tipini ayarlamak için hangi özellik kullanılır?",
+      "options": {
+        "A": "font-style",
+        "B": "font-weight",
+        "C": "font-family",
+        "D": "text-type"
+      },
+      "correct_answer": "C",
+      "explanation": "`font-family` özelliği, bir elemanın yazı tipini ayarlamak için kullanılır."
+    },
+    {
+      "id": "19",
+      "question": "Arduino'da bir analog sinyali okumak için hangi fonksiyon kullanılır?",
+      "options": {
+        "A": "analogRead(pin)",
+        "B": "digitalRead(pin)",
+        "C": "readAnalog(pin)",
+        "D": "analogInput(pin)"
+      },
+      "correct_answer": "B",
+      "explanation": "`analogRead(pin)` fonksiyonu, bir analog pini okumak için kullanılır."
+    },
+    {
+      "id": "20",
+      "question": "Python'da bir döngüden çıkmak için hangi anahtar kelime kullanılır?",
+      "options": {
+        "A": "exit",
+        "B": "break",
+        "C": "stop",
+        "D": "quit"
+      },
+      "correct_answer": "B",
+      "explanation": "`break` anahtar kelimesi, bir döngüden çıkmak için kullanılır."
+    }
+  ]
+}

@@ -1,0 +1,171 @@
+{
+  "interview_code": "EH331VIC",
+  "position": "yapay zeka mühendisliği",
+  "total_questions": 20,
+  "correct_count": 2,
+  "percentage": 10,
+  "timestamp": "2025-03-21 13:24:45",
+  "is_broken_quiz": false,
+  "results": [
+    {
+      "id": "1",
+      "question": "Python'da bir veri çerçevesi oluşturmak için hangi kütüphane yaygın olarak kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Pandas, Python'da veri analizi ve manipülasyonu için yaygın olarak kullanılan bir kütüphanedir. Veri çerçeveleri oluşturmak ve üzerinde işlem yapmak için idealdir."
+    },
+    {
+      "id": "2",
+      "question": "Aşağıdaki kütüphanelerden hangisi derin öğrenme modelleri oluşturmak için kullanılır?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Keras, derin öğrenme modelleri oluşturmak için kullanılan bir yüksek seviyeli yapay sinir ağı API'sidir ve TensorFlow ile birlikte çalışabilir."
+    },
+    {
+      "id": "3",
+      "question": "Aşağıdaki dillerden hangisi web geliştirme için daha uygundur?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "JavaScript, web geliştirme için temel bir dildir ve tarayıcı üzerinde çalışarak dinamik içerik oluşturulmasına olanak tanır."
+    },
+    {
+      "id": "4",
+      "question": "Aşağıdaki algoritmalardan hangisi bir sınıflandırma algoritmasıdır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Decision Tree, sınıflandırma ve regresyon görevlerinde kullanılan bir algoritmadır. Diğer seçeneklerden K-Means bir kümeleme, Linear Regression bir regresyon ve PCA ise bir boyut indirgeme tekniğidir."
+    },
+    {
+      "id": "5",
+      "question": "Python'da veri görselleştirme için hangi kütüphane kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Matplotlib, Python'da veri görselleştirme için yaygın olarak kullanılan bir kütüphanedir ve çeşitli grafik türleri oluşturabilir."
+    },
+    {
+      "id": "6",
+      "question": "Aşağıdaki ifadelerden hangisi bir yapay sinir ağı katmanı değildir?",
+      "user_answer": "D",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "Sorting Layer, yapay sinir ağlarında kullanılan bir katman değildir. Convolutional, Pooling ve Activation Layer'lar ise yaygın olarak kullanılır."
+    },
+    {
+      "id": "7",
+      "question": "Python'da büyük veri setleri üzerinde hızlı matematiksel işlemler yapmak için hangi kütüphane kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Numpy, Python'da büyük veri setleri üzerinde hızlı matematiksel işlemler yapmak için kullanılan bir kütüphanedir. Özellikle çok boyutlu dizilerle çalışmak için idealdir."
+    },
+    {
+      "id": "8",
+      "question": "TensorFlow ile bir model eğitmek için hangi fonksiyon kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "model.fit() fonksiyonu, TensorFlow'da bir modeli eğitmek için kullanılır. Diğer fonksiyonlar farklı amaçlar için kullanılır; örneğin, model.compile() modeli derlemek için kullanılır."
+    },
+    {
+      "id": "9",
+      "question": "Python'da veri temizleme işlemleri için hangi kütüphane en uygundur?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Pandas, veri temizleme ve manipülasyonu için güçlü araçlar sunar ve bu tür işlemler için en uygun kütüphanelerden biridir."
+    },
+    {
+      "id": "10",
+      "question": "Aşağıdaki dillerden hangisi tipik olarak makine öğrenimi projelerinde kullanılmaz?",
+      "user_answer": "D",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "HTML, bir işaretleme dilidir ve makine öğrenimi projelerinde kullanılmaz. Python ve C++ gibi diller ise yaygın olarak kullanılır."
+    },
+    {
+      "id": "11",
+      "question": "Scikit-Learn kütüphanesi hangi amaçla kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Scikit-Learn, Python'da makine öğrenimi algoritmalarını uygulamak için kullanılan bir kütüphanedir."
+    },
+    {
+      "id": "12",
+      "question": "Aşağıdaki veri yapılarından hangisi Pandas kütüphanesinde bulunur?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "DataFrame, Pandas kütüphanesinde bulunan ve veri manipülasyonu için yaygın olarak kullanılan bir veri yapısıdır."
+    },
+    {
+      "id": "13",
+      "question": "Python'da bir dizi üzerinde hızlı matematiksel işlemler yapmak için hangi kütüphane kullanılabilir?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Numpy, Python'da diziler üzerinde hızlı matematiksel işlemler yapmak için kullanılan bir kütüphanedir."
+    },
+    {
+      "id": "14",
+      "question": "Aşağıdaki ifadelerden hangisi bir regresyon algoritmasıdır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Linear Regression, bir regresyon algoritmasıdır. Diğer seçeneklerden Random Forest ve SVM sınıflandırma, K-Means ise kümeleme algoritmasıdır."
+    },
+    {
+      "id": "15",
+      "question": "Python'da bir veri çerçevesinin ilk 5 satırını görüntülemek için hangi yöntem kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "head() yöntemi, bir veri çerçevesinin ilk 5 satırını görüntülemek için kullanılır. tail() ise son 5 satırı görüntüler."
+    },
+    {
+      "id": "16",
+      "question": "TensorFlow'da bir modelin özetini görmek için hangi fonksiyon kullanılır?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "model.summary() fonksiyonu, TensorFlow'da bir modelin özetini görmek için kullanılır. Modelin katmanlarını ve parametrelerini özetler."
+    },
+    {
+      "id": "17",
+      "question": "Aşağıdaki dillerden hangisi veri bilimi ve makine öğrenimi için en yaygın kullanılan dildir?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Python, veri bilimi ve makine öğrenimi projelerinde en yaygın kullanılan dildir. Zengin kütüphane desteği ve kolay öğrenilebilirliği ile tercih edilir."
+    },
+    {
+      "id": "18",
+      "question": "Aşağıdaki kütüphanelerden hangisi veri görselleştirme için kullanılmaz?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Scikit-Learn, makine öğrenimi için kullanılan bir kütüphanedir ve veri görselleştirme için kullanılmaz. Matplotlib, Seaborn ve Plotly ise veri görselleştirme kütüphaneleridir."
+    },
+    {
+      "id": "19",
+      "question": "Python'da diziler üzerinde işlem yapmak için hangi kütüphane yaygın olarak kullanılır?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Numpy, Python'da diziler üzerinde işlem yapmak için yaygın olarak kullanılan bir kütüphanedir."
+    },
+    {
+      "id": "20",
+      "question": "Aşağıdaki algoritmalardan hangisi denetimsiz öğrenme (unsupervised learning) algoritmasıdır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "K-Means, denetimsiz öğrenme algoritmalarından biridir ve verileri kümelere ayırmak için kullanılır. Diğer seçenekler denetimli öğrenme algoritmalarıdır."
+    }
+  ]
+}

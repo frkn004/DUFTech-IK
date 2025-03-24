@@ -1,0 +1,92 @@
+{
+  "interview_code": "RIGUTBLA",
+  "position": "YAPAY ZEKA STAJERİ",
+  "timestamp": "2025-03-17 17:45:13",
+  "score": {
+    "correct": 0,
+    "total": 10,
+    "percentage": 0
+  },
+  "results": [
+    {
+      "id": "1",
+      "question": "Python dilinde veri analizi yaparken hangi kütüphane veri manipülasyonu ve analizi için en yaygın olarak kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Pandas, Python dilinde veri manipülasyonu ve analizi için en yaygın kullanılan kütüphanelerden biridir. Veri çerçeveleri ve serilerle çalışmak için çeşitli araçlar sunar."
+    },
+    {
+      "id": "2",
+      "question": "Aşağıdaki kütüphanelerden hangisi derin öğrenme modelleri oluşturmak ve eğitmek için kullanılır?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Keras, derin öğrenme modelleri oluşturmak ve eğitmek için kullanılan yüksek seviyeli bir API'dir ve genellikle TensorFlow ile birlikte kullanılır."
+    },
+    {
+      "id": "3",
+      "question": "YOLOv8n modeli hangi alanda kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "YOLO (You Only Look Once), bilgisayarla görü alanında nesne tespiti için kullanılan bir modeldir. YOLOv8n, bu modelin yeni bir versiyonudur."
+    },
+    {
+      "id": "4",
+      "question": "OpenAI API ile hangi tür uygulamalar geliştirilebilir?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "OpenAI API, doğal dil işleme ve chatbot uygulamaları geliştirmek için yaygın olarak kullanılır. ChatGPT-3.5 Turbo gibi modeller, dil tabanlı görevlerde etkilidir."
+    },
+    {
+      "id": "5",
+      "question": "TensorFlow kütüphanesi hangi amaçla kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "TensorFlow, Google tarafından geliştirilen bir açık kaynaklı kütüphanedir ve derin öğrenme modelleri oluşturmak ve eğitmek için kullanılır."
+    },
+    {
+      "id": "6",
+      "question": "Aşağıdaki dillerden hangisi web sayfası yapısının oluşturulmasında kullanılır?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "HTML (HyperText Markup Language), web sayfalarının yapısını oluşturmak için kullanılan bir işaretleme dilidir."
+    },
+    {
+      "id": "7",
+      "question": "Aşağıdaki kütüphanelerden hangisi grafik ve veri görselleştirme için kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Matplotlib, Python'da grafik ve veri görselleştirme için kullanılan bir kütüphanedir. Çizimler ve grafikler oluşturmak için geniş bir araç seti sunar."
+    },
+    {
+      "id": "8",
+      "question": "C++ dilinde bir programın derlenmesi için hangi araç gereklidir?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "C++ gibi derleme gerektiren dillerde, kaynak kodu makine diline çevirmek için bir derleyici (compiler) kullanılır."
+    },
+    {
+      "id": "9",
+      "question": "Python'da veri analizi için hangi kütüphane, büyük veri kümeleri üzerinde hızlı matematiksel işlemler yapmayı sağlar?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Numpy, Python'da büyük veri kümeleri üzerinde hızlı matematiksel işlemler yapmayı sağlayan bir kütüphanedir. Çok boyutlu diziler ve matrisler üzerinde çalışmak için çeşitli fonksiyonlar sunar."
+    },
+    {
+      "id": "10",
+      "question": "Scikit-Learn kütüphanesi hangi tür uygulamalar için kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Scikit-Learn, Python'da makine öğrenimi uygulamaları geliştirmek için kullanılan bir kütüphanedir. Sınıflandırma, regresyon ve kümeleme gibi çeşitli algoritmalar içerir."
+    }
+  ]
+}

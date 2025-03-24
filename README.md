@@ -30,14 +30,13 @@
 4. [Sistem Gereksinimleri](#-sistem-gereksinimleri)
 5. [Kurulum](#-kurulum)
 6. [Konfigürasyon](#-konfigürasyon)
-7. [Domain Yapılandırması](#-domain-yapılandırması)
-8. [Kullanım](#-kullanım)
-9. [API Dokümantasyonu](#-api-dokümantasyonu)
-10. [Güvenlik](#-güvenlik)
-11. [Hata Ayıklama](#-hata-ayıklama)
-12. [SSS](#-sss)
-13. [Katılım](#-katılım)
-14. [Lisans](#-lisans)
+7. [Kullanım](#-kullanım)
+8. [API Dokümantasyonu](#-api-dokümantasyonu)
+9. [Güvenlik](#-güvenlik)
+10. [Hata Ayıklama](#-hata-ayıklama)
+11. [SSS](#-sss)
+12. [Katılım](#-katılım)
+13. [Lisans](#-lisans)
 
 ## 📋 Proje Hakkında
 
@@ -234,125 +233,6 @@ AUDIO_SETTINGS = {
     'silence_threshold': 500,
     'silence_duration': 1.5
 }
-```
-
-## 🌐 Domain Yapılandırması
-
-### www.aimulakat.duftech.com.tr Kurulumu
-
-DUF Tech Mülakat Asistanı'nı `www.aimulakat.duftech.com.tr` adresinde çalıştırmak için aşağıdaki adımları izleyin:
-
-#### 1. Ortam Değişkenleri
-
-`.env` dosyasına domain ile ilgili yapılandırmaları ekleyin:
-
-```env
-# Domain Ayarları
-DOMAIN_NAME=www.aimulakat.duftech.com.tr
-PORT=5000
-```
-
-#### 2. Gunicorn ile Sunucu Kurulumu
-
-Gunicorn ile üretim ortamında çalıştırmak için:
-
-```bash
-# Gunicorn yükleyin
-pip install gunicorn
-
-# Uygulamayı başlatın
-gunicorn --bind 0.0.0.0:5000 --workers 4 --threads 2 wsgi:application
-```
-
-#### 3. Nginx Yapılandırması
-
-Nginx sunucusu ile reverse proxy yapılandırması:
-
-```nginx
-server {
-    listen 80;
-    server_name www.aimulakat.duftech.com.tr aimulakat.duftech.com.tr;
-    
-    location / {
-        proxy_pass http://127.0.0.1:5000;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-    
-    # Websocket desteği
-    location /socket.io {
-        proxy_pass http://127.0.0.1:5000/socket.io;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-    }
-}
-```
-
-#### 4. SSL Sertifikası
-
-Let's Encrypt ile ücretsiz SSL sertifikası edinme:
-
-```bash
-# Certbot yükleyin
-sudo apt install certbot python3-certbot-nginx
-
-# Sertifika alın
-sudo certbot --nginx -d www.aimulakat.duftech.com.tr -d aimulakat.duftech.com.tr
-```
-
-#### 5. Systemd Servis Yapılandırması
-
-Sürekli çalışır durumda tutmak için systemd servis dosyası oluşturun:
-
-```bash
-sudo nano /etc/systemd/system/duftech-interview.service
-```
-
-```ini
-[Unit]
-Description=DufTech AI Mülakat Sistemi
-After=network.target
-
-[Service]
-User=<kullanıcı_adınız>
-Group=<grup_adınız>
-WorkingDirectory=/path/to/mulakat-duftech
-Environment="PATH=/path/to/mulakat-duftech/venv/bin"
-ExecStart=/path/to/mulakat-duftech/venv/bin/gunicorn --workers 4 --bind 0.0.0.0:5000 wsgi:application
-Restart=always
-
-[Install]
-WantedBy=multi-user.target
-```
-
-Servisi etkinleştirin ve başlatın:
-
-```bash
-sudo systemctl enable duftech-interview
-sudo systemctl start duftech-interview
-sudo systemctl status duftech-interview
-```
-
-#### 6. Firewall Yapılandırması
-
-```bash
-# HTTP ve HTTPS portlarını açın
-sudo ufw allow 80/tcp
-sudo ufw allow 443/tcp
-```
-
-#### 7. DNS Kayıtları
-
-Domain sağlayıcınızda aşağıdaki DNS kayıtlarını oluşturun:
-
-```
-A     www.aimulakat.duftech.com.tr    <Sunucu_IP_Adresi>
-A     aimulakat.duftech.com.tr        <Sunucu_IP_Adresi>
 ```
 
 ## 📱 Kullanım

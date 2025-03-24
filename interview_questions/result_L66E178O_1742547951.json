@@ -1,0 +1,172 @@
+{
+  "interview_code": "L66E178O",
+  "position": "YAPAY ZEKA STAJERİ",
+  "timestamp": "2025-03-21 12:05:51",
+  "score": {
+    "correct": 20,
+    "total": 20,
+    "percentage": 100
+  },
+  "results": [
+    {
+      "id": "1",
+      "question": "Python dilinde bir veri çerçevesindeki eksik verileri ortalama değerle doldurmak için hangi kütüphane ve fonksiyon genellikle kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "Pandas kütüphanesi, veri manipülasyonu ve analizi için yaygın olarak kullanılır ve fillna() fonksiyonu, eksik verileri doldurmak için kullanılır."
+    },
+    {
+      "id": "2",
+      "question": "HTML ve CSS kullanarak bir web sayfasında stil ve tasarımı ayarlamak için hangi CSS özelliği kullanılır?",
+      "user_answer": "D",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "margin, padding ve border CSS özellikleri, bir web sayfasının stil ve tasarımını ayarlamak için kullanılır."
+    },
+    {
+      "id": "3",
+      "question": "C/C++ dilinde bir dizinin boyutunu belirlemek için hangi fonksiyon kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "C/C++ dilinde, sizeof() operatörü bir dizinin boyutunu belirlemek için kullanılır."
+    },
+    {
+      "id": "4",
+      "question": "SQL'de bir tablodan belirli bir sütundaki tekrar eden verileri kaldırmak için hangi anahtar kelime kullanılır?",
+      "user_answer": "D",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "DISTINCT anahtar kelimesi, SQL sorgularında bir sütundaki tekrar eden verileri kaldırmak için kullanılır."
+    },
+    {
+      "id": "5",
+      "question": "JavaScript'te bir fonksiyonun kendisini çağırabilmesi için kullanılan terim nedir?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "Recursive, bir fonksiyonun kendisini çağırması anlamına gelir ve JavaScript'te bu tür fonksiyonlar oluşturulabilir."
+    },
+    {
+      "id": "6",
+      "question": "MySQL'de veri tabanı yedeklemesi almak için hangi komut kullanılır?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "mysqldump komutu, MySQL'de veri tabanı yedeklemesi almak için kullanılır."
+    },
+    {
+      "id": "7",
+      "question": "Python'da bir listeyi tersine çevirmek için hangi yöntem kullanılır?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "reverse() metodu, Python'da bir listeyi tersine çevirmek için kullanılır."
+    },
+    {
+      "id": "8",
+      "question": "Makine öğreniminde modelin aşırı öğrenmesini (overfitting) önlemek için hangi teknik kullanılabilir?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "Regularization, modelin aşırı öğrenmesini önlemek için kullanılan bir tekniktir."
+    },
+    {
+      "id": "9",
+      "question": "Python'da bir sözlükteki tüm anahtarları listelemek için hangi metod kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "keys() metodu, bir sözlükteki tüm anahtarları listelemek için kullanılır."
+    },
+    {
+      "id": "10",
+      "question": "HTML'de bir form elemanına veri gönderiminde hangi method attribute'u kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "POST yöntemi, bir formdan sunucuya veri göndermek için kullanılır ve genellikle veri gönderiminde kullanılır."
+    },
+    {
+      "id": "11",
+      "question": "SQL'de bir tablodaki tüm verileri silmek için hangi komut kullanılır?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "TRUNCATE komutu, bir tablodaki tüm verileri hızlı bir şekilde silmek için kullanılır, ancak tablo yapısını korur."
+    },
+    {
+      "id": "12",
+      "question": "C++ dilinde bir sınıfın özel üyelerine erişim sağlamak için hangi anahtar kelime kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "friend anahtar kelimesi, bir sınıfın özel üyelerine başka bir sınıf veya fonksiyon tarafından erişim sağlanması için kullanılır."
+    },
+    {
+      "id": "13",
+      "question": "Python'da bir dosyayı okuma modunda açmak için hangi sembol kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "\"r\" sembolü, bir dosyayı okuma modunda açmak için kullanılır."
+    },
+    {
+      "id": "14",
+      "question": "JavaScript'te bir değişkenin veri tipini kontrol etmek için hangi fonksiyon kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "typeof operatörü, JavaScript'te bir değişkenin veri tipini kontrol etmek için kullanılır."
+    },
+    {
+      "id": "15",
+      "question": "HTML'de bir bağlantı oluşturmak için hangi etiket kullanılır?",
+      "user_answer": "D",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "<a> etiketi, HTML'de bir bağlantı oluşturmak için kullanılır."
+    },
+    {
+      "id": "16",
+      "question": "Python'da bir modülün içeriğini içe aktarmak için hangi anahtar kelime kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "import anahtar kelimesi, Python'da bir modülün içeriğini içe aktarmak için kullanılır."
+    },
+    {
+      "id": "17",
+      "question": "SQL'de bir tablodaki verileri güncellemek için hangi komut kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "UPDATE komutu, SQL'de bir tablodaki verileri güncellemek için kullanılır."
+    },
+    {
+      "id": "18",
+      "question": "C dilinde bir karakter dizisinin uzunluğunu ölçmek için hangi fonksiyon kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "strlen() fonksiyonu, C dilinde bir karakter dizisinin uzunluğunu ölçmek için kullanılır."
+    },
+    {
+      "id": "19",
+      "question": "Python'da bir listenin son elemanını kaldırmak için hangi metot kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "pop() metodu, Python'da bir listenin son elemanını kaldırmak için kullanılır."
+    },
+    {
+      "id": "20",
+      "question": "HTML'de bir resmi görüntülemek için hangi etiket kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "<img> etiketi, HTML'de bir resmi görüntülemek için kullanılır."
+    }
+  ]
+}

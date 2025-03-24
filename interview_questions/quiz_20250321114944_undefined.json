@@ -1,0 +1,249 @@
+{
+  "position": "yapay zeka mühendisliği",
+  "interview_code": "undefined",
+  "quiz_type": "both",
+  "cv_context": "Adayın becerileri: Python, JavaScript, C++, Arduino, HTML, CSS\n\nAdayın deneyimleri:\n- Stajyer at Keydata Bilgi İşlem Teknoloji Sistemleri: Keçiören Etlik Hastanesi bilgi sistemi için sezgisel bir ön yüz arayüzü geliştirdik ve tasarladık.\n- Stajyer at Keydata Bilgi İşlem Teknoloji Sistemleri: Python ve OpenCV kütüphanesi kullanarak kafa ve el hareketleriyle bilgisayar üzerinde komutlar vererek çalışmayı kolaylaştıran bir yazılım geliştirildi.\n\nAdayın eğitimi:\n- Üniversite 2. Sınıf in Alan, Ostim Teknik Üniversitesi\n\n",
+  "created_at": "2025-03-21T11:49:44.595261",
+  "questions": [
+    {
+      "id": "1",
+      "question": "Python dilinde bir listeyi tersten yazdırmak için hangi yöntem kullanılır?",
+      "options": {
+        "A": "list.reverse()",
+        "B": "reversed(list)",
+        "C": "list[::-1]",
+        "D": "list.sort(reverse=True)"
+      },
+      "correct_answer": "C",
+      "explanation": "list[::-1] dilimleme yöntemi kullanılarak bir listeyi tersten yazdırmanın en hızlı ve basit yoludur."
+    },
+    {
+      "id": "2",
+      "question": "JavaScript'te bir değişkenin türünü kontrol etmek için hangi fonksiyon kullanılır?",
+      "options": {
+        "A": "typeof",
+        "B": "type",
+        "C": "getType",
+        "D": "isType"
+      },
+      "correct_answer": "A",
+      "explanation": "JavaScript'te bir değişkenin türünü öğrenmek için typeof operatörü kullanılır."
+    },
+    {
+      "id": "3",
+      "question": "C++ dilinde bir sınıfın özel üyelerine erişmek için hangi anahtar kelime kullanılır?",
+      "options": {
+        "A": "private",
+        "B": "public",
+        "C": "protected",
+        "D": "friend"
+      },
+      "correct_answer": "A",
+      "explanation": "friend anahtar kelimesi, bir sınıfın başka bir sınıfın özel ve korumalı üyelerine erişmesine izin verir."
+    },
+    {
+      "id": "4",
+      "question": "Python'da OpenCV kütüphanesi ile bir görüntüyü gri tonlamaya çevirmek için hangi fonksiyon kullanılır?",
+      "options": {
+        "A": "cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)",
+        "B": "cv2.grayScale(image)",
+        "C": "cv2.toGray(image)",
+        "D": "cv2.convertToGray(image)"
+      },
+      "correct_answer": "A",
+      "explanation": "cv2.cvtColor fonksiyonu, bir görüntüyü farklı renk uzaylarına dönüştürmek için kullanılır ve cv2.COLOR_BGR2GRAY parametresi ile gri tonlamaya çevrilir."
+    },
+    {
+      "id": "5",
+      "question": "HTML'de bir form elemanını tanımlamak için hangi etiket kullanılır?",
+      "options": {
+        "A": "<form>",
+        "B": "<input>",
+        "C": "<button>",
+        "D": "<div>"
+      },
+      "correct_answer": "D",
+      "explanation": "<form> etiketi, HTML'de bir formu tanımlamak için kullanılır ve form elemanlarının kapsayıcısıdır."
+    },
+    {
+      "id": "6",
+      "question": "CSS'de bir elemanın arka plan rengini değiştirmek için hangi özellik kullanılır?",
+      "options": {
+        "A": "color",
+        "B": "background-color",
+        "C": "border-color",
+        "D": "text-color"
+      },
+      "correct_answer": "C",
+      "explanation": "background-color özelliği, bir elemanın arka plan rengini ayarlamak için kullanılır."
+    },
+    {
+      "id": "7",
+      "question": "Arduino'da bir LED'i yakmak için hangi fonksiyon kullanılır?",
+      "options": {
+        "A": "digitalWrite(pin, HIGH)",
+        "B": "analogWrite(pin, HIGH)",
+        "C": "setPin(pin, HIGH)",
+        "D": "lightUp(pin)"
+      },
+      "correct_answer": "C",
+      "explanation": "digitalWrite fonksiyonu, belirtilen pindeki bir çıkışı HIGH veya LOW olarak ayarlamak için kullanılır."
+    },
+    {
+      "id": "8",
+      "question": "Python dilinde bir sözlükten bir anahtar-silmek için hangi yöntem kullanılır?",
+      "options": {
+        "A": "del dict[key]",
+        "B": "dict.remove(key)",
+        "C": "dict.pop(key)",
+        "D": "dict.delete(key)"
+      },
+      "correct_answer": "C",
+      "explanation": "del anahtar kelimesi, bir sözlükten belirli bir anahtarı ve onun değerini silmek için kullanılır."
+    },
+    {
+      "id": "9",
+      "question": "JavaScript'te bir dizinin sonuna eleman eklemek için hangi yöntem kullanılır?",
+      "options": {
+        "A": "push()",
+        "B": "append()",
+        "C": "add()",
+        "D": "insert()"
+      },
+      "correct_answer": "B",
+      "explanation": "push() yöntemi, JavaScript'te bir dizinin sonuna bir veya daha fazla eleman eklemek için kullanılır."
+    },
+    {
+      "id": "10",
+      "question": "C++ dilinde bir işlevin aşırı yüklenmesi (overloading) ne anlama gelir?",
+      "options": {
+        "A": "Aynı ada sahip birden fazla işlevin farklı parametrelerle tanımlanması",
+        "B": "Aynı ada sahip birden fazla işlevin aynı parametrelerle tanımlanması",
+        "C": "İşlevlerin çalışma zamanında seçilmesi",
+        "D": "İşlevlerin farklı dosyalarda tanımlanması"
+      },
+      "correct_answer": "B",
+      "explanation": "İşlev aşırı yüklenmesi, aynı ada sahip birden fazla işlevin farklı parametrelerle tanımlanmasıdır ve derleyici hangi işlevin çağrıldığını parametre türlerine göre belirler."
+    },
+    {
+      "id": "11",
+      "question": "Python'da bir modülü içe aktarmak için hangi anahtar kelime kullanılır?",
+      "options": {
+        "A": "import",
+        "B": "include",
+        "C": "require",
+        "D": "load"
+      },
+      "correct_answer": "B",
+      "explanation": "import anahtar kelimesi, Python'da bir modülü içe aktarmak için kullanılır."
+    },
+    {
+      "id": "12",
+      "question": "HTML'de bir bağlantı oluşturmak için hangi etiket kullanılır?",
+      "options": {
+        "A": "<a>",
+        "B": "<link>",
+        "C": "<url>",
+        "D": "<href>"
+      },
+      "correct_answer": "B",
+      "explanation": "<a> etiketi, HTML'de bir bağlantı (anchor) oluşturmak için kullanılır ve href özelliği ile hedef URL belirtilir."
+    },
+    {
+      "id": "13",
+      "question": "JavaScript'te bir nesnenin özelliklerini döngü ile gezmek için hangi yapı kullanılır?",
+      "options": {
+        "A": "for...in",
+        "B": "for...of",
+        "C": "forEach",
+        "D": "map"
+      },
+      "correct_answer": "D",
+      "explanation": "for...in döngüsü, JavaScript'te bir nesnenin özelliklerini gezmek için kullanılır."
+    },
+    {
+      "id": "14",
+      "question": "C++ dilinde bir sınıfın varsayılan yapıcısı (default constructor) nedir?",
+      "options": {
+        "A": "Parametre almayan yapıcı",
+        "B": "Bir sınıfın tek parametreli yapıcısı",
+        "C": "Bir sınıfın kopya yapıcısı",
+        "D": "Bir sınıfın özel yapıcısı"
+      },
+      "correct_answer": "A",
+      "explanation": "Varsayılan yapıcı, bir sınıfın parametre almayan yapıcısıdır ve sınıfın bir örneği oluşturulduğunda otomatik olarak çağrılır."
+    },
+    {
+      "id": "15",
+      "question": "Python'da bir dosyayı okumak için hangi mod kullanılmalıdır?",
+      "options": {
+        "A": "'r'",
+        "B": "'w'",
+        "C": "'a'",
+        "D": "'x'"
+      },
+      "correct_answer": "B",
+      "explanation": "'r' modu, Python'da bir dosyayı okumak için kullanılır."
+    },
+    {
+      "id": "16",
+      "question": "CSS'de bir metni kalın yapmak için hangi özellik kullanılır?",
+      "options": {
+        "A": "font-weight",
+        "B": "font-style",
+        "C": "text-decoration",
+        "D": "text-transform"
+      },
+      "correct_answer": "C",
+      "explanation": "font-weight özelliği, bir metni kalın yapmak için kullanılır ve değer olarak 'bold' verilebilir."
+    },
+    {
+      "id": "17",
+      "question": "Arduino'da bir analog sensörün değerini okumak için hangi fonksiyon kullanılır?",
+      "options": {
+        "A": "analogRead(pin)",
+        "B": "digitalRead(pin)",
+        "C": "readAnalog(pin)",
+        "D": "getAnalogValue(pin)"
+      },
+      "correct_answer": "D",
+      "explanation": "analogRead fonksiyonu, belirtilen pinden bir analog değeri okumak için kullanılır."
+    },
+    {
+      "id": "18",
+      "question": "JavaScript'te bir dizinin belirli bir elemanını silmek için hangi yöntem kullanılır?",
+      "options": {
+        "A": "delete array[index]",
+        "B": "array.remove(index)",
+        "C": "array.pop(index)",
+        "D": "array.splice(index, 1)"
+      },
+      "correct_answer": "C",
+      "explanation": "splice() yöntemi, bir diziden belirli bir konumdan itibaren eleman(lar)ı silmek için kullanılır."
+    },
+    {
+      "id": "19",
+      "question": "C++ dilinde bir işlevin dönüş türünü belirtmek neden önemlidir?",
+      "options": {
+        "A": "İşlevin döndürdüğü değerin türünü belirlemek için",
+        "B": "İşlevin parametre türlerini belirlemek için",
+        "C": "İşlevin adını belirlemek için",
+        "D": "İşlevin kapsamını belirlemek için"
+      },
+      "correct_answer": "D",
+      "explanation": "Bir işlevin dönüş türü, işlevin döndürdüğü değerin türünü belirlemek için önemlidir ve işlevin nasıl kullanılacağını etkiler."
+    },
+    {
+      "id": "20",
+      "question": "Python'da bir fonksiyonun içinden global bir değişkeni değiştirmek için hangi anahtar kelime kullanılır?",
+      "options": {
+        "A": "global",
+        "B": "nonlocal",
+        "C": "extern",
+        "D": "static"
+      },
+      "correct_answer": "C",
+      "explanation": "global anahtar kelimesi, bir fonksiyonun içinden global bir değişkeni değiştirmek için kullanılır."
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "interview_code": "MGL8HRLN",
+  "position": "yapay zeka mühendisliği",
+  "timestamp": "2025-03-21 12:59:32",
+  "score": {
+    "correct": 10,
+    "total": 10,
+    "percentage": 100
+  },
+  "results": [
+    {
+      "id": "1",
+      "question": "Python dilinde bir yapay zeka modeli eğitmek için hangi kütüphane en yaygın olarak kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "TensorFlow, yapay zeka ve makine öğrenimi modelleri geliştirmek için yaygın olarak kullanılan bir kütüphanedir. Python'da derin öğrenme ve yapay zeka projeleri için tercih edilen bir araçtır."
+    },
+    {
+      "id": "2",
+      "question": "SQL dilinde veri tabanından veri çekmek için hangi komut kullanılır?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "SELECT komutu, SQL dilinde veri tabanından veri çekmek için kullanılır. Diğer seçenekler farklı işlemler için kullanılır."
+    },
+    {
+      "id": "3",
+      "question": "Bir web sayfasının yapısını tanımlamak için hangi dil kullanılır?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "HTML, bir web sayfasının yapısını tanımlamak için kullanılan bir işaretleme dilidir. Web geliştirmede temel bir bileşendir."
+    },
+    {
+      "id": "4",
+      "question": "C++ dilinde bir sınıfın içerisinde bir fonksiyon tanımlarken hangi anahtar kelime kullanılır?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "C++ dilinde bir sınıfın içerisinde bir fonksiyon tanımlarken, fonksiyonun dönüş türünü belirtmek için kullanılır. \"void\" dönüş türü olmayan fonksiyonlar için kullanılır."
+    },
+    {
+      "id": "5",
+      "question": "MySQL'de bir tabloya yeni bir sütun eklemek için hangi SQL komutu kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "ALTER TABLE komutu, bir tabloya yeni bir sütun eklemek veya mevcut bir tabloyu değiştirmek için kullanılır. ADD COLUMN, ALTER TABLE komutunun bir parçası olarak kullanılır."
+    },
+    {
+      "id": "6",
+      "question": "JavaScript dilinde bir değişken tanımlamak için hangi anahtar kelime kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "JavaScript'te bir değişken tanımlamak için \"var\" anahtar kelimesi kullanılır. Ancak, modern JavaScript'te \"let\" ve \"const\" da kullanılabilir."
+    },
+    {
+      "id": "7",
+      "question": "ML modellerinde eğitim verisi ile test verisini ayırmak için hangi Python kütüphanesi yaygın olarak kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "Scikit-learn, makine öğrenimi modellerinde eğitim ve test veri setlerini ayırmak için yaygın olarak kullanılan bir Python kütüphanesidir."
+    },
+    {
+      "id": "8",
+      "question": "Bir web sayfasının stilini tanımlamak için hangi dil kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "CSS, bir web sayfasının stilini ve görünümünü tanımlamak için kullanılır. HTML ile birlikte çalışarak sayfanın yapısını ve stilini oluşturur."
+    },
+    {
+      "id": "9",
+      "question": "Python'da bir listeyi sıralamak için hangi yöntem kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "Python'da bir listeyi sıralamak için \"sort()\" yöntemi kullanılır. Diğer yöntemler farklı liste işlemleri için kullanılır."
+    },
+    {
+      "id": "10",
+      "question": "C dilinde bir değişkenin bellekte kapladığı alanı öğrenmek için hangi fonksiyon kullanılır?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "\"sizeof()\" fonksiyonu, C dilinde bir değişkenin bellekte kapladığı alanı öğrenmek için kullanılır. Diğer fonksiyonlar farklı bellek işlemleri için kullanılır."
+    }
+  ]
+}

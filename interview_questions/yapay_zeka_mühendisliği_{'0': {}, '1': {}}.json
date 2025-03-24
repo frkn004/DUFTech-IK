@@ -1,0 +1,257 @@
+{
+    "position": "Yapay Zeka Mühendisliği",
+    "questions": [
+        {
+            "id": 1,
+            "question": "Python'da bir dizi içerisinde en büyük elemanı bulmak için hangi fonksiyon kullanılabilir?",
+            "options": {
+                "A": "len()",
+                "B": "max()",
+                "C": "min()",
+                "D": "sum()"
+            },
+            "correct_answer": "B",
+            "explanation": "Python'da max() fonksiyonu, bir dizideki en büyük elemanı bulmak için kullanılır."
+        },
+        {
+            "id": 2,
+            "question": "Aşağıdakilerden hangisi sınıflandırma problemlerinde kullanılan bir yapay zeka modelidir?",
+            "options": {
+                "A": "Linear Regression",
+                "B": "Decision Tree",
+                "C": "Fourier Transform",
+                "D": "Eigen Decomposition"
+            },
+            "correct_answer": "B",
+            "explanation": "Decision Tree (Karar Ağacı), sınıflandırma problemleri için kullanılan popüler bir yapay zeka modelidir."
+        },
+        {
+            "id": 3,
+            "question": "JavaScript ile bir HTML sayfasındaki bir elementin içeriğini değiştirmek için hangi metot kullanılır?",
+            "options": {
+                "A": "getElementById()",
+                "B": "innerHTML",
+                "C": "changeContent()",
+                "D": "modifyHTML()"
+            },
+            "correct_answer": "B",
+            "explanation": "innerHTML metodu, belirtilen HTML elementinin içeriğini değiştirmek için kullanılır."
+        },
+        {
+            "id": 4,
+            "question": "MySQL'de bir tabloyu silmek için hangi SQL komutu kullanılır?",
+            "options": {
+                "A": "DROP TABLE",
+                "B": "DELETE TABLE",
+                "C": "REMOVE TABLE",
+                "D": "ERASE TABLE"
+            },
+            "correct_answer": "A",
+            "explanation": "MySQL'de bir tabloyu veritabanından kaldırmak için 'DROP TABLE' SQL komutu kullanılır."
+        },
+        {
+            "id": 5,
+            "question": "Aşağıdaki yapay zeka modellerinden hangisi derin öğrenme ile ilişkilidir?",
+            "options": {
+                "A": "Support Vector Machines",
+                "B": "K-Means Clustering",
+                "C": "Convolutional Neural Networks",
+                "D": "Principal Component Analysis"
+            },
+            "correct_answer": "C",
+            "explanation": "Convolutional Neural Networks (CNN), derin öğrenme modelleri arasında yer alır ve özellikle görüntü işleme uygulamaları için popülerdir."
+        },
+        {
+            "id": 6,
+            "question": "HTML sayfalarında stil bilgileri için hangi etiket kullanılır?",
+            "options": {
+                "A": "<html>",
+                "B": "<head>",
+                "C": "<body>",
+                "D": "<style>"
+            },
+            "correct_answer": "D",
+            "explanation": "<style> etiketi, HTML sayfalarında CSS stil bilgilerini tanımlamak için kullanılır."
+        },
+        {
+            "id": 7,
+            "question": "Python'da bir veri setinden rastgele bir örnek seçmek için hangi kütüphane kullanılır?",
+            "options": {
+                "A": "math",
+                "B": "random",
+                "C": "numpy",
+                "D": "pandas"
+            },
+            "correct_answer": "B",
+            "explanation": "Python'da random kütüphanesi, rastgele sayı üretimi ve veri seçimi işlemleri için kullanılır."
+        },
+        {
+            "id": 8,
+            "question": "C++ programlama dilinde yeni bir nesne oluşturmak için hangi anahtar kelime kullanılır?",
+            "options": {
+                "A": "class",
+                "B": "struct",
+                "C": "interface",
+                "D": "new"
+            },
+            "correct_answer": "D",
+            "explanation": "C++ dilinde 'new' anahtar kelimesi, yeni bir nesne oluşturmak için kullanılır."
+        },
+        {
+            "id": 9,
+            "question": "Aşağıdakilerden hangisi, bir yapay zekanın etik olmayan kullanımına bir örnek olabilir?",
+            "options": {
+                "A": "Tıbbi teşhis koymak",
+                "B": "Otomatik sürüş sistemleri",
+                "C": "Kişisel verilerin izinsiz kullanımı",
+                "D": "Satranç oynamak"
+            },
+            "correct_answer": "C",
+            "explanation": "Kişisel verilerin izinsiz kullanımı, yapay zekanın etik olmayan kullanımlarından biridir."
+        },
+        {
+            "id": 10,
+            "question": "SQL'de birden fazla tablodan veri çekmek için kullanılan komut hangisidir?",
+            "options": {
+                "A": "SELECT",
+                "B": "JOIN",
+                "C": "COMBINE",
+                "D": "UNION"
+            },
+            "correct_answer": "B",
+            "explanation": "SQL'de 'JOIN' komutu, birden fazla tablodan veri çekmek için kullanılır."
+        },
+        {
+            "id": 11,
+            "question": "HTML'de bir resim eklemek için hangi etiket kullanılır?",
+            "options": {
+                "A": "<img>",
+                "B": "<picture>",
+                "C": "<graphics>",
+                "D": "<image>"
+            },
+            "correct_answer": "A",
+            "explanation": "<img> etiketi, HTML sayfalarında resim eklemek için kullanılır."
+        },
+        {
+            "id": 12,
+            "question": "Python ile veri analizi için en çok kullanılan kütüphane hangisidir?",
+            "options": {
+                "A": "Numpy",
+                "B": "Pandas",
+                "C": "Scipy",
+                "D": "Matplotlib"
+            },
+            "correct_answer": "B",
+            "explanation": "Pandas kütüphanesi, Python ile veri analizi yapmak için en yaygın olarak kullanılan kütüphanelerden biridir."
+        },
+        {
+            "id": 13,
+            "question": "JavaScript'te bir diziyi sıralamak için hangi metot kullanılır?",
+            "options": {
+                "A": "sort()",
+                "B": "order()",
+                "C": "arrange()",
+                "D": "lineup()"
+            },
+            "correct_answer": "A",
+            "explanation": "JavaScript'te dizileri sıralamak için 'sort()' metodu kullanılır."
+        },
+        {
+            "id": 14,
+            "question": "Aşağıdakilerden hangisi, yapay zeka sistemlerinin öğrenme sürecinde kullanılan bir yöntemdir?",
+            "options": {
+                "A": "Supervised Learning",
+                "B": "Passive Watching",
+                "C": "Observational Learning",
+                "D": "Indirect Instruction"
+            },
+            "correct_answer": "A",
+            "explanation": "Supervised Learning (Gözetimli Öğrenme), yapay zeka sistemlerinin öğrenme sürecinde kullanılan ana yöntemlerden biridir."
+        },
+        {
+            "id": 15,
+            "question": "MySQL'de bir sorgu sonucunu filtrelemek için hangi anahtar kelime kullanılır?",
+            "options": {
+                "A": "FILTER",
+                "B": "WHERE",
+                "C": "SELECT",
+                "D": "ORDER"
+            },
+            "correct_answer": "B",
+            "explanation": "SQL'de 'WHERE' anahtar kelimesi, sorgu sonuçlarını belirli kriterlere göre filtrelemek için kullanılır."
+        },
+        {
+            "id": 16,
+            "question": "HTML'de bir sayfaya başlık eklemek için kullanılan etiket hangisidir?",
+            "options": {
+                "A": "<header>",
+                "B": "<head>",
+                "C": "<title>",
+                "D": "<h1>"
+            },
+            "correct_answer": "C",
+            "explanation": "<title> etiketi, HTML belgesinin başlığını tanımlamak için kullanılır ve bu başlık tarayıcı sekmesinde görüntülenir."
+        },
+        {
+            "id": 17,
+            "question": "Python'da bir dosyayı okumak için hangi fonksiyon kullanılır?",
+            "options": {
+                "A": "read()",
+                "B": "write()",
+                "C": "open()",
+                "D": "load()"
+            },
+            "correct_answer": "C",
+            "explanation": "Python'da dosya açmak için 'open()' fonksiyonu kullanılır; bu fonksiyon dosyayı okuma veya yazma modunda açabilir."
+        },
+        {
+            "id": 18,
+            "question": "Yapay zeka modelinin performansını değerlendirmek için kullanılan metriklerden biri nedir?",
+            "options": {
+                "A": "Precision",
+                "B": "Efficiency",
+                "C": "Speed",
+                "D": "Capacity"
+            },
+            "correct_answer": "A",
+            "explanation": "Precision (Kesinlik), yapay zeka modelinin performansını değerlendirmek için kullanılan önemli metriklerden biridir."
+        },
+        {
+            "id": 19,
+            "question": "C++'da bir sınıfın başka bir sınıftan türetilmesi işlemine ne ad verilir?",
+            "options": {
+                "A": "Polymorphism",
+                "B": "Encapsulation",
+                "C": "Inheritance",
+                "D": "Abstraction"
+            },
+            "correct_answer": "C",
+            "explanation": "C++ dilinde bir sınıfın başka bir sınıftan türetilmesi işlemine 'Inheritance' (Kalıtım) denir."
+        },
+        {
+            "id": 20,
+            "question": "Yapay zeka uygulamalarında veri ön işleme adımı neden önemlidir?",
+            "options": {
+                "A": "Verileri daha hızlı işlemek için",
+                "B": "Verileri depolamak için",
+                "C": "Modelin daha iyi performans göstermesini sağlamak için",
+                "D": "Veri kaybını önlemek için"
+            },
+            "correct_answer": "C",
+            "explanation": "Veri ön işleme, yapay zeka modellerinin daha etkin öğrenmesi ve daha iyi performans göstermesi için kritik bir adımdır."
+        }
+    ],
+    "quiz_type": "both",
+    "cv_based": true,
+    "cv_skills": [
+        "Microsoft Office",
+        "Python",
+        "C/C++",
+        "JavaScript",
+        "MySQL",
+        "HTML & CSS",
+        "SQL"
+    ],
+    "cv_position": "yapay zeka mühendisliği"
+}

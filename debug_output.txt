@@ -1,0 +1,50 @@
+                                "preferred_experience": ["deneyim1", "deneyim2", ...],
+                                "education_requirements": ["eğitim1", "eğitim2", ...],
+                                "keywords": ["anahtar kelime1", "anahtar kelime2", ...]
+                            }
+                            
+                            Tahminlerin mümkün olduğunca gerçekçi ve doğru olmalı.
+                        """},
+                        {"role": "user", "content": f"Bu pozisyon için gereksinimleri analiz et: {position}"}
+                    ]
+                )
+                
+                position_data = json.loads(position_response.choices[0].message.content)
+                position_context = f"""
+                    Pozisyon bilgilerini de analiz et:
+                    Pozisyon: {position}
+                    Gerekli beceriler: {', '.join(position_data.get('required_skills', []))}
+                    Tercih edilen deneyimler: {', '.join(position_data.get('preferred_experience', []))}
+                    Anahtar kelimeler: {', '.join(position_data.get('keywords', []))}
+                """
+            except Exception as e:
+                logging.error(f"Pozisyon analizi hatası: {str(e)}")
+        
+        # CV Analizi yap
+        try:
+            response = client.chat.completions.create(
+                model="gpt-4-turbo",
+                response_format={"type": "json_object"},
+                messages=[
+                    {"role": "system", "content": f"""
+        response = client.chat.completions.create(
+            model="gpt-4-turbo",
+            response_format={"type": "json_object"},
+            messages=[
+                {"role": "system", "content": f"""
+                    Sen bir CV analiz uzmanısın. Verilen CV metnini analiz ederek aşağıdaki yapılandırılmış JSON formatında döndür:
+                    
+                    {{
+                        "personal_info": {{
+                            "name": "Ad Soyad",
+                            "email": "e-posta adresi",
+                            "phone": "telefon numarası",
+                            "location": "konum"
+                        }},
+                        "summary": "Adayın kısa özeti",
+                        "skills": ["beceri1", "beceri2", ...],
+                        "experience": [
+                            {{
+                                "title": "Pozisyon başlığı",
+                                "company": "Şirket adı",
+                                "duration": "Çalışma süresi",

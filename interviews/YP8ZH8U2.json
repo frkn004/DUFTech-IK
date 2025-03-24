@@ -1,0 +1,127 @@
+{
+  "code": "YP8ZH8U2",
+  "candidate_name": "İsimsiz Aday",
+  "position": "yapay zeka mühendisliği",
+  "questions": [
+    "1. Yapay zekanın temel bileşenleri hakkında bilgi verebilir misiniz?",
+    "2. Belirli bir veri setinde overfitting problemini nasıl tanımlar ve çözersiniz?",
+    "3. Günlük çalışmalarınızda hangi yapay zeka frameworklerini kullandınız?",
+    "4. Çeşitli regresyon teknikleri hakkında bilgi verebilir misiniz?",
+    "5. NLP konusunda ne gibi deneyimleriniz var?"
+  ],
+  "status": "pending",
+  "created_at": "2025-03-17T17:48:38.171590",
+  "cv_data": {
+    "certificates": [],
+    "education": [
+      {
+        "degree": "Bachelor of Engineering",
+        "description": "AI Engineering - GPA: 3.20",
+        "institution": "OSTİM Technical University",
+        "year": "Graduation Date: Jun 2028"
+      }
+    ],
+    "experience": [
+      {
+        "achievements": [
+          "Developed a real-time vision-based human and object tracking system for aquatic environments.",
+          "Currently developing a system to detect drowning incidents using machine learning and computer vision.",
+          "Designed AI models integrated with embedded systems for decision-making.",
+          "Improved emergency response system efficiency with advanced object recognition and tracking."
+        ],
+        "company": "Maren Robotics",
+        "description": "Developed vision-based detection systems for aquatic safety and emergency responses, and AI models for embedded systems in aquatic environments.",
+        "duration": "Sep 2024 - Present",
+        "title": "Part-Time AI Engineer"
+      },
+      {
+        "achievements": [
+          "Created an AI-powered HR assistant and meeting automation system.",
+          "Focused on prompt engineering for accuracy in large language models.",
+          "Developed AI-based customer support automation using NLP."
+        ],
+        "company": "AIVA Tech",
+        "description": "Developed automation systems in HR and project management, enhanced NLP applications, and provided AI solution support.",
+        "duration": "Aug 2024 - Present",
+        "title": "AI Technical and Software Engineer"
+      },
+      {
+        "achievements": [
+          "Cleaned and transformed over 102 million data entries.",
+          "Developed a helmet detection model for workplace safety.",
+          "Implemented AI solutions for operational efficiency."
+        ],
+        "company": "Limak Cement",
+        "description": "Performed data preparation and integrated machine learning models to optimize energy usage and enhance safety.",
+        "duration": "Feb 2024 - Jul 2025",
+        "title": "AI Intern"
+      },
+      {
+        "achievements": [
+          "Improved forecast accuracy from 64% to 96%."
+        ],
+        "company": "OSTİM Organized Industrial Zone Directorate",
+        "description": "Developed a machine learning-based revenue forecasting tool.",
+        "duration": "Jun 2024 - Sep 2024",
+        "title": "AI Intern"
+      },
+      {
+        "achievements": [],
+        "company": "OSTİMTech Technology Transfer Office",
+        "description": "Contributed to operations and academic-industrial collaborations.",
+        "duration": "Feb 2024 - Jun 2025",
+        "title": "Intern"
+      }
+    ],
+    "generated_questions": [
+      "Nisa Hanım, CV'nizde belirttiğiniz Python, C/C++, JavaScript ve MySQL becerilerinizi nasıl edindiğinizi anlatır mısınız? Özellikle, her birini ne kadar süreyle ve hangi projelerde kullandığınızı belirtir misiniz?",
+      "Maren Robotics şirketinde yarı zamanlı bir AI mühendisi olarak çalıştığınızı gördüm. Burada hangi projelerde yer aldınız ve bu projelerin başarısına nasıl katkıda bulundunuz? Ayrıca, bu deneyiminizde en büyük zorluklarınız nelerdi ve bunları nasıl aştınız?",
+      "AIVA Tech'deki AI Teknik ve Yazılım Mühendisi pozisyonunuz hakkında biraz daha bilgi alabilir miyim? Bu pozisyondaki görevleriniz nelerdi ve burada hangi teknolojileri kullandınız? Ayrıca, bu rolde sahip olduğunuz en büyük başarılarınız nelerdi?",
+      "OSTİM Teknik Üniversitesi'nde mühendislik eğitimi aldığınızı gördüm. Bu eğitim programında hangi kursları en faydalı buldunuz ve bu kurslar profesyonel hayatınızda nasıl bir etki yarattı?",
+      "Microsoft Office becerileriniz hakkında konuşabilir miyiz? Bu araçları profesyonel ortamda hangi şekillerde kullandınız ve bu becerilerin sizin için bir AI mühendisi olarak ne gibi avantajları oldu?",
+      "Yapay zeka mühendisliği alanında hangi trendlerin veya gelişmelerin sizin ilgi alanınıza girdiğini ve kariyerinizi nasıl etkilediğini bize anlatabilir misiniz?",
+      "Son olarak, bir AI mühendisi olarak kendi gelişiminizi ve öğrenmenizi nasıl sürdürdüğünüzü anlatabilir misiniz? Kendinizi bu alanda nasıl güncel tutuyorsunuz ve yeni beceriler öğrenmek için hangi kaynakları kullanıyorsunuz?"
+    ],
+    "languages": [
+      "English B2",
+      "German B1"
+    ],
+    "personal_info": {
+      "email": "nisaduru72@gmail.com",
+      "location": "Ankara",
+      "name": "Nisa Duru",
+      "phone": "0552 328 55 07"
+    },
+    "position_match": {
+      "match_percentage": 80,
+      "matching_skills": [
+        "Python",
+        "Natural Language Processing (NLP)",
+        "Makine öğrenimi algoritmaları"
+      ],
+      "missing_skills": [
+        "Derin öğrenme teknikleri",
+        "TensorFlow veya PyTorch",
+        "Yapay zeka modeli optimizasyonu",
+        "Model eğitimi ve test süreçleri"
+      ],
+      "recommendations": [
+        "Explore deep learning techniques through specific courses or projects.",
+        "Gain practical experience with TensorFlow or PyTorch.",
+        "Work on model optimization and evaluation strategies."
+      ]
+    },
+    "profile_summary": "Nisa Duru demonstrates notable experience in AI engineering roles focused on safety, automation, and intelligent processing across several industries. Her robust skills in machine learning and systems integration are evident through her contributions to both commercial and industrial projects.",
+    "skills": [
+      "Microsoft Office (Excel, Word, PowerPoint)",
+      "Python",
+      "C/C++",
+      "JavaScript",
+      "MySQL",
+      "HTML & CSS",
+      "SQL"
+    ],
+    "success": true,
+    "summary": "An AI Engineer experienced in developing AI-driven systems for real-time decision-making and automation, with a focus on safety improvements, efficiency enhancements, and intelligent process automation."
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "interview_code": "53LGTS2Z",
+  "position": "YAPAY ZEKA STAJERİ",
+  "timestamp": "2025-03-20 23:17:26",
+  "score": {
+    "correct": 3,
+    "total": 10,
+    "percentage": 30
+  },
+  "results": [
+    {
+      "id": "1",
+      "question": "Python'da bir veri kümesini yüklemek ve temel istatistikleri hesaplamak için hangi kütüphane yaygın olarak kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Pandas, Python'da veri yükleme, işleme ve istatistik hesaplamaları için yaygın olarak kullanılan bir kütüphanedir. NumPy ise daha çok sayısal işlemler için kullanılırken, Matplotlib veri görselleştirme için, TensorFlow ise derin öğrenme modelleri için kullanılır."
+    },
+    {
+      "id": "2",
+      "question": "SQL'de bir veritabanındaki tüm kayıtları silmek için hangi komut kullanılır?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "DELETE komutu, bir tablodaki tüm veya belirli kayıtları silmek için kullanılır. DROP komutu ise tabloyu tamamen kaldırır. TRUNCATE, tüm kayıtları siler ancak tabloyu bırakır. REMOVE ise SQL'de geçerli bir komut değildir."
+    },
+    {
+      "id": "3",
+      "question": "C++ dilinde bir sınıfın özel üyelerine dışarıdan erişimi kontrol etmek için hangi erişim belirteci kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "C++ dilinde \"private\" erişim belirteci, bir sınıfın üyelerinin dışarıdan erişilmesini engeller. \"Public\" tüm erişimlere izin verirken, \"Protected\" ise türetilmiş sınıflara erişim izni verir. \"External\" ise geçerli bir erişim belirteci değildir."
+    },
+    {
+      "id": "4",
+      "question": "HTML ve CSS kullanarak bir web sayfasının stilini değiştirmek için hangi yöntem kullanılır?",
+      "user_answer": "D",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "HTML ve CSS'de stil değişiklikleri yapmak için inline, internal ve external CSS yöntemleri kullanılabilir. Her birinin farklı kullanım senaryoları ve avantajları vardır."
+    },
+    {
+      "id": "5",
+      "question": "JavaScript'te bir değişkenin türünü kontrol etmek için hangi operatör kullanılır?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "JavaScript'te \"typeof\" operatörü, bir değişkenin türünü kontrol etmek için kullanılır. \"Var\" ise değişken tanımlamak için kullanılırken, \"type\" ve \"instance\" geçerli operatörler değildir."
+    },
+    {
+      "id": "6",
+      "question": "Python'da bir listeyi tersten sıralamak için hangi yöntem kullanılır?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Python'da bir listeyi tersten sıralamak için \"reverse()\" yöntemi kullanılır. \"sort(reverse=True)\" sıralı bir listeyi tersine çevirir ancak orijinal listeyi değiştirmez. \"Invert\" ve \"Flip\" ise geçerli yöntemler değildir."
+    },
+    {
+      "id": "7",
+      "question": "MySQL'de bir tablonun yapısını değiştirmek için hangi komut kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "MySQL'de bir tablonun yapısını değiştirmek için \"ALTER\" komutu kullanılır. \"MODIFY\" ve \"CHANGE\" ise ALTER komutunun içinde kullanılabilecek alt komutlardır. \"UPDATE\" ise tablo verilerini güncellemek için kullanılır."
+    },
+    {
+      "id": "8",
+      "question": "Python'da bir modül içe aktarmak için hangi anahtar kelime kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Python'da bir modül içe aktarmak için \"import\" anahtar kelimesi kullanılır. \"Load\", \"include\" ve \"require\" ise Python'da geçerli olmayan anahtar kelimelerdir."
+    },
+    {
+      "id": "9",
+      "question": "Bir web sayfasında kullanıcı etkileşimlerini dinlemek için JavaScript'te hangi yapı kullanılır?",
+      "user_answer": "D",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "JavaScript'te kullanıcı etkileşimlerini dinlemek için \"Event Listener\" yapısı kullanılır. \"Callback\" bir işlevi çağırmak için, \"Promise\" asenkron işlemleri yönetmek için, \"Observer\" ise gözlemci tasarım deseni için kullanılır."
+    },
+    {
+      "id": "10",
+      "question": "Python'da bir dosyayı yazma modunda açmak için hangi mod kullanılmalıdır?",
+      "user_answer": "D",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "Python'da bir dosyayı yazma modunda açmak için 'w' (write) modu kullanılır. 'r' okuma, 'a' ekleme, 'x' ise yeni bir dosya oluşturma için kullanılır."
+    }
+  ]
+}

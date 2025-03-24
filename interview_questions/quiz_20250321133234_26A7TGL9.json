@@ -1,0 +1,249 @@
+{
+  "position": "yapay zeka mühendisliği",
+  "interview_code": "26A7TGL9",
+  "quiz_type": "both",
+  "cv_context": "Adayın becerileri: Microsoft Office (Excel, Word, PowerPoint), Python, C/C++, JavaScript, MySQL, HTML & CSS, SQL\n\nAdayın deneyimleri:\n- Part-Time AI Engineer at Maren Robotics: Develop and implement artificial intelligence models and algorithms in aquatic environments for safety and emergency responses.\n- AI Technical and Software Engineer at AIVA Tech: Focused on developing AI-driven solutions for HR and customer support, enhancing automation, performance, and productivity.\n- AI Intern at Limak Cement: Managed data for AI applications and developed ML models for operational efficiency and safety.\n\nAdayın eğitimi:\n- Bachelor of Engineering in Alan, OSTİM Technical University\n\n",
+  "created_at": "2025-03-21T13:32:34.111537",
+  "questions": [
+    {
+      "id": "1",
+      "question": "Yapay zeka mühendisliği pozisyonunda, hangi programlama dili genellikle makine öğrenimi ve veri analizi için en yaygın olarak kullanılır?",
+      "options": {
+        "A": "JavaScript",
+        "B": "C++",
+        "C": "Python",
+        "D": "HTML"
+      },
+      "correct_answer": "B",
+      "explanation": "Python, geniş kütüphane desteği ve kolay okunabilirliği nedeniyle makine öğrenimi ve veri analizi için en yaygın kullanılan programlama dilidir."
+    },
+    {
+      "id": "2",
+      "question": "SQL, hangi tür veritabanı yönetimi için kullanılır?",
+      "options": {
+        "A": "NoSQL veritabanları",
+        "B": "İlişkisel veritabanları",
+        "C": "Nesne yönelimli veritabanları",
+        "D": "Dosya tabanlı veritabanları"
+      },
+      "correct_answer": "D",
+      "explanation": "SQL, ilişkisel veritabanlarını yönetmek ve sorgulamak için kullanılan bir dildir."
+    },
+    {
+      "id": "3",
+      "question": "Yapay zeka modellerinin performansını değerlendirirken hangi metrik genellikle kullanılmaz?",
+      "options": {
+        "A": "Doğruluk",
+        "B": "Hassasiyet",
+        "C": "F1 Skoru",
+        "D": "HTML"
+      },
+      "correct_answer": "D",
+      "explanation": "HTML, bir işaretleme dilidir ve yapay zeka modellerinin performansını değerlendirmek için kullanılan bir metrik değildir."
+    },
+    {
+      "id": "4",
+      "question": "Aşağıdaki dillerden hangisi bir web sayfasının yapısını tanımlamak için kullanılır?",
+      "options": {
+        "A": "Python",
+        "B": "C++",
+        "C": "HTML",
+        "D": "SQL"
+      },
+      "correct_answer": "A",
+      "explanation": "HTML, bir web sayfasının yapısını tanımlamak için kullanılan bir işaretleme dilidir."
+    },
+    {
+      "id": "5",
+      "question": "MySQL, hangi tür veritabanı sistemine örnektir?",
+      "options": {
+        "A": "NoSQL",
+        "B": "İlişkisel veritabanı",
+        "C": "Nesne yönelimli veritabanı",
+        "D": "Dağıtılmış veritabanı"
+      },
+      "correct_answer": "A",
+      "explanation": "MySQL, ilişkisel veritabanı yönetim sistemi olarak bilinir ve verileri tablolar halinde saklar."
+    },
+    {
+      "id": "6",
+      "question": "JavaScript hangi tür uygulamalar geliştirmek için yaygın olarak kullanılır?",
+      "options": {
+        "A": "Masaüstü uygulamaları",
+        "B": "Web tabanlı uygulamalar",
+        "C": "Sistem yazılımları",
+        "D": "Veritabanı yönetim sistemleri"
+      },
+      "correct_answer": "C",
+      "explanation": "JavaScript, web tabanlı uygulamalar geliştirmek için yaygın olarak kullanılır."
+    },
+    {
+      "id": "7",
+      "question": "Aşağıdakilerden hangisi bir yapay zeka modelinin aşırı öğrenme (overfitting) yaptığını gösterir?",
+      "options": {
+        "A": "Eğitim verisinde yüksek doğruluk, test verisinde düşük doğruluk",
+        "B": "Eğitim verisinde düşük doğruluk, test verisinde yüksek doğruluk",
+        "C": "Hem eğitim hem de test verisinde yüksek doğruluk",
+        "D": "Hem eğitim hem de test verisinde düşük doğruluk"
+      },
+      "correct_answer": "A",
+      "explanation": "Aşırı öğrenme, modelin eğitim verisinde iyi performans gösterip, test verisinde düşük performans göstermesi durumunda ortaya çıkar."
+    },
+    {
+      "id": "8",
+      "question": "C/C++ hangi tür uygulamaların geliştirilmesinde genellikle tercih edilir?",
+      "options": {
+        "A": "Web uygulamaları",
+        "B": "Sistem yazılımları ve gömülü sistemler",
+        "C": "Mobil uygulamalar",
+        "D": "Grafik tasarım yazılımları"
+      },
+      "correct_answer": "C",
+      "explanation": "C/C++ genellikle sistem yazılımları ve gömülü sistemlerin geliştirilmesinde kullanılır."
+    },
+    {
+      "id": "9",
+      "question": "Python'da veri görselleştirme için hangi kütüphane yaygın olarak kullanılır?",
+      "options": {
+        "A": "NumPy",
+        "B": "Pandas",
+        "C": "Matplotlib",
+        "D": "SQLAlchemy"
+      },
+      "correct_answer": "A",
+      "explanation": "Matplotlib, Python'da veri görselleştirme için yaygın olarak kullanılan bir kütüphanedir."
+    },
+    {
+      "id": "10",
+      "question": "Aşağıdakilerden hangisi bir yapay zeka modelinin genel performansını artırmak için kullanılabilecek bir tekniktir?",
+      "options": {
+        "A": "Verilerin normalizasyonu",
+        "B": "Veritabanı optimizasyonu",
+        "C": "HTML kullanımı",
+        "D": "CSS kullanımı"
+      },
+      "correct_answer": "B",
+      "explanation": "Verilerin normalizasyonu, yapay zeka modellerinin performansını artırmak için kullanılan bir tekniktir."
+    },
+    {
+      "id": "11",
+      "question": "Bir yapay zeka mühendisinin, modelin doğruluğunu artırmak için hangi aşamayı iyileştirmesi gerekir?",
+      "options": {
+        "A": "Eğitim verisi hazırlama",
+        "B": "Kullanıcı arayüzü tasarımı",
+        "C": "Sunucu yönetimi",
+        "D": "HTML kodlama"
+      },
+      "correct_answer": "C",
+      "explanation": "Modelin doğruluğunu artırmak için eğitim verisinin kalitesi ve hazırlanışı iyileştirilmelidir."
+    },
+    {
+      "id": "12",
+      "question": "SQL'de veritabanından veri çekmek için hangi komut kullanılır?",
+      "options": {
+        "A": "INSERT",
+        "B": "UPDATE",
+        "C": "DELETE",
+        "D": "SELECT"
+      },
+      "correct_answer": "B",
+      "explanation": "SELECT komutu, SQL'de veritabanından veri çekmek için kullanılır."
+    },
+    {
+      "id": "13",
+      "question": "JavaScript hangi dilin bir uzantısı veya türevi değildir?",
+      "options": {
+        "A": "C++",
+        "B": "Java",
+        "C": "Python",
+        "D": "HTML"
+      },
+      "correct_answer": "B",
+      "explanation": "JavaScript, Python'un bir uzantısı veya türevi değildir. JavaScript, web geliştirme için kullanılan ayrı bir dildir."
+    },
+    {
+      "id": "14",
+      "question": "Aşağıdakilerden hangisi bir yapay zeka modelinin doğruluğunu artırmak için veri ön işleme aşamasında yapılabilir?",
+      "options": {
+        "A": "Verilerin etiketlenmesi",
+        "B": "CSS kullanımı",
+        "C": "HTML düzenlemesi",
+        "D": "Sunucu optimizasyonu"
+      },
+      "correct_answer": "A",
+      "explanation": "Veri ön işleme aşamasında verilerin doğru etiketlenmesi, modelin doğruluğunu artırabilir."
+    },
+    {
+      "id": "15",
+      "question": "Python'da veri analizi için hangi kütüphane yaygın olarak kullanılır?",
+      "options": {
+        "A": "Matplotlib",
+        "B": "Pandas",
+        "C": "BeautifulSoup",
+        "D": "Flask"
+      },
+      "correct_answer": "A",
+      "explanation": "Pandas, Python'da veri analizi için yaygın olarak kullanılan bir kütüphanedir."
+    },
+    {
+      "id": "16",
+      "question": "Aşağıdaki programlama dillerinden hangisi genellikle yapay zeka ve makine öğrenimi projelerinde kullanılmaz?",
+      "options": {
+        "A": "Python",
+        "B": "C++",
+        "C": "JavaScript",
+        "D": "HTML"
+      },
+      "correct_answer": "A",
+      "explanation": "HTML, bir işaretleme dilidir ve yapay zeka veya makine öğrenimi projelerinde kullanılmaz."
+    },
+    {
+      "id": "17",
+      "question": "SQL'de veritabanına yeni bir kayıt eklemek için hangi komut kullanılır?",
+      "options": {
+        "A": "SELECT",
+        "B": "DELETE",
+        "C": "INSERT",
+        "D": "UPDATE"
+      },
+      "correct_answer": "C",
+      "explanation": "INSERT komutu, SQL'de veritabanına yeni bir kayıt eklemek için kullanılır."
+    },
+    {
+      "id": "18",
+      "question": "Aşağıdakilerden hangisi yapay zeka modellerinin eğitimi sırasında kullanılan bir optimizasyon algoritmasıdır?",
+      "options": {
+        "A": "Gradient Descent",
+        "B": "Bubble Sort",
+        "C": "Binary Search",
+        "D": "Quick Sort"
+      },
+      "correct_answer": "C",
+      "explanation": "Gradient Descent, yapay zeka modellerinin eğitimi sırasında kullanılan bir optimizasyon algoritmasıdır."
+    },
+    {
+      "id": "19",
+      "question": "Python'da hangi kütüphane veri manipülasyonu ve analizi için güçlü veri yapıları sağlar?",
+      "options": {
+        "A": "NumPy",
+        "B": "Pandas",
+        "C": "SciPy",
+        "D": "TensorFlow"
+      },
+      "correct_answer": "D",
+      "explanation": "Pandas, veri manipülasyonu ve analizi için güçlü veri yapıları sağlayan bir Python kütüphanesidir."
+    },
+    {
+      "id": "20",
+      "question": "HTML ve CSS genellikle hangi tür geliştirme projelerinde kullanılır?",
+      "options": {
+        "A": "Masaüstü uygulama geliştirme",
+        "B": "Web geliştirme",
+        "C": "Veritabanı geliştirme",
+        "D": "Yapay zeka modeli geliştirme"
+      },
+      "correct_answer": "B",
+      "explanation": "HTML ve CSS, web geliştirme projelerinde kullanılan temel teknolojilerdir."
+    }
+  ]
+}

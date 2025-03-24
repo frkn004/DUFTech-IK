@@ -1,0 +1,129 @@
+{
+  "position": "yapay zeka mühendisliği",
+  "interview_code": "MGL8HRLN",
+  "quiz_type": "both",
+  "cv_context": "Adayın becerileri: Microsoft Office (Excel, Word, PowerPoint), Python, C/C++, JavaScript, MySQL, HTML & CSS, SQL\n\nAdayın deneyimleri:\n- Part-Time AI Engineer at Maren Robotics: Engaged in the development of AI-based solutions and systems for aquatic safety and real-time monitoring.\n- AI Technical and Software Engineer at AIVA Tech: Developing AI solutions for internal and client-based projects focusing on HR and meeting automation, and customer support.\n- AI Intern at Limak Cement: Worked on ML models for optimizing energy consumption and enhancing safety through visual data analysis.\n- AI Intern at OSTİM Organized Industrial Zone Directorate: Developed a revenue forecasting tool using ML improving prediction accuracy.\n- Intern at OSTİMTech Technology Transfer Office: Experience in technology transfer operations and academic-industrial collaborations.\n\nAdayın eğitimi:\n- Undergraduate in Alan, OSTİM Technical University\n\n",
+  "created_at": "2025-03-21T12:56:25.300272",
+  "questions": [
+    {
+      "id": "1",
+      "question": "Python dilinde bir yapay zeka modeli eğitmek için hangi kütüphane en yaygın olarak kullanılır?",
+      "options": {
+        "A": "NumPy",
+        "B": "TensorFlow",
+        "C": "Matplotlib",
+        "D": "Pandas"
+      },
+      "correct_answer": "C",
+      "explanation": "TensorFlow, yapay zeka ve makine öğrenimi modelleri geliştirmek için yaygın olarak kullanılan bir kütüphanedir. Python'da derin öğrenme ve yapay zeka projeleri için tercih edilen bir araçtır."
+    },
+    {
+      "id": "2",
+      "question": "SQL dilinde veri tabanından veri çekmek için hangi komut kullanılır?",
+      "options": {
+        "A": "INSERT",
+        "B": "DELETE",
+        "C": "SELECT",
+        "D": "UPDATE"
+      },
+      "correct_answer": "A",
+      "explanation": "SELECT komutu, SQL dilinde veri tabanından veri çekmek için kullanılır. Diğer seçenekler farklı işlemler için kullanılır."
+    },
+    {
+      "id": "3",
+      "question": "Bir web sayfasının yapısını tanımlamak için hangi dil kullanılır?",
+      "options": {
+        "A": "Python",
+        "B": "SQL",
+        "C": "HTML",
+        "D": "JavaScript"
+      },
+      "correct_answer": "B",
+      "explanation": "HTML, bir web sayfasının yapısını tanımlamak için kullanılan bir işaretleme dilidir. Web geliştirmede temel bir bileşendir."
+    },
+    {
+      "id": "4",
+      "question": "C++ dilinde bir sınıfın içerisinde bir fonksiyon tanımlarken hangi anahtar kelime kullanılır?",
+      "options": {
+        "A": "void",
+        "B": "class",
+        "C": "struct",
+        "D": "public"
+      },
+      "correct_answer": "B",
+      "explanation": "C++ dilinde bir sınıfın içerisinde bir fonksiyon tanımlarken, fonksiyonun dönüş türünü belirtmek için kullanılır. \"void\" dönüş türü olmayan fonksiyonlar için kullanılır."
+    },
+    {
+      "id": "5",
+      "question": "MySQL'de bir tabloya yeni bir sütun eklemek için hangi SQL komutu kullanılır?",
+      "options": {
+        "A": "ADD COLUMN",
+        "B": "ALTER TABLE",
+        "C": "CREATE TABLE",
+        "D": "INSERT INTO"
+      },
+      "correct_answer": "C",
+      "explanation": "ALTER TABLE komutu, bir tabloya yeni bir sütun eklemek veya mevcut bir tabloyu değiştirmek için kullanılır. ADD COLUMN, ALTER TABLE komutunun bir parçası olarak kullanılır."
+    },
+    {
+      "id": "6",
+      "question": "JavaScript dilinde bir değişken tanımlamak için hangi anahtar kelime kullanılır?",
+      "options": {
+        "A": "let",
+        "B": "int",
+        "C": "var",
+        "D": "const"
+      },
+      "correct_answer": "D",
+      "explanation": "JavaScript'te bir değişken tanımlamak için \"var\" anahtar kelimesi kullanılır. Ancak, modern JavaScript'te \"let\" ve \"const\" da kullanılabilir."
+    },
+    {
+      "id": "7",
+      "question": "ML modellerinde eğitim verisi ile test verisini ayırmak için hangi Python kütüphanesi yaygın olarak kullanılır?",
+      "options": {
+        "A": "NumPy",
+        "B": "Scikit-learn",
+        "C": "Matplotlib",
+        "D": "Pandas"
+      },
+      "correct_answer": "A",
+      "explanation": "Scikit-learn, makine öğrenimi modellerinde eğitim ve test veri setlerini ayırmak için yaygın olarak kullanılan bir Python kütüphanesidir."
+    },
+    {
+      "id": "8",
+      "question": "Bir web sayfasının stilini tanımlamak için hangi dil kullanılır?",
+      "options": {
+        "A": "HTML",
+        "B": "CSS",
+        "C": "Python",
+        "D": "SQL"
+      },
+      "correct_answer": "C",
+      "explanation": "CSS, bir web sayfasının stilini ve görünümünü tanımlamak için kullanılır. HTML ile birlikte çalışarak sayfanın yapısını ve stilini oluşturur."
+    },
+    {
+      "id": "9",
+      "question": "Python'da bir listeyi sıralamak için hangi yöntem kullanılır?",
+      "options": {
+        "A": "sort()",
+        "B": "append()",
+        "C": "remove()",
+        "D": "index()"
+      },
+      "correct_answer": "B",
+      "explanation": "Python'da bir listeyi sıralamak için \"sort()\" yöntemi kullanılır. Diğer yöntemler farklı liste işlemleri için kullanılır."
+    },
+    {
+      "id": "10",
+      "question": "C dilinde bir değişkenin bellekte kapladığı alanı öğrenmek için hangi fonksiyon kullanılır?",
+      "options": {
+        "A": "strlen()",
+        "B": "sizeof()",
+        "C": "malloc()",
+        "D": "free()"
+      },
+      "correct_answer": "C",
+      "explanation": "\"sizeof()\" fonksiyonu, C dilinde bir değişkenin bellekte kapladığı alanı öğrenmek için kullanılır. Diğer fonksiyonlar farklı bellek işlemleri için kullanılır."
+    }
+  ]
+}

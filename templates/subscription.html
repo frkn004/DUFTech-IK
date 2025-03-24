@@ -1,0 +1,260 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Üyelik Paketleri</h2>
+    
+    <!-- Mevcut Üyelik Bilgileri -->
+    <div class="card mb-4" id="currentSubscription">
+        <div class="card-header">
+            <h5 class="mb-0">Mevcut Üyeliğiniz</h5>
+        </div>
+        <div class="card-body">
+            <div class="text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Yükleniyor...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Kullanım İstatistikleri -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Kullanım İstatistikleri</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="progress mb-3">
+                        <div class="progress-bar" role="progressbar" id="interviewProgress" style="width: 0%"></div>
+                    </div>
+                    <p class="mb-0">Mülakat Kullanımı: <span id="interviewCount">0</span> / <span id="interviewLimit">0</span></p>
+                </div>
+                <div class="col-md-6">
+                    <div class="progress mb-3">
+                        <div class="progress-bar" role="progressbar" id="quizProgress" style="width: 0%"></div>
+                    </div>
+                    <p class="mb-0">Quiz Kullanımı: <span id="quizCount">0</span> / <span id="quizLimit">0</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Paketler -->
+    <div class="row" id="packages">
+        <div class="text-center">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Yükleniyor...</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Ödeme Modalı -->
+<div class="modal fade" id="paymentModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ödeme Bilgileri</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="paymentForm">
+                    <div class="mb-3">
+                        <label class="form-label">Kart Üzerindeki İsim</label>
+                        <input type="text" class="form-control" id="cardName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Kart Numarası</label>
+                        <input type="text" class="form-control" id="cardNumber" required>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Son Kullanma Tarihi</label>
+                            <input type="text" class="form-control" id="cardExpiry" placeholder="MM/YY" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">CVV</label>
+                            <input type="text" class="form-control" id="cardCvv" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                <button type="button" class="btn btn-primary" id="confirmPayment">Ödemeyi Tamamla</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+let selectedPackage = null;
+let paymentModal = null;
+
+document.addEventListener('DOMContentLoaded', function() {
+    paymentModal = new bootstrap.Modal(document.getElementById('paymentModal'));
+    loadCurrentSubscription();
+    loadUsageStats();
+    loadPackages();
+});
+
+function loadCurrentSubscription() {
+    fetch('/api/subscriptions/current')
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById('currentSubscription').querySelector('.card-body');
+            
+            if (data.success) {
+                const subscription = data.subscription;
+                container.innerHTML = `
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>${subscription.package_name}</h5>
+                            <p class="mb-1">Bitiş Tarihi: ${new Date(subscription.end_date).toLocaleDateString('tr-TR')}</p>
+                            <p class="mb-0">Fiyat: ${subscription.price} TL</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Özellikler:</h6>
+                            <ul class="list-unstyled">
+                                ${subscription.features.map(feature => `
+                                    <li><i class="bi bi-check-circle-fill text-success"></i> ${feature}</li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `
+                    <div class="text-center">
+                        <p class="mb-0">Aktif üyeliğiniz bulunmamaktadır.</p>
+                    </div>
+                `;
+            }
+        })
+        .catch(error => {
+            console.error('Üyelik bilgileri yüklenirken hata oluştu:', error);
+        });
+}
+
+function loadUsageStats() {
+    fetch('/api/subscriptions/usage')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const stats = data.stats;
+                document.getElementById('interviewCount').textContent = stats.interview_count;
+                document.getElementById('quizCount').textContent = stats.quiz_count;
+                
+                // Progress bar'ları güncelle
+                const interviewProgress = document.getElementById('interviewProgress');
+                const quizProgress = document.getElementById('quizProgress');
+                
+                interviewProgress.style.width = `${(stats.interview_count / stats.interview_limit) * 100}%`;
+                quizProgress.style.width = `${(stats.quiz_count / stats.quiz_limit) * 100}%`;
+                
+                // Limitleri güncelle
+                document.getElementById('interviewLimit').textContent = stats.interview_limit;
+                document.getElementById('quizLimit').textContent = stats.quiz_limit;
+            }
+        })
+        .catch(error => {
+            console.error('Kullanım istatistikleri yüklenirken hata oluştu:', error);
+        });
+}
+
+function loadPackages() {
+    fetch('/api/subscriptions')
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById('packages');
+            
+            if (data.success) {
+                container.innerHTML = data.packages.map(package => `
+                    <div class="col-md-3 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header text-center">
+                                <h5 class="mb-0">${package.name}</h5>
+                                <h3 class="mb-0">${package.price} TL</h3>
+                                <small class="text-muted">${package.duration_days} gün</small>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled">
+                                    ${package.features.map(feature => `
+                                        <li><i class="bi bi-check-circle-fill text-success"></i> ${feature}</li>
+                                    `).join('')}
+                                </ul>
+                                <p class="card-text">${package.description}</p>
+                            </div>
+                            <div class="card-footer text-center">
+                                <button class="btn btn-primary" onclick="selectPackage(${package.id})">
+                                    Seç
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        })
+        .catch(error => {
+            console.error('Paketler yüklenirken hata oluştu:', error);
+        });
+}
+
+function selectPackage(packageId) {
+    selectedPackage = packageId;
+    paymentModal.show();
+}
+
+document.getElementById('confirmPayment').addEventListener('click', function() {
+    if (!selectedPackage) return;
+    
+    // Ödeme işlemi simülasyonu
+    setTimeout(() => {
+        fetch('/api/subscriptions/purchase', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                package_id: selectedPackage
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                paymentModal.hide();
+                loadCurrentSubscription();
+                loadUsageStats();
+                showAlert('success', 'Üyelik başarıyla oluşturuldu!');
+            } else {
+                showAlert('danger', data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Ödeme işlemi sırasında hata oluştu:', error);
+            showAlert('danger', 'Ödeme işlemi sırasında bir hata oluştu.');
+        });
+    }, 1500);
+});
+
+function showAlert(type, message) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+    alertDiv.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    
+    document.querySelector('.container').insertBefore(alertDiv, document.querySelector('.card'));
+    
+    setTimeout(() => {
+        alertDiv.remove();
+    }, 5000);
+}
+</script>
+{% endblock %} 

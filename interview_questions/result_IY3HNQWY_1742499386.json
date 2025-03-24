@@ -1,0 +1,92 @@
+{
+  "interview_code": "IY3HNQWY",
+  "position": "YAPAY ZEKA STAJERİ",
+  "timestamp": "2025-03-20 22:36:26",
+  "score": {
+    "correct": 1,
+    "total": 10,
+    "percentage": 10
+  },
+  "results": [
+    {
+      "id": "1",
+      "question": "Python programlama dilinde bir listeyi sıralamak için hangi fonksiyon kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Python'da bir listeyi sıralamak için kullanılan fonksiyon \"sorted()\" fonksiyonudur. \"sort()\" fonksiyonu ise listeyi yerinde sıralar ve bir değer döndürmez."
+    },
+    {
+      "id": "2",
+      "question": "SQL'de, bir veritabanından belirli bir koşula uyan verileri seçmek için hangi anahtar kelime kullanılır?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "SQL'de \"WHERE\" anahtar kelimesi, bir sorguda belirli bir koşula uyan verileri seçmek için kullanılır. \"SELECT\" ise hangi sütunların seçileceğini belirtir."
+    },
+    {
+      "id": "3",
+      "question": "HTML'de bir web sayfasının başlığını belirlemek için hangi etiket kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "HTML'de bir web sayfasının başlığını belirlemek için \"<title>\" etiketi kullanılır. Bu etiket, sayfanın başlık çubuğunda görünen metni tanımlar."
+    },
+    {
+      "id": "4",
+      "question": "C++ dilinde bir sınıfın özel üyelerine erişmek için hangi anahtar kelime kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "C++ dilinde \"friend\" anahtar kelimesi, bir sınıfın özel üyelerine başka bir sınıftan veya fonksiyondan erişim izni vermek için kullanılır."
+    },
+    {
+      "id": "5",
+      "question": "JavaScript'te bir değişkeni tanımlamak için hangi anahtar kelime kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "JavaScript'te değişken tanımlamak için \"var\", \"let\" ve \"const\" anahtar kelimeleri kullanılabilir. \"var\" eski bir yöntemken, \"let\" ve \"const\" ES6 ile gelen daha modern yöntemlerdir."
+    },
+    {
+      "id": "6",
+      "question": "MySQL'de bir tablodan tüm verileri silmek için hangi komut kullanılır?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "MySQL'de bir tablodan tüm verileri silmek için \"TRUNCATE\" komutu kullanılır. \"DELETE\" ise belirli koşullara göre verileri silmek için kullanılır."
+    },
+    {
+      "id": "7",
+      "question": "Python'da bir döngüden çıkmak için hangi anahtar kelime kullanılır?",
+      "user_answer": "D",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "Python'da bir döngüden çıkmak için \"break\" anahtar kelimesi kullanılır. Bu, döngünün çalışmasını durdurur ve kontrolü döngünün dışına çıkarır."
+    },
+    {
+      "id": "8",
+      "question": "SQL'de iki tablo arasında bir ilişki kurmak için hangi anahtar kelime kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "SQL'de iki tablo arasında bir ilişki kurmak ve verileri birleştirmek için \"JOIN\" anahtar kelimesi kullanılır. \"UNION\" ise iki sorgunun sonuçlarını birleştirir."
+    },
+    {
+      "id": "9",
+      "question": "HTML ve CSS kullanarak bir sayfanın arka plan rengini ayarlamak için hangi CSS özelliği kullanılır?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "CSS'te bir sayfanın arka plan rengini ayarlamak için \"background-color\" özelliği kullanılır. \"color\" ise metin rengini ayarlamak için kullanılır."
+    },
+    {
+      "id": "10",
+      "question": "Python'da bir dizinin uzunluğunu bulmak için hangi fonksiyon kullanılır?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Python'da bir dizinin veya liste gibi bir veri yapısının uzunluğunu bulmak için \"len()\" fonksiyonu kullanılır. Bu fonksiyon, eleman sayısını döndürür."
+    }
+  ]
+}

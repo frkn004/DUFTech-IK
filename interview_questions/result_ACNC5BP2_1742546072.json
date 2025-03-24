@@ -1,0 +1,172 @@
+{
+  "interview_code": "ACNC5BP2",
+  "position": "yapay zeka mühendisliği",
+  "timestamp": "2025-03-21 11:34:32",
+  "score": {
+    "correct": 0,
+    "total": 20,
+    "percentage": 0
+  },
+  "results": [
+    {
+      "id": "1",
+      "question": "Python programlama dilinde bir veri setini makine öğrenimi modeline hazırlarken hangi kütüphane en yaygın olarak kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Pandas kütüphanesi, veri manipülasyonu ve analizinde yaygın olarak kullanılır ve veri setlerini makine öğrenimi modellerine hazırlamada önemli bir rol oynar."
+    },
+    {
+      "id": "2",
+      "question": "SQL dilinde bir veritabanından belirli bir sütunu seçmek için hangi komut kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "SELECT komutu, SQL dilinde bir veritabanından belirli sütunları veya tüm sütunları seçmek için kullanılır."
+    },
+    {
+      "id": "3",
+      "question": "C++ dilinde bir sınıfın özel üyelerine erişmek için hangi anahtar kelime kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "'friend' anahtar kelimesi, bir sınıfın özel üyelerine başka bir sınıf veya fonksiyon tarafından erişim izni vermek için kullanılır."
+    },
+    {
+      "id": "4",
+      "question": "HTML dilinde bir web sayfasının başlığını belirlemek için hangi etiket kullanılır?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "<title> etiketi, bir web sayfasının başlığını belirlemek için kullanılır ve bu başlık tarayıcı sekmesinde görüntülenir."
+    },
+    {
+      "id": "5",
+      "question": "CSS dilinde bir elementin arka plan rengini ayarlamak için hangi özellik kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "background-color özelliği, bir HTML elementinin arka plan rengini ayarlamak için kullanılır."
+    },
+    {
+      "id": "6",
+      "question": "Python'da bir listeyi sıralamak için hangi yöntem kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "sort() yöntemi, Python'da bir listeyi sıralamak için kullanılır."
+    },
+    {
+      "id": "7",
+      "question": "JavaScript'te bir değişken tanımlamak için hangi anahtar kelime kullanılmaz?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "JavaScript'te değişken tanımlamak için var, let ve const anahtar kelimeleri kullanılır. 'define' bir değişken tanımlama anahtar kelimesi değildir."
+    },
+    {
+      "id": "8",
+      "question": "MySQL'de bir tablo oluşturmak için hangi komut kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "CREATE TABLE komutu, MySQL'de yeni bir tablo oluşturmak için kullanılır."
+    },
+    {
+      "id": "9",
+      "question": "Makine öğreniminde modelin aşırı öğrenmesini (overfitting) önlemek için hangi yöntem kullanılabilir?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Regularization, modelin aşırı öğrenmesini önlemek için kullanılan bir tekniktir. Bu yöntem, modelin karmaşıklığını kontrol eder."
+    },
+    {
+      "id": "10",
+      "question": "Python'da bir sözlüğün tüm anahtarlarını almak için hangi yöntem kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "keys() yöntemi, bir Python sözlüğünün tüm anahtarlarını almak için kullanılır."
+    },
+    {
+      "id": "11",
+      "question": "C++ dilinde bir sınıfın türetilmiş sınıflar tarafından erişilebilen ancak dışarıdan erişilemeyen üyeleri için hangi erişim belirleyicisi kullanılır?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "'protected' erişim belirleyicisi, bir sınıfın türetilmiş sınıflar tarafından erişilebilen ancak dışarıdan erişilemeyen üyelerini tanımlar."
+    },
+    {
+      "id": "12",
+      "question": "SQL'de bir tablodan belirli koşullara uyan kayıtları seçmek için hangi anahtar kelime kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "WHERE anahtar kelimesi, SQL'de bir tablodan belirli koşullara uyan kayıtları seçmek için kullanılır."
+    },
+    {
+      "id": "13",
+      "question": "Python'da bir fonksiyonun tanımlanması için hangi anahtar kelime kullanılır?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Python'da bir fonksiyon tanımlamak için 'def' anahtar kelimesi kullanılır."
+    },
+    {
+      "id": "14",
+      "question": "JavaScript'te bir dizinin son elemanını kaldırmak için hangi yöntem kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "pop() yöntemi, JavaScript'te bir dizinin son elemanını kaldırmak için kullanılır."
+    },
+    {
+      "id": "15",
+      "question": "CSS'de bir elementin kenar boşluğunu ayarlamak için hangi özellik kullanılır?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "margin özelliği, bir HTML elementinin kenar boşluğunu ayarlamak için kullanılır."
+    },
+    {
+      "id": "16",
+      "question": "Python'da bir string'in uzunluğunu bulmak için hangi fonksiyon kullanılır?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "len() fonksiyonu, Python'da bir string'in veya herhangi bir koleksiyonun uzunluğunu bulmak için kullanılır."
+    },
+    {
+      "id": "17",
+      "question": "HTML'de bir form elemanını tanımlamak için hangi etiket kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "<form> etiketi, HTML'de bir form elemanını tanımlamak için kullanılır ve form içindeki diğer elemanları kapsar."
+    },
+    {
+      "id": "18",
+      "question": "SQL'de bir tablodan bir sütunu güncellemek için hangi komut kullanılır?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "UPDATE komutu, SQL'de bir tablodan belirli sütunları güncellemek için kullanılır."
+    },
+    {
+      "id": "19",
+      "question": "Python'da bir dosyayı okuma modunda açmak için hangi mod kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "'r' modu, Python'da bir dosyayı okuma modunda açmak için kullanılır."
+    },
+    {
+      "id": "20",
+      "question": "JavaScript'te bir fonksiyonun başka bir fonksiyonun içine yerleştirilmesine ne denir?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Nested Function, JavaScript'te bir fonksiyonun başka bir fonksiyonun içine yerleştirilmesine denir. Bu, fonksiyonlar arasında veri paylaşımını kolaylaştırır."
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "code": "RIGUTBLA",
+  "candidate_name": "İsimsiz Aday",
+  "position": "YAPAY ZEKA STAJERİ",
+  "questions": [
+    "1. Yapay zekanın temel bileşenleri hakkında bilgi verebilir misiniz?",
+    "2. Belirli bir veri setinde overfitting problemini nasıl tanımlar ve çözersiniz?",
+    "3. Günlük çalışmalarınızda hangi yapay zeka frameworklerini kullandınız?",
+    "4. Çeşitli regresyon teknikleri hakkında bilgi verebilir misiniz?",
+    "5. NLP konusunda ne gibi deneyimleriniz var?"
+  ],
+  "status": "completed",
+  "created_at": "2025-03-17T17:12:48.279297",
+  "cv_data": {
+    "certificates": [],
+    "education": [
+      {
+        "degree": "Bachelor of Engineering",
+        "description": "AI Engineering - GPA: 3.18",
+        "institution": "OSTIM Technical University",
+        "year": "Graduation Date: May 2027"
+      }
+    ],
+    "experience": [
+      {
+        "achievements": [
+          "Accelerated recommendation process by 90%",
+          "Achieved model accuracy of approximately 80%",
+          "Accelerated information retrieval by 95%"
+        ],
+        "company": "Limak Cement",
+        "description": "Fine-tuned a ChatBot using OpenAI API with the ChatGPT-3.5 Turbo model to provide training recommendations; developed a computer vision model using YOLOv8n and CUDA for worker safety compliance; created a document extraction and summarization tool using OCR.",
+        "duration": "Oct 2024 to Dec 2024",
+        "title": "AI Intern"
+      },
+      {
+        "achievements": [],
+        "company": "AIVA Tech",
+        "description": "Integrated and optimized AI-based systems, focusing on AI and automation solutions in various projects, including data analysis and reporting process optimizations.",
+        "duration": "Sep 2024 to Dec 2024",
+        "title": "AI Intern (Remote)"
+      },
+      {
+        "achievements": [
+          "Obtained a clean dataset of 40 million rows from original noisy data"
+        ],
+        "company": "Limak Cement",
+        "description": "Processed and cleaned a large-scale dataset, conducted various statistical analyses, and prepared the data for ML applications using PostgreSQL and Python.",
+        "duration": "Apr 2024 to Aug 2024",
+        "title": "AI Intern"
+      },
+      {
+        "achievements": [],
+        "company": "OSTIMTech Technology Transfer Office",
+        "description": "Collaborated with the business development team on university-industry partnership projects.",
+        "duration": "Feb 2024 to Jun 2024",
+        "title": "Intern"
+      }
+    ],
+    "generated_questions": [
+      "Mevlüt Bey, kimya ve inşaat sektörüne yönelik AI projelerinde deneyiminiz olduğunu görüyorum. Limak Cement'teki stajınızda hangi tür projeler üzerinde çalıştınız ve bu projelerin yapay zeka kullanarak bu sektörlerdeki sorunları nasıl çözdüğünü detaylandırabilir misiniz?",
+      "AIVA Tech ile uzaktan bir staj yapmışsınız, bu süreçte hangi çalışmaları gerçekleştirdiniz ve uzaktan çalışmanın getirdiği zorluklarla nasıl başa çıktınız? Ayrıca, bu deneyimin sizinle ilgili olarak hangi profesyonel becerileri geliştirdiğini düşünüyorsunuz?",
+      "Yazılım dillerinden C, C++, Python ve R'da yetenekleriniz olduğunu belirtmişsiniz. Her biri için en iyi hangi projelerde kullandınız ve bu dilleri kullanarak çözdüğünüz en karmaşık problem neydi?",
+      "Bir Yapay Zeka Stajyeri olarak, bir projenin başlangıcından sonuna kadar olan süreçte hangi rolleri üstlendiğinizi anlatır mısınız? Projenin başarısına ne tür katkılar sağladınız?",
+      "OSTIM Teknik Üniversitesi'nde Mühendislik lisans eğitiminizde hangi derslerin sizin bu rol için en uygun aday olmanızı sağladığını düşünüyorsunuz?",
+      "Bir sonraki sorumuz, problem çözme yeteneğinizle ilgili olacak. Önceden karşılaştığınız ve nasıl çözdüğünüzü açıklayabileceğiniz bir problemi bizimle paylaşabilir misiniz?",
+      "Son olarak, yapay zeka ve makine öğrenmesi alanında hangi konulara özellikle ilgi duyuyorsunuz ve kariyerinizi bu alanlarda nasıl ilerletmeyi planlıyorsunuz? Bu rol, kariyer hedeflerinize nasıl yardımcı olabilir?"
+    ],
+    "languages": [
+      "English",
+      "German",
+      "Japanese",
+      "Turkish"
+    ],
+    "personal_info": {
+      "email": "kayamevv@gmail.com",
+      "location": "Ankara",
+      "name": "Mevlüt Kaya",
+      "phone": "+90 542 568 22 14"
+    },
+    "position_match": {
+      "match_percentage": 85,
+      "matching_skills": [
+        "Python",
+        "TensorFlow",
+        "AI projects"
+      ],
+      "missing_skills": [
+        "Statistical analysis"
+      ],
+      "recommendations": [
+        "Further develop statistical analysis skills to enhance data-driven decision making."
+      ]
+    },
+    "profile_summary": "Mevlüt Kaya, an aspiring AI engineer currently engaged in a rigorous academic and internship program, demonstrates a robust command of AI and machine learning technologies, evidenced by practical internship experiences. Mevlüt's application of advanced ML models and analytics tools spans various domains, ensuring industry-level data integrity and optimization.",
+    "skills": [
+      "Programming",
+      "C",
+      "C++",
+      "Python",
+      "R",
+      "JavaScript",
+      "HTML",
+      "Scikit-Learn",
+      "TensorFlow",
+      "Keras",
+      "Pandas",
+      "Numpy",
+      "Matplotlib"
+    ],
+    "success": true,
+    "summary": null
+  },
+  "started_at": "2025-03-17T17:16:33.646424",
+  "conversation_history": [
+    {
+      "role": "user",
+      "content": "Başlanıyoruz."
+    },
+    {
+      "role": "assistant",
+      "content": "Merhaba İsimsiz Aday, YAPAY ZEKA STAJERİ pozisyonu için mülakatımıza hoş geldiniz.\n\nÖzgeçmişinizi inceledim. Limak Cement'da AI Intern olarak çalışma deneyiminiz dikkatimi çekti. Programming, C, C++ gibi becerilerinizin bu pozisyon için değerli olduğunu düşünüyorum.\n\nPozisyonun gerektirdiği yetkinlikler hakkında konuşacağız.\n\nİlk olarak, 1. Yapay zekanın temel bileşenleri hakkında bilgi verebilir misiniz?"
+    }
+  ],
+  "ended": true,
+  "ended_at": "2025-03-17T17:45:59.116244"
+}

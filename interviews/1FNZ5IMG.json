@@ -1,0 +1,28 @@
+{
+  "code": "1FNZ5IMG",
+  "candidate_name": "Furkan Sevinç",
+  "position": "Yapay Zeka Mühendisi",
+  "requirements": [],
+  "questions": [
+    "Furkan Bey, CV'nizde belirttiğiniz gibi Python, C/C++, JavaScript ve MySQL becerileriniz var. Bu dillerin her birinde hangi projelerde çalıştınız ve bu projelerde hangi sorunlarla karşılaştınız, bunları nasıl çözdünüz?",
+    "AIVA Tech'deki Yapay Zeka Teknik ve Yazılım Mühendisliği pozisyonunuzda hangi AI teknolojileri ve algoritmaları kullanma fırsatı buldunuz? Bu algoritmaların uygulamalar üzerindeki etkilerini ve bu algoritmaların avantajlarını ve dezavantajlarını açıklar mısınız?",
+    "Maren Robotics'te part-time AI mühendisi olarak hangi projelere katkı sağladınız? Bu projelerin hangi aşamalarında yer aldınız ve projelerin genel hedefleri nelerdi?",
+    "Microsoft Office becerilerinizin, özellikle Excel'in, işinizde nasıl bir rolü oldu? Bu becerileri bir Yapay Zeka Mühendisi olarak nasıl kullandınız ve bu becerilerin işinizi kolaylaştırdığı konusunda örnekler verebilir misiniz?",
+    "Bir Yapay Zeka Mühendisi olarak, hangi etik konuların sizin için önemli olduğunu düşünüyorsunuz? Bu etik konularla ilgili kendi deneyimlerinizden örnekler verebilir misiniz?",
+    "Veritabanı yönetimi ve optimizasyonu konusunda ne tür deneyimleriniz var? MySQL kullanarak gerçekleştirdiğiniz veritabanı projelerinden bahsedebilir misiniz? En zorlu bulduğunuz veritabanı sorunları nelerdi ve bu sorunları nasıl çözdünüz?",
+    "Son olarak, OSTİM Teknik Üniversitesi'nde formal bir eğitim almadan önce ve sürecinde hangi becerileri edindiniz ve bu becerileri nasıl uygulama fırsatı buldunuz? Kendi kendinize öğrenme yeteneğinizi ve bu süreçte karşılaştığınız zorlukları bize anlatabilir misiniz?"
+  ],
+  "created_at": "2025-03-20T16:56:01.114812",
+  "status": "completed",
+  "started_at": "2025-03-20T22:22:26.820175",
+  "photos": [
+    {
+      "filename": "20250320222237.jpg",
+      "timestamp": "2025-03-20T19:22:37.780Z",
+      "path": "1FNZ5IMG_photos/20250320222237.jpg"
+    }
+  ],
+  "conversation_history": [],
+  "ended": true,
+  "ended_at": "2025-03-20T22:22:42.750955"
+}

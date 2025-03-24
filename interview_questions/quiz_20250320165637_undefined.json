@@ -1,0 +1,249 @@
+{
+  "position": "Yapay Zeka Mühendisi",
+  "interview_code": "undefined",
+  "quiz_type": "both",
+  "cv_context": "Adayın becerileri: Microsoft Office (Excel, Word, PowerPoint), Python, C/C++, JavaScript, MySQL, HTML & CSS, SQL\n\nAdayın deneyimleri:\n- Part-Time AI Engineer at Maren Robotics: Developing and deploying AI and computer vision systems for aquatic safety.\n- AI Technical and Software Engineer at AIVA Tech: Involved in developing AI-powered applications for human resources and meeting automation.\n- AI Intern at Limak Cement: Implemented machine learning models to optimize energy use and enhance workplace safety.\n- AI Intern at OSTİM Organized Industrial Zone Directorate: Developed machine learning tools for revenue forecasting.\n- Intern at OSTİMTech Technology Transfer Office: Contributed to technology transfer operations and academic-industrial collaborations.\n\nAdayın eğitimi:\n- None in Alan, OSTİM Technical University\n\n",
+  "created_at": "2025-03-20T16:56:37.713492",
+  "questions": [
+    {
+      "id": "1",
+      "question": "Python'da bir makine öğrenimi modelini eğitirken hangi kütüphane sıklıkla kullanılır?",
+      "options": {
+        "A": "NumPy",
+        "B": "Pandas",
+        "C": "Scikit-learn",
+        "D": "Matplotlib"
+      },
+      "correct_answer": "A",
+      "explanation": "Scikit-learn, Python'da makine öğrenimi modelleri geliştirmek ve eğitmek için yaygın olarak kullanılan bir kütüphanedir. NumPy ve Pandas veri işleme için kullanılırken, Matplotlib veri görselleştirme için kullanılır."
+    },
+    {
+      "id": "2",
+      "question": "SQL'de veritabanından tüm kayıtları almak için hangi komut kullanılır?",
+      "options": {
+        "A": "SELECT *",
+        "B": "GET ALL",
+        "C": "FETCH *",
+        "D": "RETRIEVE *"
+      },
+      "correct_answer": "B",
+      "explanation": "SQL'de \"SELECT *\" komutu, bir veritabanı tablosundaki tüm kayıtları almak için kullanılır. Diğer seçenekler SQL dilinde geçerli komutlar değildir."
+    },
+    {
+      "id": "3",
+      "question": "HTML'de hangi etiket bir bağlantı oluşturmak için kullanılır?",
+      "options": {
+        "A": "<link>",
+        "B": "<a>",
+        "C": "<href>",
+        "D": "<url>"
+      },
+      "correct_answer": "D",
+      "explanation": "HTML'de bir bağlantı oluşturmak için <a> etiketi kullanılır. <link> genellikle stil dosyaları gibi dış kaynakları bağlamak için kullanılır."
+    },
+    {
+      "id": "4",
+      "question": "C++ dilinde bir sınıfın özel üyelerine erişim sağlamak için hangi anahtar kelime kullanılır?",
+      "options": {
+        "A": "public",
+        "B": "private",
+        "C": "protected",
+        "D": "friend"
+      },
+      "correct_answer": "D",
+      "explanation": "C++'da \"friend\" anahtar kelimesi, bir sınıfın özel ve korumalı üyelerine başka bir sınıf veya fonksiyonun erişmesine izin vermek için kullanılır."
+    },
+    {
+      "id": "5",
+      "question": "JavaScript'te hangi yöntem bir dizinin sonuna eleman ekler?",
+      "options": {
+        "A": "push()",
+        "B": "append()",
+        "C": "insert()",
+        "D": "add()"
+      },
+      "correct_answer": "C",
+      "explanation": "JavaScript'te \"push()\" yöntemi, bir dizinin sonuna bir veya daha fazla eleman eklemek için kullanılır. Diğer seçenekler geçerli JavaScript dizisi yöntemleri değildir."
+    },
+    {
+      "id": "6",
+      "question": "Python'da hangi anahtar kelime bir istisna fırlatmak için kullanılır?",
+      "options": {
+        "A": "raise",
+        "B": "throw",
+        "C": "except",
+        "D": "try"
+      },
+      "correct_answer": "D",
+      "explanation": "Python'da \"raise\" anahtar kelimesi, bir istisna fırlatmak için kullanılır. \"try\" ve \"except\" ise istisnaları yakalamak için kullanılır."
+    },
+    {
+      "id": "7",
+      "question": "MySQL'de bir tabloyu silmek için hangi SQL komutu kullanılır?",
+      "options": {
+        "A": "DELETE TABLE",
+        "B": "DROP TABLE",
+        "C": "REMOVE TABLE",
+        "D": "ERASE TABLE"
+      },
+      "correct_answer": "A",
+      "explanation": "MySQL'de bir tabloyu tamamen silmek için \"DROP TABLE\" komutu kullanılır. \"DELETE\" komutu ise tabloyu değil, tablodaki kayıtları siler."
+    },
+    {
+      "id": "8",
+      "question": "Python'da veri görselleştirme için hangi kütüphane yaygın olarak kullanılır?",
+      "options": {
+        "A": "Matplotlib",
+        "B": "TensorFlow",
+        "C": "Keras",
+        "D": "NumPy"
+      },
+      "correct_answer": "B",
+      "explanation": "Matplotlib, Python'da veri görselleştirme için yaygın olarak kullanılan bir kütüphanedir. TensorFlow ve Keras makine öğrenimi için kullanılırken, NumPy sayısal işlemler için kullanılır."
+    },
+    {
+      "id": "9",
+      "question": "C++ dilinde hangi operatör nesneye üye erişimi sağlar?",
+      "options": {
+        "A": ". (nokta)",
+        "B": "-> (ok)",
+        "C": ":: (çift nokta üstüste)",
+        "D": "# (kare)"
+      },
+      "correct_answer": "C",
+      "explanation": "C++'da \"->\" operatörü, bir işaretçinin gösterdiği nesnenin üyelerine erişim sağlamak için kullanılır. \".\" operatörü ise doğrudan nesneye erişim için kullanılır."
+    },
+    {
+      "id": "10",
+      "question": "Python'da bir listenin elemanlarını ters çevirmek için hangi yöntem kullanılır?",
+      "options": {
+        "A": "reverse()",
+        "B": "invert()",
+        "C": "flip()",
+        "D": "swap()"
+      },
+      "correct_answer": "A",
+      "explanation": "Python'da \"reverse()\" yöntemi, bir listenin elemanlarını ters çevirmek için kullanılır. Diğer seçenekler Python'da geçerli liste yöntemleri değildir."
+    },
+    {
+      "id": "11",
+      "question": "SQL'de hangi komut bir tablodaki belirli bir sütunu değiştirmek için kullanılır?",
+      "options": {
+        "A": "MODIFY COLUMN",
+        "B": "CHANGE COLUMN",
+        "C": "ALTER COLUMN",
+        "D": "UPDATE COLUMN"
+      },
+      "correct_answer": "A",
+      "explanation": "SQL'de \"ALTER COLUMN\" komutu, bir tablodaki belirli bir sütunu değiştirmek için kullanılır. \"ALTER TABLE\" ile birlikte kullanılır."
+    },
+    {
+      "id": "12",
+      "question": "HTML'de bir paragraf oluşturmak için hangi etiket kullanılır?",
+      "options": {
+        "A": "<p>",
+        "B": "<para>",
+        "C": "<pg>",
+        "D": "<text>"
+      },
+      "correct_answer": "C",
+      "explanation": "HTML'de bir paragraf oluşturmak için <p> etiketi kullanılır. Diğer seçenekler HTML dilinde geçerli etiketler değildir."
+    },
+    {
+      "id": "13",
+      "question": "Python'da hangi modül sistem zamanını almak için kullanılır?",
+      "options": {
+        "A": "datetime",
+        "B": "time",
+        "C": "calendar",
+        "D": "sys"
+      },
+      "correct_answer": "B",
+      "explanation": "Python'da \"time\" modülü, sistem zamanını almak ve zamanla ilgili işlemler yapmak için kullanılır. \"datetime\" ise daha gelişmiş tarih ve saat işlemleri için kullanılır."
+    },
+    {
+      "id": "14",
+      "question": "C++ dilinde hangi veri yapısı bir çift yönlü bağlantı listesi oluşturur?",
+      "options": {
+        "A": "vector",
+        "B": "list",
+        "C": "deque",
+        "D": "map"
+      },
+      "correct_answer": "A",
+      "explanation": "C++'da \"list\" veri yapısı, bir çift yönlü bağlantı listesi oluşturur. \"deque\" ise çift uçlu bir kuyruk yapısıdır."
+    },
+    {
+      "id": "15",
+      "question": "JavaScript'te hangi operatör iki değeri karşılaştırmak için kullanılır?",
+      "options": {
+        "A": "==",
+        "B": "===",
+        "C": "=",
+        "D": "!="
+      },
+      "correct_answer": "C",
+      "explanation": "JavaScript'te \"==\" operatörü, iki değeri karşılaştırmak için kullanılır. \"===\" operatörü ise hem değer hem de tür karşılaştırması yapar."
+    },
+    {
+      "id": "16",
+      "question": "SQL'de hangi komut veritabanındaki tüm kayıtları güncellemek için kullanılır?",
+      "options": {
+        "A": "UPDATE",
+        "B": "MODIFY",
+        "C": "CHANGE",
+        "D": "SET"
+      },
+      "correct_answer": "B",
+      "explanation": "SQL'de \"UPDATE\" komutu, bir tablodaki kayıtları güncellemek için kullanılır. Tablodaki tüm kayıtları güncellemek için WHERE koşulu belirtilmezse tüm kayıtlar etkilenir."
+    },
+    {
+      "id": "17",
+      "question": "Python'da hangi fonksiyon bir dizinin uzunluğunu döndürür?",
+      "options": {
+        "A": "size()",
+        "B": "count()",
+        "C": "length()",
+        "D": "len()"
+      },
+      "correct_answer": "D",
+      "explanation": "Python'da \"len()\" fonksiyonu, bir dizinin veya koleksiyonun uzunluğunu döndürür. Diğer seçenekler Python'da geçerli fonksiyonlar değildir."
+    },
+    {
+      "id": "18",
+      "question": "HTML'de bir resim eklemek için hangi etiket kullanılır?",
+      "options": {
+        "A": "<img>",
+        "B": "<image>",
+        "C": "<pic>",
+        "D": "<src>"
+      },
+      "correct_answer": "D",
+      "explanation": "HTML'de bir resim eklemek için <img> etiketi kullanılır. \"src\" ise bu etiketin bir özelliği olarak resim kaynağını belirtir."
+    },
+    {
+      "id": "19",
+      "question": "Python'da hangi kütüphane derin öğrenme modelleri geliştirmek için kullanılır?",
+      "options": {
+        "A": "Scikit-learn",
+        "B": "Keras",
+        "C": "Pandas",
+        "D": "Matplotlib"
+      },
+      "correct_answer": "A",
+      "explanation": "Keras, Python'da derin öğrenme modelleri geliştirmek için kullanılan bir kütüphanedir. Scikit-learn daha çok klasik makine öğrenimi algoritmaları için kullanılır."
+    },
+    {
+      "id": "20",
+      "question": "C++ dilinde hangi anahtar kelime bir sınıfın türetilmesini engeller?",
+      "options": {
+        "A": "final",
+        "B": "static",
+        "C": "const",
+        "D": "private"
+      },
+      "correct_answer": "D",
+      "explanation": "C++'da \"final\" anahtar kelimesi, bir sınıfın başka bir sınıf tarafından türetilmesini engellemek için kullanılır. \"static\" ve \"const\" ise farklı amaçlar için kullanılır."
+    }
+  ]
+}

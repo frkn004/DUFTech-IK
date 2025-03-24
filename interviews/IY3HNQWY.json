@@ -1,0 +1,140 @@
+{
+  "code": "IY3HNQWY",
+  "candidate_name": "İsimsiz Aday",
+  "position": "YAPAY ZEKA STAJERİ",
+  "questions": [
+    "1. Yapay zekanın temel bileşenleri hakkında bilgi verebilir misiniz?",
+    "2. Belirli bir veri setinde overfitting problemini nasıl tanımlar ve çözersiniz?",
+    "3. Günlük çalışmalarınızda hangi yapay zeka frameworklerini kullandınız?",
+    "4. Çeşitli regresyon teknikleri hakkında bilgi verebilir misiniz?",
+    "5. NLP konusunda ne gibi deneyimleriniz var?"
+  ],
+  "status": "completed",
+  "created_at": "2025-03-20T22:35:30.879093",
+  "cv_data": {
+    "certificates": [],
+    "education": [
+      {
+        "degree": "Bachelor's Degree (Expected)",
+        "description": null,
+        "institution": "OSTİM Technical University",
+        "year": "Graduation Date: Jun 2028"
+      }
+    ],
+    "experience": [
+      {
+        "achievements": [
+          "Developed a vision-based detection system for tracking humans and objects on water.",
+          "Created an AI-based surface rescue system."
+        ],
+        "company": "Maren Robotics",
+        "description": "Engaged in developing advanced AI models for real-time decision making and emergency response in aquatic environments.",
+        "duration": "Sep 2024 - Present",
+        "title": "Part-Time AI Engineer"
+      },
+      {
+        "achievements": [
+          "Developed an AI-powered HR Assistant.",
+          "Contributed to an AI Call Center project using NLP."
+        ],
+        "company": "AIVA Tech",
+        "description": "Focused on enhancing AI implementations and automation in HR and customer support processes.",
+        "duration": "Aug 2024 - Present",
+        "title": "AI Technical and Software Engineer"
+      },
+      {
+        "achievements": [
+          "Optimized energy use in mill operations.",
+          "Developed a safety monitoring system for factory helmet compliance."
+        ],
+        "company": "Limak Cement",
+        "description": "Implemented machine learning models to improve safety and operational efficiency.",
+        "duration": "Feb 2024 - Jul 2025",
+        "title": "AI Intern"
+      },
+      {
+        "achievements": [
+          "Improved prediction accuracy from 64% to 96%."
+        ],
+        "company": "OSTİM Organized Industrial Zone Directorate",
+        "description": "Developed a machine learning-based tool for revenue forecasting.",
+        "duration": "Jun 2024 - Sep 2024",
+        "title": "AI Intern"
+      },
+      {
+        "achievements": [],
+        "company": "OSTİMTech Technology Transfer Office",
+        "description": "Contributed to operations and process management with a focus on technology transfer.",
+        "duration": "Feb 2024 - Jun 2025",
+        "title": "Intern"
+      }
+    ],
+    "generated_questions": [
+      "Furkan Bey, CV'nizde belirttiğiniz gibi Python, C/C++, JavaScript ve MySQL konusunda yetenekleriniz var. Bu dil ve teknolojilerin her birini ne tür projelerde kullandınız ve bu projelerde hangi zorluklarla karşılaştınız? Özellikle AI ve Machine Learning projelerinde bu teknolojilerin nasıl bir rol oynadığını bize anlatabilir misiniz?",
+      "Bir sonraki sorumuz, Python ve C/C++ dilindeki yeteneklerinizle ilgili. Belirli bir problemi çözmek için bu dilleri nasıl ve neden kullandınız? Bu dilleri seçerken ne tür bir karşılaştırma yaptınız ve neden bu dilleri tercih ettiniz?",
+      "Microsoft Office'in çeşitli uygulamalarına hakimsiniz. Bu uygulamaları veri analizi, raporlama veya sunum hazırlama gibi işlerde nasıl kullandınız? Özellikle Excel'de hangi özellikleri veya formülleri kullandınız ve bu becerilerinizi AI stajyeri rolünde nasıl kullanmayı planlıyorsunuz?",
+      "Maren Robotics'te part-time AI Engineer olarak deneyiminiz olduğunu görüyoruz. Bu deneyiminizde öne çıkan bir projeyi bizimle paylaşabilir misiniz? Bu projede hangi teknik zorluklarla karşılaştınız ve bu zorlukları nasıl aştınız?",
+      "AIVA Tech'de AI Technical and Software Engineer olarak çalışmışsınız. Bu rolde hangi teknolojileri kullandınız ve bu teknolojilerin seçiminde sizin rolünüz neydi? Bu pozisyonda yer alırken en önemli öğrendiğiniz şey nedir ve bu bilgiyi nasıl yeni bir projeye uygulardınız?",
+      "Son olarak, OSTİM Teknik Üniversitesi'nde bir lisans derecesine sahip olmayı beklediğinizi belirtmişsiniz. Üniversitedeki eğitiminiz, AI konusundaki bilgi ve becerilerinizi nasıl geliştirdi? Özellikle hangi dersler veya projeler sizin bu alandaki bilginizi derinleştirdi ve bu bilgi ve becerilerinizi bizim stajyer pozisyonumuzda nasıl kullanmayı planlıyorsunuz?"
+    ],
+    "languages": [
+      "English B1"
+    ],
+    "personal_info": {
+      "email": "sevinc.furkan04@gmail.com",
+      "location": "Ankara",
+      "name": "Furkan Sevinç",
+      "phone": "0531 835 41 11"
+    },
+    "position_match": {
+      "match_percentage": 90,
+      "matching_skills": [
+        "Python",
+        "Makine öğrenmesi temelleri",
+        "Numpy"
+      ],
+      "missing_skills": [
+        "Pandas",
+        "Estatistik anlayışı"
+      ],
+      "recommendations": [
+        "Consider acquiring practical experience with Pandas library to enhance data manipulation skills.",
+        "Improve statistical understanding to better apply AI models."
+      ]
+    },
+    "profile_summary": "Furkan Sevinç is a detail-oriented and technically adept AI Engineer, gaining substantial hands-on experience through versatile roles in well-known organizations. His practical knowledge of AI and machine learning techniques in real-world applications, along with his ability to integrate complex AI models, positions him strongly for roles requiring deep technological expertise and innovativeness in AI.",
+    "skills": [
+      "Microsoft Office (Excel, Word, PowerPoint)",
+      "Python",
+      "C/C++",
+      "JavaScript",
+      "MySQL",
+      "HTML & CSS",
+      "SQL"
+    ],
+    "success": true,
+    "summary": "Highly skilled AI Engineer and Intern with hands-on experience in developing and deploying AI solutions across multiple organizations and projects."
+  },
+  "quiz_results": {
+    "timestamp": "2025-03-20 22:36:26",
+    "score": {
+      "correct": 1,
+      "total": 10,
+      "percentage": 10
+    },
+    "result_file": "result_IY3HNQWY_1742499386.json"
+  },
+  "report_pdf": "mulakat_raporu_IY3HNQWY_20250320_223626.pdf",
+  "report_generated_at": "2025-03-20T22:36:26.957727",
+  "report_status": "completed",
+  "report_generated": true,
+  "started_at": "2025-03-20T22:36:29.639368",
+  "conversation_history": [
+    {
+      "role": "user",
+      "content": "Başlayalım."
+    }
+  ],
+  "ended": true,
+  "ended_at": "2025-03-20T22:39:21.176005"
+}

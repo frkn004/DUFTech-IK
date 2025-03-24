@@ -1,0 +1,155 @@
+{
+  "code": "EH331VIC",
+  "candidate_name": "İsimsiz Aday",
+  "position": "yapay zeka mühendisliği",
+  "questions": [
+    "1. Yapay zekanın temel bileşenleri hakkında bilgi verebilir misiniz?",
+    "2. Belirli bir veri setinde overfitting problemini nasıl tanımlar ve çözersiniz?",
+    "3. Günlük çalışmalarınızda hangi yapay zeka frameworklerini kullandınız?",
+    "4. Çeşitli regresyon teknikleri hakkında bilgi verebilir misiniz?",
+    "5. NLP konusunda ne gibi deneyimleriniz var?"
+  ],
+  "status": "pending",
+  "created_at": "2025-03-21T13:18:48.133751",
+  "cv_data": {
+    "areas_to_improve": [
+      "Further experience in NLP",
+      "Deeper knowledge in non-relational databases",
+      "Experience in industry-specific AI applications"
+    ],
+    "certificates": [],
+    "education": [
+      {
+        "degree": "Bachelor of Engineering",
+        "description": "Majoring in AI Engineering with a GPA of 3.18",
+        "institution": "OSTIM Technical University",
+        "year": "May 2027"
+      }
+    ],
+    "experience": [
+      {
+        "achievements": [
+          "Accelerated the recommendation process by 90%.",
+          "Enhanced privacy and access in training recommendations.",
+          "Achieved approximately 80% accuracy in compliance monitoring using computer vision.",
+          "Enhanced and automated occupational health safety systems.",
+          "Developed and applied OCR for document text extraction and chatbot information summarization."
+        ],
+        "company": "Limak Cement",
+        "description": "Focused on developing and implementing AI projects, including ChatBot fine-tuning and computer vision applications for workplace safety.",
+        "duration": "Oct 2024 - Dec 2024",
+        "title": "AI Intern"
+      },
+      {
+        "achievements": [
+          "Contributed to multiple AI-based optimizations and system integrations influencing business operations.",
+          "Developed AI-driven innovative solutions for enhancing data analysis and reporting processes."
+        ],
+        "company": "AIVA Tech",
+        "description": "Involved in the integration, optimization, and implementation of AI-driven systems for business process acceleration and cost reduction.",
+        "duration": "Sep 2024 - Dec 2024",
+        "title": "AI Intern (Remote)"
+      },
+      {
+        "achievements": [
+          "Processed and cleaned a dataset of 102 million rows to 40 million clean rows.",
+          "Created 42 diverse tables for client requirements in database systems.",
+          "Prepared structured data ready for machine learning development."
+        ],
+        "company": "Limak Cement",
+        "description": "Worked on large-scale data processing, cleaning, and preparation for ML applications using PostgreSQL and Python.",
+        "duration": "Apr 2024 - Aug 2024",
+        "title": "AI Intern"
+      },
+      {
+        "achievements": [],
+        "company": "OSTIM Tech Technology Transfer Office",
+        "description": "Supported the coordination of university-industry partnership projects.",
+        "duration": "Feb 2024 - Jun 2024",
+        "title": "Intern"
+      }
+    ],
+    "generated_questions": [
+      "Mevlüt Bey, CV'nizdeki beceri setiniz oldukça geniş görünüyor. C, C++, Python, R ve JavaScript gibi dillerde deneyiminiz olduğunu belirtmişsiniz. Bu dilleri hangi projelerde ve ne ölçüde kullandınız? Hangisi sizin en rahat hissettiğiniz dil ve neden?",
+      "Limak Cement'teki yapay zeka stajınızda üzerinde çalıştığınız projeler hakkında bana biraz bilgi verebilir misiniz? Katkılarınızın bu projelerin genel sonuçlarına nasıl bir etkisi oldu? Bu deneyimdeki en büyük zorluklarınız nelerdi ve bu zorlukları nasıl aştınız?",
+      "AIVA Tech'teki uzaktan yapay zeka stajınızda, ekip üyeleriyle etkili bir şekilde iletişim kurma ve projeler üzerinde uzaktan işbirliği yapma konusunda hangi stratejileri kullandınız? Bu deneyim, işbirliği ve iletişim becerilerinizi nasıl geliştirdi?",
+      "OSTIM Teknik Üniversitesi'ndeki Mühendislik eğitiminiz esnasında hangi projelerde yer aldınız ve bu projelerdeki rolleriniz nelerdi? Bu projeler sırasında edindiğiniz bilgi ve beceriler, yapay zeka mühendisliği pozisyonu için nasıl bir temel oluşturdu?",
+      "Yapay zeka mühendisliği alanında neleri öğrenmeyi hedefliyorsunuz ve kariyer hedefleriniz nelerdir? Kendinizi bu alanda nasıl geliştirmeyi planlıyorsunuz?",
+      "Son olarak, yapay zeka mühendisliği alanında hangi etik kuralların önemli olduğunu düşünüyorsunuz ve bu kuralların çalışmalarınıza nasıl yansıdığını anlatabilir misiniz?"
+    ],
+    "languages": [
+      "English",
+      "German",
+      "Japanese",
+      "Turkish"
+    ],
+    "personal_info": {
+      "email": "kayamevv@gmail.com",
+      "location": "Ankara",
+      "name": "Mevlüt Kaya",
+      "phone": "+90 542 568 22 14"
+    },
+    "position_match": {
+      "match_percentage": 80,
+      "matching_skills": [
+        "Python",
+        "TensorFlow",
+        "Keras",
+        "Data Analysis"
+      ],
+      "missing_skills": [
+        "Java",
+        "NoSQL",
+        "NLP Experience"
+      ],
+      "recommendations": [
+        "Further develop skills in Java and NoSQL to enhance database management capabilities.",
+        "Gain experience with natural language processing to meet specialized AI needs.",
+        "Engage in cross-functional teams to gain insights into industry-specific AI applications."
+      ]
+    },
+    "profile_summary": "Mevlüt Kaya is a motivated AI Engineering student with solid hands-on internship experiences in AI, demonstrating capabilities in AI-driven projects to enhance business processes and operational safety. His proactive involvement in AI community leadership also highlights his commitment and ability to contribute effectively in collaborative, innovative environments.",
+    "show_quiz_option": true,
+    "skills": [
+      "C",
+      "C++",
+      "Python",
+      "R",
+      "JavaScript",
+      "HTML",
+      "Scikit-Learn",
+      "TensorFlow",
+      "Keras",
+      "Pandas",
+      "Numpy",
+      "Matplotlib"
+    ],
+    "strengths": [
+      "Strong practical experience in AI implementations",
+      "Adept in multiple programming languages and AI libraries",
+      "Leadership roles in AI community and student organizations"
+    ],
+    "success": true,
+    "suggested_questions": [
+      "Can you describe a challenging project you undertook and how you managed it?",
+      "How would you apply your AI skills to improve our existing processes?",
+      "What strategies do you use for effective teamwork in technology-driven projects?",
+      "How do you stay updated with AI advancements?",
+      "Describe a time when you had to learn a new tool or technology quickly for a project."
+    ],
+    "summary": "Mevlüt Kaya, currently pursuing AI Engineering with practical intern experience in implementing AI solutions in diverse business contexts and leading youth AI community activities."
+  },
+  "quiz_results": {
+    "timestamp": "2025-03-21 13:24:45",
+    "score": {
+      "correct": 2,
+      "total": 20,
+      "percentage": 10
+    },
+    "result_file": "result_EH331VIC_1742552685.json"
+  },
+  "report_pdf": "mulakat_raporu_EH331VIC_20250321_132445.pdf",
+  "report_generated_at": "2025-03-21T13:24:45.339719",
+  "report_status": "completed",
+  "report_generated": true
+}

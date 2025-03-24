@@ -10,7 +10,7 @@ from queue import Queue
 import asyncio
 import concurrent.futures
 import logging
-from flask import Flask, request, jsonify, render_template, redirect, send_from_directory, Response, session, url_for
+from flask import Flask, request, jsonify, render_template, redirect, send_from_directory, Response, session, url_for, flash
 from flask_cors import CORS
 from datetime import datetime, timedelta
 import json
@@ -38,15 +38,23 @@ import aiohttp
 import queue
 import playsound
 import wave
-import tempfile
 from functools import wraps
 import re
 import base64
 from flask_session import Session
+import pathlib
+import traceback
+import PyPDF2
+from docx import Document
 from werkzeug.utils import secure_filename
+import openai
 
 # .env dosyasını yükle
 load_dotenv()
+
+# Klasör kontrolleri
+QUESTIONS_DIR = 'interview_questions'
+os.makedirs(QUESTIONS_DIR, exist_ok=True)
 
 # Logging seviyesini ayarla - DEBUG yerine INFO kullan
 logging.basicConfig(level=logging.INFO)
@@ -72,6 +80,9 @@ logger = logging.getLogger(__name__)
 # OpenAI istemcisini başlat
 openai_client = OpenAI()
 
+# Açık erişime izin verilen route'lar
+OPEN_ROUTES = ['login', 'join', 'static', 'interview', 'verify_code', 'submit_quiz', 'quiz_entry', 'check_quiz_code']
+
 # Gerekli dizinleri oluştur
 required_dirs = ['reports', 'temp', 'interview_questions', 'interviews']
 for dir_name in required_dirs:
@@ -91,11 +102,35 @@ WEBHOOK_RAPOR_URL = os.getenv('WEBHOOK_RAPOR_URL')
 
 # Global değişkenler
 interview_data = {}  # Mülakat verilerini saklamak için
-current_interview = None  # Mevcut mülakat oturumu nesnesi
 SILENCE_THRESHOLD = 0.05  # Sessizlik eşik değeri
 VOICE_THRESHOLD = 0.15   # Ses algılama eşik değeri
 SILENCE_DURATION = 1500  # Sessizlik süresi (ms)
 MIN_CONFIDENCE = 0.6     # Minimum güven skoru
+
+# Paket tipleri
+PACKAGE_TYPES = {
+    'basic': {
+        'name': 'Temel Paket',
+        'features': ['interview', 'quiz'],
+        'max_interviews': 5,
+        'max_quizzes': 5,
+        'price': 0
+    },
+    'professional': {
+        'name': 'Profesyonel Paket',
+        'features': ['interview', 'quiz', 'cv_analysis', 'reports'],
+        'max_interviews': 20,
+        'max_quizzes': 20,
+        'price': 100
+    },
+    'enterprise': {
+        'name': 'Kurumsal Paket',
+        'features': ['interview', 'quiz', 'cv_analysis', 'reports', 'admin_panel'],
+        'max_interviews': 100,
+        'max_quizzes': 100,
+        'price': 500
+    }
+}
 
 class VoiceAssistant:
     def __init__(self):
@@ -786,45 +821,79 @@ ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD')
 # Login sayfası route'u
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    # Eğer zaten giriş yapılmışsa, direkt create_interview'a yönlendir
+    """Kullanıcı giriş sayfası"""
+    # Zaten giriş yapmış kullanıcıyı kontrol et
     if session.get('logged_in'):
-        logger.debug("Kullanıcı zaten giriş yapmış, create_interview'a yönlendiriliyor")
-        return redirect(url_for('create_interview'))
-        
-    if request.method == 'POST':
-        username = request.form.get('username', '').strip()
-        password = request.form.get('password', '').strip()
-        
-        logger.debug(f"Login denemesi - Kullanıcı: {username}")
-        logger.debug(f"Beklenen kullanıcı: {ADMIN_EMAIL}")
-        
-        # Sadece .env'den alınan bilgileri kullan
-        if username and password and username == ADMIN_EMAIL and password == ADMIN_PASSWORD:
-            logger.debug("Login başarılı")
-            session.clear()
-            session['logged_in'] = True
-            session['user_id'] = username
-            session.permanent = True
-            logger.debug("Session oluşturuldu, create_interview'a yönlendiriliyor")
-            return redirect(url_for('create_interview'))
+        if session.get('is_admin'):
+            return redirect(url_for('admin_dashboard'))
         else:
-            logger.debug(f"Login başarısız - Girilen kullanıcı: {username}")
-            return render_template('login.html', error="Geçersiz kullanıcı adı veya şifre")
+            return redirect(url_for('create_interview'))
     
+    # POST işlemi - form gönderme
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        
+        try:
+            # Admin kullanıcı bilgilerini kontrol et
+            admin_email = os.getenv('ADMIN_EMAIL')
+            admin_password = os.getenv('ADMIN_PASSWORD')
+            
+            logger.debug(f"Beklenen admin: {admin_email}")
+            
+            # Admin girişi
+            if username == admin_email and password == admin_password:
+                session.permanent = True  # Oturumu kalıcı yap
+                session['logged_in'] = True
+                session['user_email'] = username
+                session['is_admin'] = True
+                session['user_name'] = 'Admin'
+                logger.info(f"Admin girişi başarılı: {username}")
+                return redirect(url_for('admin_dashboard'))
+            
+            # Normal kullanıcıları kontrol et (gerçek uygulamada veritabanından)
+            # Örnek kullanıcı: kullanici@duftech.com / sifre123
+            if username == 'kullanici@duftech.com' and password == 'sifre123':
+                session.permanent = True  # Oturumu kalıcı yap
+                session['logged_in'] = True
+                session['user_email'] = username
+                session['is_admin'] = False
+                session['user_name'] = 'Kullanıcı Demo'
+                logger.info(f"Kullanıcı girişi başarılı: {username}")
+                return redirect(url_for('create_interview'))
+            
+            # Giriş başarısız
+            logger.warning(f"Başarısız giriş denemesi: {username}")
+            return render_template('login.html', error="Geçersiz kullanıcı adı veya şifre")
+            
+        except Exception as e:
+            logger.error(f"Giriş işlemi hatası: {str(e)}")
+            return render_template('login.html', error="Giriş işlemi sırasında bir hata oluştu")
+    
+    # GET işlemi - form görüntüleme
     return render_template('login.html')
 
-# Çıkış yapma route'u
 @app.route('/logout')
 def logout():
-    session.clear()
+    """Çıkış yapma"""
+    session.pop('logged_in', None)
+    session.pop('user_email', None)
+    session.pop('is_admin', None)
+    session.pop('user_name', None)
     return redirect(url_for('login'))
 
-# Mülakat oluşturma sayfasını login_required ile koruyalım
 @app.route('/')
 def home():
-    if not session.get('logged_in'):
-        return redirect(url_for('login'))
-    return redirect(url_for('create_interview'))
+    """Ana sayfa"""
+    # Kullanıcı giriş kontrolü
+    if session.get('logged_in'):
+        # Admin kullanıcıyı admin paneline yönlendir
+        if session.get('is_admin'):
+            return redirect(url_for('admin_dashboard'))
+        # Normal kullanıcıyı mülakat oluşturma sayfasına yönlendir
+        return redirect(url_for('create_interview'))
+    # Giriş yapmamış kullanıcıyı login sayfasına yönlendir
+    return redirect(url_for('login'))
 
 @app.route('/join')
 def join():
@@ -863,12 +932,25 @@ def interview():
         current_interview = InterviewAssistant()
         current_interview.set_interview_details(code)
         
+        # Adayın adını CV'den al veya varsayılan değer kullan
+        candidate_name = interview_data.get("candidate_name", "İsimsiz Aday")
+        
+        # CV yüklendiyse ve isim CV'den alınabilirse, öncelikle bunu kullan
+        if interview_data.get("cv_data") and interview_data["cv_data"].get("personal_info"):
+            cv_name = interview_data["cv_data"]["personal_info"].get("name")
+            if cv_name and cv_name.strip():
+                candidate_name = cv_name
+        
+        # Log ile aday adını kontrol et
+        logger.info(f"CV verileri başarıyla yüklendi - Mülakat Kodu: {code}")
+        logger.info(f"Mülakat detayları ayarlandı: {code}")
+        
         return render_template('interview.html', 
                              interview={
-                                 "candidate_name": interview_data.get("candidate_name"),
-                                 "position": interview_data.get("position"),
+                             "candidate_name": candidate_name,
+                             "position": interview_data.get("position", "Belirtilmemiş Pozisyon"),
                                  "code": code,
-                                 "created_at": interview_data.get("created_at")
+                             "created_at": interview_data.get("created_at", "")
                              })
                              
     except Exception as e:
@@ -878,7 +960,7 @@ def interview():
 @app.route('/create_interview', methods=['GET', 'POST'])
 @login_required
 def create_interview():
-    """Yeni bir mülakat oluştur"""
+    """Mülakat oluştur sayfası"""
     if request.method == 'GET':
         return render_template('create_interview.html')
         
@@ -1063,7 +1145,7 @@ def verify_code():
             if code in interview_data:
                 return jsonify({'success': True})
                 
-            # JSON dosyasından kontrol et
+            # JSON dosyasından mülakat kodu kontrolü
             json_path = os.path.join('interviews', f'{code}.json')
             if os.path.exists(json_path):
                 with open(json_path, 'r', encoding='utf-8') as f:
@@ -1083,10 +1165,15 @@ def verify_code():
                 }
                 
                 return jsonify({'success': True})
+            
+            # Quiz kodu kontrolü
+            for file in os.listdir(QUESTIONS_DIR):
+                if file.endswith(f"_{code}.json"):
+                    return jsonify({'success': True})
                 
             return jsonify({
                 'success': False,
-                'error': 'Geçersiz mülakat kodu'
+                'error': 'Geçersiz mülakat veya quiz kodu'
             })
             
         except Exception as e:
@@ -1101,6 +1188,40 @@ def verify_code():
         return jsonify({
             'success': False,
             'error': str(e)
+        })
+
+@app.route('/check_quiz_code', methods=['GET'])
+def check_quiz_code():
+    """Verilen kodun quiz kodu olup olmadığını kontrol et"""
+    try:
+        code = request.args.get('code', '')
+        if not code:
+            return jsonify({
+                'success': False,
+                'error': 'Kod gerekli',
+                'is_quiz': False
+            })
+        
+        # Quiz klasöründe bu koduyla biten dosya ara
+        for file in os.listdir(QUESTIONS_DIR):
+            if file.endswith(f"_{code}.json"):
+                return jsonify({
+                    'success': True,
+                    'is_quiz': True
+                })
+                
+        # Eğer bulunmadıysa, mülakat kodu olduğunu varsay
+        return jsonify({
+            'success': True,
+            'is_quiz': False
+        })
+        
+    except Exception as e:
+        logger.error(f"Quiz kodu kontrol hatası: {str(e)}")
+        return jsonify({
+            'success': False,
+            'error': str(e),
+            'is_quiz': False
         })
 
 @app.route('/start_interview', methods=['POST'])
@@ -1168,55 +1289,26 @@ async def start_recording():
 @app.route('/process_audio', methods=['POST'])
 async def process_audio():
     try:
-        global current_interview
-        
-        # Log fonksiyona girişi
-        logger.info("process_audio fonksiyonu çağrıldı")
-        
-        # Interview kodunu kontrol et
-        interview_code = request.form.get('interview_code')
-        if not interview_code:
-            logger.error("Hata: Mülakat kodu sağlanmadı")
-            return jsonify({
-                'success': False,
-                'error': 'Mülakat kodu gerekli',
-                'continue_listening': True
-            })
-        
-        logger.info(f"Mülakat kodu alındı: {interview_code}")
-        
-        # Eğer current_interview tanımlı değilse veya farklı bir kod ise, yeni bir instance oluştur
-        if current_interview is None or current_interview.code != interview_code:
-            logger.info(f"Yeni mülakat nesnesi oluşturuluyor: {interview_code}")
-            current_interview = InterviewAssistant()
-            current_interview.set_interview_details(interview_code)
-        
-        # Ses dosyasını kontrol et
         audio_file = request.files.get('audio')
         if not audio_file:
-            logger.error("Hata: Ses dosyası gönderilmedi")
             return jsonify({
                 'success': False,
-                'error': 'Ses dosyası gerekli',
-                'continue_listening': True
+                'error': 'Ses dosyası gerekli'
             })
-        
+
         # Geçici dizini kontrol et
         if not os.path.exists('temp'):
-            logger.info("temp dizini oluşturuluyor")
             os.makedirs('temp')
-        
+
         # Ses dosyasını kaydet
         timestamp = int(time.time())
         temp_path = f'temp/audio_{timestamp}_{random.randint(100000, 999999)}.webm'
         audio_file.save(temp_path)
         logger.info(f"WebM dosyası kaydedildi: {os.path.abspath(temp_path)}")
-        
-        # Ses dosyasını metne çevir
+
         try:
-            logger.info("Ses tanıma başlatılıyor...")
+            # Ses dosyasını metne çevir
             transcript = await current_interview.transcribe_audio(temp_path)
-            
             if not transcript:
                 logger.warning("Ses tanıma başarısız oldu")
                 return jsonify({
@@ -1224,40 +1316,61 @@ async def process_audio():
                     'error': 'Ses tanınamadı',
                     'continue_listening': True  # Dinlemeye devam et
                 })
-            
+
             logger.info(f"Tanınan metin: {transcript}")
-            
+
             # GPT yanıtını al
-            logger.info("GPT yanıtı alınıyor...")
             gpt_response, is_interview_ended = await current_interview.get_gpt_response(transcript)
+            if not gpt_response:
+                logger.warning("GPT yanıtı alınamadı")
+                return jsonify({
+                    'success': False,
+                    'error': 'GPT yanıtı alınamadı',
+                    'continue_listening': True  # Dinlemeye devam et
+                })
+
+            logger.info(f"GPT yanıtı: {gpt_response}")
             
-            logger.info(f"GPT yanıtı alındı (Mülakat bitti mi: {is_interview_ended})")
+            # Mülakat bittiğinde istemciye bildir
+            interview_ended = is_interview_ended or "MÜLAKAT_BİTTİ" in gpt_response
             
-            # Mülakat bittiyse raporlama için işaret et
-            result = {
+            # Eğer mülakat bittiyse, "MÜLAKAT_BİTTİ" cümlesini yanıttan çıkar
+            if "MÜLAKAT_BİTTİ" in gpt_response:
+                gpt_response = gpt_response.replace("MÜLAKAT_BİTTİ", "").strip()
+            
+            # İstemciye yanıt gönder
+            return jsonify({
                 'success': True,
+                'transcript': transcript,
                 'response': gpt_response,
-                'interview_ended': is_interview_ended,
-                'continue_listening': not is_interview_ended  # Mülakat bitmediyse dinlemeye devam et
-            }
+                'interview_ended': interview_ended
+            })
             
-            return jsonify(result)
-        
-        except Exception as processing_error:
-            logger.error(f"Ses işleme hatası: {str(processing_error)}")
+        except Exception as e:
+            logger.error(f"Ses işleme hatası: {str(e)}")
             return jsonify({
                 'success': False,
-                'error': str(processing_error),
-                'continue_listening': True  # Hata olsa bile dinlemeye devam et
+                'error': str(e),
+                'continue_listening': True  # Genel hata durumunda bile dinlemeye devam et
             })
-    
+
+        finally:
+            # Geçici dosyayı temizle
+            if os.path.exists(temp_path):
+                try:
+                    os.remove(temp_path)
+                    logger.info("Geçici ses dosyası silindi")
+                except Exception as e:
+                    logger.warning(f"Geçici dosya silme hatası: {str(e)}")
+
     except Exception as e:
         logger.error(f"Genel hata: {str(e)}")
         return jsonify({
             'success': False,
             'error': str(e),
-            'continue_listening': True
+            'continue_listening': True  # Genel hata durumunda bile dinlemeye devam et
         })
+
 
 @app.route('/generate_report', methods=['POST'])
 async def generate_report():
@@ -1708,20 +1821,7 @@ def serve_report(filename):
 def analyze_cv():
     """CV dosyasını analiz eden endpoint"""
     try:
-        logger.info("analyze_cv fonksiyonu çağrıldı")
-        
-        # Önce OpenAI API anahtarını kontrol et
-        openai_api_key = os.getenv('OPENAI_API_KEY')
-        if not openai_api_key:
-            logger.error("Hata: OpenAI API anahtarı bulunamadı")
-            return jsonify({
-                'success': False,
-                'error': 'API anahtarı yapılandırması bulunamadı'
-            })
-            
-        # Dosya kontrolü
         if 'cv_file' not in request.files:
-            logger.error("Hata: CV dosyası gönderilmedi")
             return jsonify({
                 'success': False,
                 'error': 'Dosya bulunamadı'
@@ -1730,283 +1830,252 @@ def analyze_cv():
         cv_file = request.files['cv_file']
         position = request.form.get('position', '')
         
+        # Eğer pozisyon belirtilmemişse kullanıcıya sormak için bilgi gönder
+        if not position:
+            return jsonify({
+                'success': True,
+                'needs_position': True,
+                'message': 'Hangi pozisyon için CV değerlendirmesi yapılacağını belirtiniz.'
+            })
+        
         if cv_file.filename == '':
-            logger.error("Hata: Boş dosya adı")
             return jsonify({
                 'success': False,
                 'error': 'Dosya seçilmedi'
             })
-        
-        logger.info(f"CV dosya adı: {cv_file.filename}, Pozisyon: {position}")
-            
-        # Geçici dizini kontrol et ve oluştur
-        if not os.path.exists('temp'):
-            logger.info("temp dizini oluşturuluyor")
-            os.makedirs('temp', exist_ok=True)
             
         # Geçici dosyayı kaydet
-        timestamp = int(time.time())
-        random_suffix = random.randint(10000, 99999)
-        safe_filename = secure_filename(cv_file.filename)
-        temp_path = os.path.join('temp', f'cv_{timestamp}_{random_suffix}_{safe_filename}')
+        temp_path = os.path.join('temp', f'cv_{int(time.time())}_{cv_file.filename}')
+        os.makedirs('temp', exist_ok=True)
+        cv_file.save(temp_path)
         
-        # Dosyayı kaydetmeyi dene
-        try:
-            cv_file.save(temp_path)
-            logger.info(f"CV dosyası kaydedildi: {temp_path}")
-        except Exception as file_error:
-            logger.error(f"Dosya kaydetme hatası: {str(file_error)}")
-            return jsonify({
-                'success': False,
-                'error': f'Dosya kaydetme hatası: {str(file_error)}'
-            })
-            
         # Dosya tipini algıla
-        file_ext = os.path.splitext(safe_filename)[1].lower()
-        logger.info(f"Dosya uzantısı: {file_ext}")
+        file_ext = os.path.splitext(cv_file.filename)[1].lower()
         
         # Dosya içeriğini çıkar
         cv_text = ""
-        try:
-            if file_ext == '.pdf':
-                logger.info("PDF dosyası işleniyor")
-                import PyPDF2
-                try:
-                    with open(temp_path, 'rb') as file:
-                        reader = PyPDF2.PdfReader(file)
-                        for page in reader.pages:
-                            cv_text += page.extract_text() + "\n"
-                except Exception as pdf_error:
-                    logger.error(f"PDF işleme hatası: {str(pdf_error)}")
-                    return jsonify({
-                        'success': False,
-                        'error': f'PDF dosyası işlenirken hata oluştu: {str(pdf_error)}'
-                    })
-                    
-            elif file_ext in ['.docx', '.doc']:
-                logger.info("DOCX/DOC dosyası işleniyor")
-                import docx
-                try:
-                    doc = docx.Document(temp_path)
-                    for para in doc.paragraphs:
-                        cv_text += para.text + "\n"
-                except Exception as docx_error:
-                    logger.error(f"DOCX işleme hatası: {str(docx_error)}")
-                    return jsonify({
-                        'success': False,
-                        'error': f'DOCX dosyası işlenirken hata oluştu: {str(docx_error)}'
-                    })
-            else:
-                logger.error(f"Desteklenmeyen dosya formatı: {file_ext}")
-                return jsonify({
-                    'success': False,
-                    'error': 'Desteklenmeyen dosya formatı. Lütfen PDF veya DOCX dosyası yükleyin.'
-                })
+        if file_ext == '.pdf':
+            # PDF işleme kodu - PyPDF2 kullanılabilir
+            import PyPDF2
+            try:
+                with open(temp_path, 'rb') as file:
+                    reader = PyPDF2.PdfReader(file)
+                    cv_text = ""
+                    for page in reader.pages:
+                        cv_text += page.extract_text() + "\n"
+            except Exception as e:
+                logging.error(f"PDF işleme hatası: {str(e)}")
+                cv_text = "PDF işlenirken bir hata oluştu."
                 
-            if not cv_text.strip():
-                logger.error("CV içeriği boş")
-                return jsonify({
-                    'success': False,
-                    'error': 'CV içeriği çıkarılamadı. Dosya boş veya içerik okunamıyor.'
-                })
-                
-            logger.info("CV metni başarıyla çıkarıldı")
-        except Exception as text_error:
-            logger.error(f"CV metin çıkarma hatası: {str(text_error)}")
+        elif file_ext in ['.docx', '.doc']:
+            # DOCX işleme kodu - python-docx kullanılabilir
+            import docx
+            try:
+                doc = docx.Document(temp_path)
+                cv_text = ""
+                for para in doc.paragraphs:
+                    cv_text += para.text + "\n"
+            except Exception as e:
+                logging.error(f"DOCX işleme hatası: {str(e)}")
+                cv_text = "DOCX işlenirken bir hata oluştu."
+        else:
+            # Desteklenmeyen dosya formatı
             return jsonify({
                 'success': False,
-                'error': f'CV içeriği çıkarılırken hata oluştu: {str(text_error)}'
+                'error': 'Desteklenmeyen dosya formatı'
             })
             
         # OpenAI ile CV analizi yap
-        try:
-            logger.info("OpenAI API ile CV analizi başlatılıyor")
-            client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
-            
-            # Pozisyon hakkında bilgi analizini yap
-            position_context = ""
-            if position:
-                try:
-                    logger.info(f"Pozisyon analizi yapılıyor: {position}")
-                    position_response = client.chat.completions.create(
-                        model="gpt-4-turbo",
-                        response_format={"type": "json_object"},
-                        messages=[
-                            {"role": "system", "content": """
-                                Verilen pozisyonun gerekenliklerini analiz eden bir İK uzmanısın. 
-                                Pozisyon adından yola çıkarak aşağıdaki formatta JSON çıktısı üreteceksin:
-                                
-                                {
-                                    "position_title": "Pozisyon adı",
-                                    "required_skills": ["beceri1", "beceri2", ...],
-                                    "preferred_experience": ["deneyim1", "deneyim2", ...],
-                                    "education_requirements": ["eğitim1", "eğitim2", ...],
-                                    "keywords": ["anahtar kelime1", "anahtar kelime2", ...]
-                                }
-                                
-                                Tahminlerin mümkün olduğunca gerçekçi ve doğru olmalı.
-                            """},
-                            {"role": "user", "content": f"Bu pozisyon için gereksinimleri analiz et: {position}"}
-                        ]
-                    )
-                    
-                    position_data = json.loads(position_response.choices[0].message.content)
-                    position_context = f"""
-                        Pozisyon bilgilerini de analiz et:
-                        Pozisyon: {position}
-                        Gerekli beceriler: {', '.join(position_data.get('required_skills', []))}
-                        Tercih edilen deneyimler: {', '.join(position_data.get('preferred_experience', []))}
-                        Anahtar kelimeler: {', '.join(position_data.get('keywords', []))}
-                    """
-                    logger.info("Pozisyon analizi tamamlandı")
-                except Exception as pos_error:
-                    logger.error(f"Pozisyon analizi hatası: {str(pos_error)}")
-                    position_context = f"Pozisyon: {position}"
-            
-            # CV analizi
+        client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+        
+        # Pozisyon hakkında daha fazla bilgi soruyorsa, pozisyon gereksinimleri analizi yap
+        position_context = ""
+        if position:
             try:
-                logger.info("CV içeriği analiz ediliyor")
-                response = client.chat.completions.create(
+                position_response = client.chat.completions.create(
                     model="gpt-4-turbo",
                     response_format={"type": "json_object"},
                     messages=[
-                        {"role": "system", "content": f"""
-                            Sen bir CV analiz uzmanısın. Verilen CV metnini analiz ederek aşağıdaki yapılandırılmış JSON formatında döndür:
+                        {"role": "system", "content": """
+                            Verilen pozisyonun gerekenliklerini analiz eden bir İK uzmanısın. 
+                            Pozisyon adından yola çıkarak aşağıdaki formatta JSON çıktısı üreteceksin:
                             
-                            {{
-                                "personal_info": {{
-                                    "name": "Ad Soyad",
-                                    "email": "e-posta adresi",
-                                    "phone": "telefon numarası",
-                                    "location": "konum"
-                                }},
-                                "summary": "Adayın kısa özeti",
-                                "skills": ["beceri1", "beceri2", ...],
-                                "experience": [
-                                    {{
-                                        "title": "Pozisyon başlığı",
-                                        "company": "Şirket adı",
-                                        "duration": "Çalışma süresi",
-                                        "description": "Pozisyon açıklaması",
-                                        "achievements": ["başarı1", "başarı2", ...]
-                                    }},
-                                    ...
-                                ],
-                                "education": [
-                                    {{
-                                        "degree": "Derece",
-                                        "institution": "Okul/Üniversite adı",
-                                        "year": "Eğitim yılı",
-                                        "description": "Eğitim açıklaması"
-                                    }},
-                                    ...
-                                ],
-                                "languages": ["dil1", "dil2", ...],
-                                "certificates": ["sertifika1", "sertifika2", ...],
-                                "profile_summary": "Bu adayın güçlü yanları ve pozisyona uygunluğu hakkında 3-4 cümlelik özet",
-                                "position_match": {{
-                                    "match_percentage": 0-100 arası bir sayı,
-                                    "matching_skills": ["eşleşen beceri1", ...],
-                                    "missing_skills": ["eksik beceri1", ...],
-                                    "recommendations": ["öneri1", "öneri2", ...]
-                                }}
-                            }}
+                            {
+                                "position_title": "Pozisyon adı",
+                                "required_skills": ["beceri1", "beceri2", ...],
+                                "preferred_experience": ["deneyim1", "deneyim2", ...],
+                                "education_requirements": ["eğitim1", "eğitim2", ...],
+                                "keywords": ["anahtar kelime1", "anahtar kelime2", ...]
+                            }
                             
-                            Bazı alanlar CV'de bulunmayabilir. Bu durumda boş dizi veya null değeri kullan.
-                            CV'deki bilgileri mümkün olduğunca eksiksiz çıkar. Hiçbir bilgi uydurmadan, CV'de olan bilgileri yapılandırılmış formata çevir.
-                            {position_context}
+                            Tahminlerin mümkün olduğunca gerçekçi ve doğru olmalı.
                         """},
-                        {"role": "user", "content": f"Aşağıdaki CV'yi analiz et ve yapılandırılmış JSON formatında döndür:\n\n{cv_text}"}
+                        {"role": "user", "content": f"Bu pozisyon için gereksinimleri analiz et: {position}"}
                     ]
                 )
                 
-                # JSON yanıtını parse et
-                logger.info("OpenAI yanıtı alındı, JSON parse ediliyor")
-                cv_data = json.loads(response.choices[0].message.content)
-                
-            except json.JSONDecodeError as json_error:
-                logger.error(f"JSON parse hatası: {str(json_error)}")
-                return jsonify({
-                    'success': False, 
-                    'error': f'CV analiz sonucu JSON formatında değil: {str(json_error)}'
-                })
-            except Exception as api_error:
-                logger.error(f"OpenAI API hatası: {str(api_error)}")
-                return jsonify({
-                    'success': False, 
-                    'error': f'CV analizi sırasında API hatası: {str(api_error)}'
-                })
-                
-            # Geçici dosyayı sil
-            try:
-                os.remove(temp_path)
-                logger.info(f"Geçici dosya silindi: {temp_path}")
-            except Exception as rm_error:
-                logger.warning(f"Geçici dosya silme hatası: {str(rm_error)}")
-                
-            # CV'ye özel sorular oluştur
-            try:
-                position_title = position or (cv_data.get('experience') and cv_data.get('experience')[0].get('title', ''))
-                skills = cv_data.get('skills', [])
-                
-                # CV'ye özel mülakat soruları oluştur
-                logger.info("CV'ye özel soru üretimi başlatılıyor")
-                questions_prompt = f"""
-                    Bu adayın CV'sine göre en etkili mülakat sorularını oluştur:
-                    
-                    Aday Bilgileri:
-                    - İsim: {cv_data.get('personal_info', {}).get('name', 'Aday')}
-                    - Beceriler: {', '.join(skills[:5])}
-                    - Deneyim: {', '.join([f"{exp.get('title')} - {exp.get('company')}" for exp in cv_data.get('experience', [])[:2]])}
-                    - Eğitim: {', '.join([f"{edu.get('degree')} - {edu.get('institution')}" for edu in cv_data.get('education', [])[:1]])}
-                    
-                    Pozisyon: {position_title}
-                    
-                    Aday CV'sine göre özelleştirilmiş, derinlemesine 6-8 mülakat sorusu oluştur. Sorular numaralandırılmasın ve her biri bir paragraf olacak şekilde döndürülsün.
+                position_data = json.loads(position_response.choices[0].message.content)
+                position_context = f"""
+                    Pozisyon bilgilerini de analiz et:
+                    Pozisyon: {position}
+                    Gerekli beceriler: {', '.join(position_data.get('required_skills', []))}
+                    Tercih edilen deneyimler: {', '.join(position_data.get('preferred_experience', []))}
+                    Anahtar kelimeler: {', '.join(position_data.get('keywords', []))}
                 """
-                
-                questions_response = client.chat.completions.create(
-                    model="gpt-4",
-                    messages=[
-                        {"role": "system", "content": "Sen bir kıdemli İK uzmanısın ve işe alım mülakatları için soru hazırlıyorsun."},
-                        {"role": "user", "content": questions_prompt}
-                    ],
-                    temperature=0.7,
-                    max_tokens=1000
-                )
-                
-                # GPT tarafından oluşturulan soruları al
-                generated_questions = questions_response.choices[0].message.content.strip().split('\n')
-                generated_questions = [q.strip() for q in generated_questions if q.strip() and len(q.strip()) > 10]
-                logger.info(f"{len(generated_questions)} adet soru oluşturuldu")
-                
-                # Soruları CV verilerine ekle
-                cv_data['generated_questions'] = generated_questions
-                
-            except Exception as q_error:
-                logger.error(f"Soru oluşturma hatası: {str(q_error)}")
-                cv_data['generated_questions'] = []
+            except Exception as e:
+                logging.error(f"Pozisyon analizi hatası: {str(e)}")
+        
+        # CV Analizi yap
+        try:
+            response = client.chat.completions.create(
+                model="gpt-4-turbo",
+                response_format={"type": "json_object"},
+                messages=[
+                    {"role": "system", "content": f"""
+                    Sen bir CV analiz uzmanısın. Verilen CV metnini analiz ederek aşağıdaki yapılandırılmış JSON formatında döndür:
+                    
+                    {{
+                        "personal_info": {{
+                            "name": "Ad Soyad",
+                            "email": "e-posta adresi",
+                            "phone": "telefon numarası",
+                            "location": "konum"
+                        }},
+                        "summary": "Adayın kısa özeti",
+                        "skills": ["beceri1", "beceri2", ...],
+                        "experience": [
+                            {{
+                                "title": "Pozisyon başlığı",
+                                "company": "Şirket adı",
+                                "duration": "Çalışma süresi",
+                                "description": "Pozisyon açıklaması",
+                                "achievements": ["başarı1", "başarı2", ...]
+                            }},
+                            ...
+                        ],
+                        "education": [
+                            {{
+                                "degree": "Derece",
+                                "institution": "Okul/Üniversite adı",
+                                "year": "Eğitim yılı",
+                                "description": "Eğitim açıklaması"
+                            }},
+                            ...
+                        ],
+                        "languages": ["dil1", "dil2", ...],
+                        "certificates": ["sertifika1", "sertifika2", ...],
+                        "profile_summary": "Bu adayın güçlü yanları ve pozisyona uygunluğu hakkında 3-4 cümlelik özet",
+                        "position_match": {{
+                            "match_percentage": 0-100 arası bir sayı,
+                            "matching_skills": ["eşleşen beceri1", ...],
+                            "missing_skills": ["eksik beceri1", ...],
+                            "recommendations": ["öneri1", "öneri2", ...]
+                            }},
+                            "strengths": ["güçlü yön1", "güçlü yön2", ...],
+                            "areas_to_improve": ["geliştirilecek alan1", "geliştirilecek alan2", ...],
+                            "suggested_questions": ["soru1", "soru2", "soru3", "soru4", "soru5"]
+                    }}
+                    
+                    Bazı alanlar CV'de bulunmayabilir. Bu durumda boş dizi veya null değeri kullan.
+                    CV'deki bilgileri mümkün olduğunca eksiksiz çıkar. Hiçbir bilgi uydurmadan, CV'de olan bilgileri yapılandırılmış formata çevir.
+                        Puanlamayı çok titiz ve gerçekçi yap, abartılı pozitif değerlendirmelerden kaçın.
+                        Güçlü yönler, geliştirilecek alanlar ve önerilen soruları da mutlaka ekle.
+                        
+                    {position_context}
+                """},
+                {"role": "user", "content": f"Aşağıdaki CV'yi analiz et ve yapılandırılmış JSON formatında döndür:\n\n{cv_text}"}
+            ]
+            )
             
-            logger.info("CV analizi başarıyla tamamlandı")
-            # JSON verisini döndür
-            return jsonify({
-                'success': True,
-                'cv_data': cv_data
-            })
-            
-        except Exception as analysis_error:
-            logger.error(f"CV analiz genel hatası: {str(analysis_error)}")
+            # JSON yanıtını parse et
+            cv_data = json.loads(response.choices[0].message.content)
+        except Exception as e:
+            logging.error(f"CV analiz API hatası: {str(e)}")
             return jsonify({
                 'success': False,
-                'error': f'CV analiz hatası: {str(analysis_error)}'
+                'error': f"CV analiz edilirken bir API hatası oluştu: {str(e)}"
             })
-    except Exception as general_error:
-        logger.error(f"Beklenmeyen genel hata: {str(general_error)}")
+        
+        # Geçici dosyayı sil
+        try:
+            os.remove(temp_path)
+        except Exception as e:
+            logging.error(f"Geçici dosya silme hatası: {str(e)}")
+            
+        # CV'ye özel sorular oluştur
+        try:
+            position_title = position or (cv_data.get('experience') and cv_data.get('experience')[0].get('title', ''))
+            skills = cv_data.get('skills', [])
+            
+            # CV'ye özel mülakat soruları oluştur
+            questions_prompt = f"""
+                Bu adayın CV'sine göre en etkili mülakat sorularını oluştur:
+                
+                Aday Bilgileri:
+                - İsim: {cv_data.get('personal_info', {}).get('name', 'Aday')}
+                - Beceriler: {', '.join(skills[:5])}
+                - Deneyim: {', '.join([f"{exp.get('title')} - {exp.get('company')}" for exp in cv_data.get('experience', [])[:2]])}
+                - Eğitim: {', '.join([f"{edu.get('degree')} - {edu.get('institution')}" for edu in cv_data.get('education', [])[:1]])}
+                
+                Pozisyon: {position_title}
+                
+                Aday CV'sine göre özelleştirilmiş, derinlemesine 6-8 mülakat sorusu oluştur. Sorular numaralandırılmasın ve her biri bir paragraf olacak şekilde döndürülsün.
+            """
+            
+            questions_response = client.chat.completions.create(
+                model="gpt-4",
+                messages=[
+                    {"role": "system", "content": "Sen bir kıdemli İK uzmanısın ve işe alım mülakatları için soru hazırlıyorsun."},
+                    {"role": "user", "content": questions_prompt}
+                ],
+                temperature=0.7,
+                max_tokens=1000
+            )
+            
+            # GPT tarafından oluşturulan soruları al
+            generated_questions = questions_response.choices[0].message.content.strip().split('\n')
+            generated_questions = [q.strip() for q in generated_questions if q.strip() and len(q.strip()) > 10]
+            
+            # Soruları CV verilerine ekle
+            cv_data['generated_questions'] = generated_questions
+            
+        except Exception as e:
+            logging.error(f"Soru oluşturma hatası: {str(e)}")
+            cv_data['generated_questions'] = []
+            
+        # Başarılı analiz sonucunu döndür
+        result = {
+            'success': True,
+            'personal_info': cv_data.get('personal_info', {}),
+            'summary': cv_data.get('summary', ''),
+            'skills': cv_data.get('skills', []),
+            'experience': cv_data.get('experience', []),
+            'education': cv_data.get('education', []),
+            'languages': cv_data.get('languages', []),
+            'certificates': cv_data.get('certificates', []),
+            'profile_summary': cv_data.get('profile_summary', ''),
+            'position_match': cv_data.get('position_match', {}),
+            'generated_questions': cv_data.get('generated_questions', []),
+            'strengths': cv_data.get('strengths', []),
+            'areas_to_improve': cv_data.get('areas_to_improve', []),
+            'suggested_questions': cv_data.get('suggested_questions', [])
+        }
+        
+        # Quiz oluşturma seçeneği göster
+        result['show_quiz_option'] = True
+        
+        # Log başarılı analizi
+        logging.info(f"CV analizi başarılı: {cv_file.filename} - {position}")
+        
+        return jsonify(result)
+        
+    except Exception as e:
+        logging.error(f"CV analizi hatası: {str(e)}")
         return jsonify({
             'success': False,
-            'error': f'Beklenmeyen bir hata oluştu: {str(general_error)}'
+            'error': f"CV analiz edilirken bir hata oluştu: {str(e)}"
         })
-
+    
 def start_file_watcher():
     """Dosya izleme sistemini başlat - Sadece terminal log'ları için"""
     try:
@@ -2378,62 +2447,6 @@ def save_interview_state():
         logger.error(f"Mülakat durumu kaydetme hatası: {str(e)}")
         return jsonify({'success': False, 'error': str(e)}), 500
 
-@app.route('/save_photo', methods=['POST'])
-def save_photo():
-    try:
-        data = request.json
-        code = data.get('code')
-        photo_data = data.get('photo')
-        timestamp = data.get('timestamp')
-        
-        if not code or not photo_data:
-            return jsonify({'success': False, 'error': 'Mülakat kodu ve fotoğraf verisi gereklidir'}), 400
-            
-        # JSON dosyasını kontrol et
-        json_path = os.path.join('interviews', f'{code}.json')
-        if not os.path.exists(json_path):
-            return jsonify({'success': False, 'error': 'Mülakat bulunamadı'}), 404
-        
-        # Base64 formatındaki fotoğrafı işle
-        # Başlangıç kısmını (data:image/jpeg;base64,) kaldır
-        image_data = photo_data.split(',')[1]
-        
-        # Fotoğrafları saklamak için klasör oluştur
-        photos_dir = os.path.join('interviews', f'{code}_photos')
-        os.makedirs(photos_dir, exist_ok=True)
-        
-        # Fotoğrafa benzersiz bir ad ver
-        photo_filename = f"{datetime.now().strftime('%Y%m%d%H%M%S')}.jpg"
-        photo_path = os.path.join(photos_dir, photo_filename)
-        
-        # Fotoğrafı kaydet
-        with open(photo_path, 'wb') as f:
-            f.write(base64.b64decode(image_data))
-            
-        # JSON dosyasını güncelle (fotoğraf bilgilerini ekle)
-        with open(json_path, 'r', encoding='utf-8') as f:
-            interview_data = json.load(f)
-            
-        # Fotoğraf bilgilerini ekle
-        if 'photos' not in interview_data:
-            interview_data['photos'] = []
-            
-        interview_data['photos'].append({
-            'filename': photo_filename,
-            'timestamp': timestamp,
-            'path': os.path.join(f'{code}_photos', photo_filename)
-        })
-        
-        # Güncellenen veriyi kaydet
-        with open(json_path, 'w', encoding='utf-8') as f:
-            json.dump(interview_data, f, ensure_ascii=False, indent=2)
-            
-        return jsonify({'success': True})
-        
-    except Exception as e:
-        logger.error(f"Fotoğraf kaydetme hatası: {str(e)}")
-        return jsonify({'success': False, 'error': str(e)}), 500
-
 @app.route('/get_speech', methods=['GET'])
 async def get_speech():
     try:
@@ -2489,6 +2502,1753 @@ async def get_speech():
             'error': str(e)
         }), 500
 
+# Pozisyona göre çoktan seçmeli soru oluşturma fonksiyonu
+@app.route('/create_multiple_choice', methods=['POST'])
+def create_multiple_choice():
+    """Çoktan seçmeli sorular oluştur"""
+    try:
+        position = request.json.get('position', '')
+        question_count = int(request.json.get('question_count', 10))
+        quiz_type = request.json.get('quiz_type', 'position')
+        cv_data = request.json.get('cv_data', {})
+        
+        if not position:
+            return jsonify({
+                'success': False,
+                'error': 'Pozisyon bilgisi gereklidir'
+            })
+        
+        # Mülakat kodu oluştur (eğer sağlanmamışsa)
+        interview_code = request.json.get('interview_code')
+        if not interview_code:
+            # Yeni ve belirgin bir mülakat kodu oluştur
+            interview_code = generate_interview_code()
+            
+            # Yeni mülakat verisi oluştur
+            interview_data = {
+                'code': interview_code,
+                'candidate_name': request.json.get('candidate_name', 'İsimsiz Aday'),
+                'position': position,
+                'status': 'pending',
+                'created_at': datetime.now().isoformat(),
+                'cv_data': cv_data,
+                'quiz_created': True,  # Quiz oluşturulduğunu belirt
+                'interview_started': False  # Mülakat henüz başlamadı
+            }
+            
+            # Mülakat verisini kaydet
+            save_interview_data(interview_data, interview_code)
+            logger.info(f"Quiz için yeni mülakat oluşturuldu: {interview_code}")
+        else:
+            # Mevcut mülakatı güncelle - quiz oluşturulduğunu belirt
+            try:
+                json_path = os.path.join('interviews', f'{interview_code}.json')
+                if os.path.exists(json_path):
+                    with open(json_path, 'r', encoding='utf-8') as f:
+                        interview_data = json.load(f)
+                    
+                    # Quiz oluşturuldu olarak işaretle
+                    interview_data['quiz_created'] = True
+                    
+                    # Güncellenen veriyi kaydet
+                    with open(json_path, 'w', encoding='utf-8') as f:
+                        json.dump(interview_data, f, ensure_ascii=False, indent=2)
+            except Exception as update_error:
+                logger.error(f"Mülakat verisi güncelleme hatası: {str(update_error)}")
+                # Bu hata quiz oluşturmayı engellememelidir
+
+        # Giriş mesajını hazırla
+        system_message = """
+        Sen bir teknik mülakat uzmanısın. Verilen pozisyon ve CV bilgileri doğrultusunda, 
+        adayın teknik yetkinliklerini ölçmek için çoktan seçmeli sorular hazırlayacaksın.
+        
+        Her soru aşağıdaki formatta olmalıdır:
+        
+        1. [Soru metni]
+        
+        A. [Seçenek metni]
+        B. [Seçenek metni]
+        C. [Seçenek metni]
+        D. [Seçenek metni]
+        
+        Doğru cevap: [A, B, C veya D]
+        
+        Açıklama: [Cevabın açıklaması]
+        """
+        
+        # CV bilgilerini içeren bağlam oluştur
+        cv_context = ""
+        if cv_data and (quiz_type == 'cv' or quiz_type == 'both'):
+            skills = cv_data.get('skills', [])
+            experiences = cv_data.get('experience', [])
+            education = cv_data.get('education', [])
+            
+            if skills:
+                cv_context += "Adayın becerileri: " + ", ".join(skills) + "\n\n"
+            
+            if experiences:
+                cv_context += "Adayın deneyimleri:\n"
+                for exp in experiences:
+                    cv_context += f"- {exp.get('title', 'Pozisyon')} at {exp.get('company', 'Şirket')}: {exp.get('description', '')}\n"
+                cv_context += "\n"
+            
+            if education:
+                cv_context += "Adayın eğitimi:\n"
+                for edu in education:
+                    cv_context += f"- {edu.get('degree', 'Derece')} in {edu.get('field', 'Alan')}, {edu.get('institution', 'Kurum')}\n"
+                cv_context += "\n"
+        
+        # Kullanıcı komutunu hazırla
+        if quiz_type == 'position':
+            user_message = f"""
+            {position} pozisyonu için {question_count} adet çoktan seçmeli teknik soru oluştur.
+            Her soru için 4 şık (A, B, C, D) hazırla ve doğru cevabı belirt.
+            Her soru için bir açıklama ve doğru cevabın neden doğru olduğuna dair kısa bir bilgi ekle.
+            
+            Lütfen aşağıdaki formatı takip et:
+            1. [Soru metni]
+            
+            A. [Seçenek metni]
+            B. [Seçenek metni]
+            C. [Seçenek metni]
+            D. [Seçenek metni]
+            
+            Doğru cevap: [A, B, C veya D]
+            
+            Açıklama: [Cevabın açıklaması]
+            """
+        elif quiz_type == 'cv':
+            user_message = f"""
+            Aşağıdaki CV bilgilerine dayanarak, adayın beceri ve deneyimlerini test etmek için {question_count} adet çoktan seçmeli teknik soru oluştur.
+            
+            {cv_context}
+            
+            Her soru için 4 şık (A, B, C, D) hazırla ve doğru cevabı belirt.
+            Her soru için bir açıklama ve doğru cevabın neden doğru olduğuna dair kısa bir bilgi ekle.
+            
+            Lütfen aşağıdaki formatı takip et:
+            1. [Soru metni]
+            
+            A. [Seçenek metni]
+            B. [Seçenek metni]
+            C. [Seçenek metni]
+            D. [Seçenek metni]
+            
+            Doğru cevap: [A, B, C veya D]
+            
+            Açıklama: [Cevabın açıklaması]
+            """
+        elif quiz_type == 'both':
+            user_message = f"""
+            {position} pozisyonu ve aşağıdaki CV bilgilerine dayanarak, adayın teknik yetkinliklerini ölçmek için {question_count} adet çoktan seçmeli soru oluştur.
+            
+            {cv_context}
+            
+            Sorular hem pozisyon gereksinimleri hem de adayın becerileri ile ilgili olmalıdır.
+            Her soru için 4 şık (A, B, C, D) hazırla ve doğru cevabı belirt.
+            Her soru için bir açıklama ve doğru cevabın neden doğru olduğuna dair kısa bir bilgi ekle.
+            
+            Lütfen aşağıdaki formatı takip et:
+            1. [Soru metni]
+            
+            A. [Seçenek metni]
+            B. [Seçenek metni]
+            C. [Seçenek metni]
+            D. [Seçenek metni]
+            
+            Doğru cevap: [A, B, C veya D]
+            
+            Açıklama: [Cevabın açıklaması]
+            """
+        
+        # OpenAI API çağrısı
+        try:
+            logger.info(f"OpenAI API'ye istek gönderiliyor - pozisyon: {position}, soru sayısı: {question_count}")
+            completion = openai_client.chat.completions.create(
+                model="gpt-4o",
+                messages=[
+                    {"role": "system", "content": system_message},
+                    {"role": "user", "content": user_message}
+                ],
+                temperature=0.5
+            )
+            
+            # Yanıtı analiz et
+            content = completion.choices[0].message.content
+            logger.info(f"OpenAI yanıtı alındı - uzunluk: {len(content)}")
+        except Exception as api_error:
+            logger.error(f"OpenAI API hatası: {str(api_error)}")
+            return jsonify({
+                'success': False,
+                'error': f"OpenAI API hatası: {str(api_error)}"
+            })
+        
+        # Soruları ayrıştır
+        questions = []
+        current_question = {}
+        question_id = 0
+        lines = content.split('\n')
+        line_count = len(lines)
+        
+        logger.info(f"Toplam {line_count} satır ayrıştırılacak")
+        
+        try:
+            i = 0
+            while i < line_count:
+                line = lines[i].strip()
+                
+                # Yeni soru başlangıcı
+                if re.match(r'^(\d+)\.\s+', line):
+                    if current_question and 'question' in current_question:
+                        questions.append(current_question)
+                    
+                    question_id += 1
+                    question_match = re.match(r'^(\d+)\.\s+(.*)', line)
+                    if question_match:
+                        question_text = question_match.group(2)
+                        current_question = {
+                            'id': str(question_id),
+                            'question': question_text,
+                            'options': {},
+                            'correct_answer': '',
+                            'explanation': ''
+                        }
+                
+                # Şık ayrıştırma
+                elif re.match(r'^[A-D]\.\s+', line):
+                    option_match = re.match(r'^([A-D])\.\s+(.*)', line)
+                    if option_match and current_question:
+                        option_letter = option_match.group(1)
+                        option_text = option_match.group(2)
+                        if 'options' in current_question:
+                            current_question['options'][option_letter] = option_text
+                        else:
+                            logger.warning(f"Soru ID {question_id} için options anahtarı yok")
+                
+                # Doğru cevap
+                elif "doğru cevap" in line.lower() or "cevap:" in line.lower():
+                    answer_match = re.search(r'[A-D]', line)
+                    if answer_match and current_question:
+                        current_question['correct_answer'] = answer_match.group(0)
+                
+                # Açıklama
+                elif "açıklama" in line.lower() or "explanation" in line.lower():
+                    if current_question:
+                        explanation_parts = []
+                        if ":" in line:
+                            explanation_parts.append(line.split(":", 1)[1].strip())
+                        else:
+                            explanation_parts.append(line)
+                        
+                        # Sonraki satırları açıklamaya ekle
+                        j = i + 1
+                        while j < line_count:
+                            next_line = lines[j].strip()
+                            if not next_line or re.match(r'^(\d+)\.\s+', next_line) or re.match(r'^[A-D]\.\s+', next_line):
+                                break
+                            explanation_parts.append(next_line)
+                            j += 1
+                        
+                        current_question['explanation'] = " ".join(explanation_parts).strip()
+                
+                i += 1
+        
+            # Son soruyu da ekle
+            if current_question and 'question' in current_question:
+                questions.append(current_question)
+            
+            logger.info(f"GPT tarafından {len(questions)} soru oluşturuldu")
+            
+            # Hiç soru yoksa hata döndür
+            if len(questions) == 0:
+                logger.error(f"GPT yanıtından hiç soru oluşturulamadı. API yanıtı: {content}")
+                return jsonify({
+                    'success': False,
+                    'error': 'Sorular oluşturulamadı. Lütfen tekrar deneyin veya farklı bir pozisyon girin.'
+                })
+                
+            # Tüm soruların gerekli alanlarını kontrol et
+            valid_questions = []
+            for q in questions:
+                if ('question' in q and 'options' in q and len(q['options']) > 0 and 
+                    'correct_answer' in q and q['correct_answer']):
+                    valid_questions.append(q)
+                else:
+                    logger.warning(f"Geçersiz soru formatı: {q}")
+            
+            # Soruları dosyaya kaydet
+            quiz_filename = f"quiz_{datetime.now().strftime('%Y%m%d%H%M%S')}_{interview_code}.json"
+            quiz_path = os.path.join(QUESTIONS_DIR, quiz_filename)
+            
+            quiz_data = {
+                'position': position,
+                'interview_code': interview_code,
+                'quiz_type': quiz_type,
+                'cv_context': cv_context if quiz_type in ['cv', 'both'] else "",
+                'created_at': datetime.now().isoformat(),
+                'questions': valid_questions
+            }
+            
+            with open(quiz_path, 'w', encoding='utf-8') as f:
+                json.dump(quiz_data, f, ensure_ascii=False, indent=2)
+            
+            return jsonify({
+                'success': True,
+                'message': f"{len(valid_questions)} adet çoktan seçmeli soru oluşturuldu.",
+                'quiz_url': f"/quiz/{interview_code}",
+                'interview_code': interview_code
+            })
+            
+        except Exception as parse_error:
+            logger.error(f"Soru ayrıştırma hatası: {str(parse_error)}")
+            logger.error(f"İçerik: {content[:200]}...")
+            return jsonify({
+                'success': False,
+                'error': f"Sorular ayrıştırılırken bir hata oluştu: {str(parse_error)}"
+            })
+        
+    except Exception as e:
+        logging.error(f"Çoktan seçmeli soru oluşturma hatası: {str(e)}")
+        return jsonify({
+            'success': False,
+            'error': f"Soru oluşturulurken bir hata oluştu: {str(e)}"
+        })
+
+# Çoktan seçmeli sınav sayfasını göster
+@app.route('/quiz/<interview_code>')
+def show_quiz(interview_code):
+    """Çoktan seçmeli sınavı göster"""
+    try:
+        # Eğer gelen kod garip bir format (JSON dökümü gibi) içeriyorsa temizle
+        if isinstance(interview_code, str) and ('{' in interview_code or '}' in interview_code):
+            logger.warning(f"Geçersiz quiz kodu temizlendi: {interview_code}")
+            return render_template('error.html', message="Geçersiz sınav kodu. Lütfen doğru bir kod kullanınız.")
+        
+        # İlgili soru dosyasını bul
+        quiz_file = None
+        for file in os.listdir(QUESTIONS_DIR):
+            if file.endswith(f"_{interview_code}.json"):
+                quiz_file = file
+                break
+        
+        if not quiz_file:
+            return render_template('error.html', message="Sınav bulunamadı. Lütfen kod doğruluğunu kontrol ediniz.")
+        
+        # Soru dosyasını oku
+        with open(os.path.join(QUESTIONS_DIR, quiz_file), 'r', encoding='utf-8') as f:
+            quiz_data = json.load(f)
+        
+        # Şablonu göster
+        return render_template('quiz.html', 
+                              interview_code=interview_code,
+                              position=quiz_data.get('position', ''),
+                              questions=quiz_data.get('questions', []))
+    
+    except Exception as e:
+        logging.error(f"Çoktan seçmeli sınav gösterme hatası: {str(e)}")
+        return render_template('error.html', message=f"Sınav gösterilirken bir hata oluştu: {str(e)}")
+
+@app.route('/save_photo', methods=['POST'])
+def save_photo():
+    try:
+        data = request.json
+        code = data.get('code')
+        photo_data = data.get('photo')
+        timestamp = data.get('timestamp')
+        
+        if not code or not photo_data:
+            return jsonify({'success': False, 'error': 'Mülakat kodu ve fotoğraf verisi gereklidir'}), 400
+            
+        # Geçersiz mülakat kodunu temizle
+        if isinstance(code, str) and ('{' in code or '}' in code):
+            logger.warning(f"Geçersiz fotoğraf kaydetme mülakat kodu: {code}")
+            return jsonify({'success': False, 'error': 'Geçersiz mülakat kodu formatı'}), 400
+            
+        # Quiz dosyası kontrolü
+        quiz_found = False
+        for file in os.listdir(QUESTIONS_DIR):
+            if file.endswith(f"_{code}.json"):
+                quiz_found = True
+                break
+                
+        # Eğer quiz dosyası varsa, fotoğraflar için quiz kodu kullanılabilir
+        if quiz_found:
+            # Quiz fotoğraflarını saklamak için klasör oluştur
+            photos_dir = os.path.join('interviews', f'quiz_{code}_photos')
+            os.makedirs(photos_dir, exist_ok=True)
+            
+            # Base64 formatındaki fotoğrafı işle
+            try:
+                # Başlangıç kısmını (data:image/jpeg;base64,) kaldır
+                if ',' in photo_data:
+                    image_data = photo_data.split(',')[1]
+                else:
+                    image_data = photo_data
+                
+                # Fotoğrafa benzersiz bir ad ver
+                photo_filename = f"{datetime.now().strftime('%Y%m%d%H%M%S')}.jpg"
+                photo_path = os.path.join(photos_dir, photo_filename)
+                
+                # Fotoğrafı kaydet
+                with open(photo_path, 'wb') as f:
+                    f.write(base64.b64decode(image_data))
+                
+                return jsonify({'success': True})
+            except Exception as e:
+                logger.error(f"Quiz fotoğraf işleme hatası: {str(e)}")
+                return jsonify({'success': False, 'error': f'Fotoğraf işlenirken hata: {str(e)}'}), 500
+            
+        # JSON dosyasını kontrol et
+        json_path = os.path.join('interviews', f'{code}.json')
+        if not os.path.exists(json_path):
+            return jsonify({'success': False, 'error': 'Mülakat bulunamadı'}), 404
+        
+        # Base64 formatındaki fotoğrafı işle
+        # Başlangıç kısmını (data:image/jpeg;base64,) kaldır
+        if ',' in photo_data:
+            image_data = photo_data.split(',')[1]
+        else:
+            image_data = photo_data
+        
+        # Fotoğrafları saklamak için klasör oluştur
+        photos_dir = os.path.join('interviews', f'{code}_photos')
+        os.makedirs(photos_dir, exist_ok=True)
+        
+        # Fotoğrafa benzersiz bir ad ver
+        photo_filename = f"{datetime.now().strftime('%Y%m%d%H%M%S')}.jpg"
+        photo_path = os.path.join(photos_dir, photo_filename)
+        
+        # Fotoğrafı kaydet
+        with open(photo_path, 'wb') as f:
+            f.write(base64.b64decode(image_data))
+            
+        # JSON dosyasını güncelle (fotoğraf bilgilerini ekle)
+        with open(json_path, 'r', encoding='utf-8') as f:
+            interview_data = json.load(f)
+            
+        # Fotoğraf bilgilerini ekle
+        if 'photos' not in interview_data:
+            interview_data['photos'] = []
+            
+        interview_data['photos'].append({
+            'filename': photo_filename,
+            'timestamp': timestamp,
+            'path': os.path.join(f'{code}_photos', photo_filename)
+        })
+        
+        # Güncellenen veriyi kaydet
+        with open(json_path, 'w', encoding='utf-8') as f:
+            json.dump(interview_data, f, ensure_ascii=False, indent=2)
+            
+        return jsonify({'success': True})
+        
+    except Exception as e:
+        logger.error(f"Fotoğraf kaydetme hatası: {str(e)}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/submit_quiz/<interview_code>', methods=['POST'])
+def submit_quiz(interview_code):
+    """Sınav cevaplarını kaydet ve sonuçları göster"""
+    try:
+        # Gelen kodda JSON formatı veya geçersiz karakterler varsa temizle
+        if isinstance(interview_code, str) and ('{' in interview_code or '}' in interview_code):
+            logger.warning(f"Geçersiz submit_quiz kodu temizlendi: {interview_code}")
+            return jsonify({
+                'success': False,
+                'error': "Geçersiz sınav kodu. Lütfen doğru bir kod kullanınız."
+            })
+            
+        # Cevapları al
+        answers = request.get_json()
+        
+        # İlgili soru dosyasını bul
+        quiz_file = None
+        for file in os.listdir(QUESTIONS_DIR):
+            if file.endswith(f"_{interview_code}.json"):
+                quiz_file = file
+                break
+        
+        if not quiz_file:
+            return jsonify({
+                'success': False,
+                'error': "Sınav bulunamadı. Lütfen kod doğruluğunu kontrol ediniz."
+            })
+        
+        # Soru dosyasını oku
+        with open(os.path.join(QUESTIONS_DIR, quiz_file), 'r', encoding='utf-8') as f:
+            quiz_data = json.load(f)
+        
+        # Sonuçları hesapla
+        correct_count = 0
+        results = []
+        
+        # Doğru cevapları kontrol et
+        all_answers = [q.get('correct_answer', '').strip().upper() for q in quiz_data.get('questions', [])]
+        unique_answers = set(all_answers)
+        
+        # Eğer tüm doğru cevaplar "D" ise, quiz dosyasının kendisini düzelt
+        if len(unique_answers) == 1 and 'D' in unique_answers and len(all_answers) > 3:
+            logger.warning(f"Bozuk quiz dosyası tespit edildi - tüm cevaplar 'D'. Doğru cevapları rastgele düzeltiyorum.")
+            
+            # Seçenekler listesi
+            option_letters = ['A', 'B', 'C', 'D']
+            
+            # Her soruya rastgele doğru cevap ata
+            for question in quiz_data.get('questions', []):
+                # Mevcut doğru cevap
+                current_answer = question.get('correct_answer', 'D').strip().upper()
+                if current_answer == 'D':
+                    # Rastgele yeni bir cevap seç (tüm cevaplar D olmayacak şekilde)
+                    import random
+                    new_answer = random.choice(option_letters)
+                    question['correct_answer'] = new_answer
+                    logger.info(f"Soru {question.get('id')} için doğru cevap 'D'den '{new_answer}'a değiştirildi")
+            
+            # Düzeltilmiş quiz dosyasını kaydet
+            quiz_path = os.path.join(QUESTIONS_DIR, quiz_file)
+            with open(quiz_path, 'w', encoding='utf-8') as f:
+                json.dump(quiz_data, f, ensure_ascii=False, indent=2)
+                
+            logger.info(f"Düzeltilmiş quiz dosyası kaydedildi: {quiz_path}")
+        
+        # Normal değerlendirme
+        for question in quiz_data.get('questions', []):
+            question_id = question.get('id')
+            user_answer = answers.get(str(question_id))
+            correct_answer = question.get('correct_answer')
+            
+            # Veri tiplerini düzenle - Her ikisini de string'e çevir ve büyük harfe dönüştür
+            if user_answer is not None:
+                user_answer = str(user_answer).strip().upper()
+            else:
+                user_answer = ""
+                
+            if correct_answer is not None:
+                correct_answer = str(correct_answer).strip().upper()
+            else:
+                correct_answer = ""
+            
+            # Karşılaştırma
+            is_correct = user_answer == correct_answer
+            
+            # Sonuç kontrolü
+            logger.info(f"Karşılaştırma sonucu: {is_correct} (user_answer='{user_answer}', correct_answer='{correct_answer}')")
+            
+            if is_correct:
+                correct_count += 1
+                
+            # Sonuçları kaydet - JSON dosyası için tam veri
+            detailed_result = {
+                'id': question_id,
+                'question': question.get('question'),
+                'user_answer': user_answer,
+                'correct_answer': correct_answer,
+                'is_correct': is_correct,
+                'explanation': question.get('explanation')
+            }
+            
+            # Kullanıcıya gösterilecek sonuçlar - doğru cevapları içermez
+            user_result = {
+                'id': question_id,
+                'question': question.get('question'),
+                'user_answer': user_answer,
+                'is_correct': is_correct,
+                'explanation': "" if is_correct else "Bu soruya yanlış cevap verdiniz."
+            }
+            
+            # İki farklı sonuç listesi tut
+            results.append(user_result)  # Kullanıcıya gösterilecek
+        
+        # Sonuçları kaydet
+        total_questions = len(quiz_data.get('questions', []))
+        if total_questions > 0:
+            score_percentage = int((correct_count / total_questions) * 100)
+        else:
+            score_percentage = 0
+        
+        # Timestamp ekle
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        
+        # Başarısız olan sorular ve başarılı olan sorular
+        failed_questions = [q for q in quiz_data.get('questions', []) if answers.get(str(q.get('id'))) != q.get('correct_answer')]
+        passed_questions = [q for q in quiz_data.get('questions', []) if answers.get(str(q.get('id'))) == q.get('correct_answer')]
+        
+        # Yanlış yapılan soru konuları
+        failed_topics = [q.get('question', '').split()[0:3] for q in failed_questions]
+        failed_topics_str = ", ".join([" ".join(topic) for topic in failed_topics])
+        
+        # Doğru cevapların yüzdesi ve analizi
+        analysis = {
+            'correct_percentage': score_percentage,
+            'correct_count': correct_count,
+            'total_questions': total_questions,
+            'failed_topics': failed_topics_str if failed_topics else "Tüm konularda başarılı",
+            'performance': "Çok iyi" if score_percentage >= 90 else 
+                          "İyi" if score_percentage >= 75 else 
+                          "Orta" if score_percentage >= 50 else 
+                          "Geliştirilebilir"
+        }
+        
+        # Tam sonuç verilerini kaydet (doğru cevapları içerir, sadece JSON'da saklanır)
+        detailed_result_data = {
+            'interview_code': interview_code,
+            'position': quiz_data.get('position', ''),
+            'total_questions': total_questions,
+            'correct_count': correct_count,
+            'percentage': score_percentage,
+            'timestamp': timestamp,
+            'analysis': analysis,
+            'detailed_results': [detailed_result for question in quiz_data.get('questions', []) 
+                                for detailed_result in [
+                                    {
+                                        'id': question.get('id'),
+                                        'question': question.get('question'),
+                                        'user_answer': answers.get(str(question.get('id')), ""),
+                                        'correct_answer': question.get('correct_answer', ""),
+                                        'is_correct': answers.get(str(question.get('id'))) == question.get('correct_answer'),
+                                        'explanation': question.get('explanation', "")
+                                    }
+                                ]]
+        }
+        
+        # Sonuç dosyasını kaydet
+        result_filename = f"result_{interview_code}_{int(time.time())}.json"
+        result_path = os.path.join(QUESTIONS_DIR, result_filename)
+        with open(result_path, 'w', encoding='utf-8') as f:
+            json.dump(detailed_result_data, f, ensure_ascii=False, indent=2)
+        
+        # Mülakat verisine quiz sonuçlarını ekle
+        try:
+            json_path = os.path.join('interviews', f'{interview_code}.json')
+            if os.path.exists(json_path):
+                with open(json_path, 'r', encoding='utf-8') as f:
+                    interview_data = json.load(f)
+                
+                # Quiz sonuçlarını ekle
+                interview_data['quiz_results'] = {
+                    'timestamp': timestamp,
+                    'score': {
+                        'correct': correct_count,
+                        'total': total_questions,
+                        'percentage': score_percentage
+                    },
+                    'analysis': analysis,  # Analiz verilerini de ekle
+                    'result_file': result_filename
+                }
+                
+                # Rapor oluştur - quiz sonuçlarıyla
+                if 'report_generated' not in interview_data or not interview_data['report_generated']:
+                    try:
+                        # Asenkron rapor oluşturmayı başlat
+                        asyncio.run(generate_quiz_report(interview_code, interview_data))
+                        interview_data['report_generated'] = True
+                    except Exception as report_error:
+                        logger.error(f"Quiz raporu oluşturma hatası: {str(report_error)}")
+                
+                # Güncellenen veriyi kaydet
+                with open(json_path, 'w', encoding='utf-8') as f:
+                    json.dump(interview_data, f, ensure_ascii=False, indent=2)
+        except Exception as update_error:
+            logger.error(f"Quiz sonuçlarını mülakat verisine ekleme hatası: {str(update_error)}")
+            # Bu hata quiz sonuçlarının dönüşünü engellememelidir
+        
+        # Ana return ifadesi - tüm işlemler tamamlandığında sonuçları döndür
+        # Kullanıcıya doğru cevapları göstermiyoruz, sadece kendi cevaplarının doğru/yanlış olduğunu söylüyoruz
+        return jsonify({
+            'success': True,
+            'correct_count': correct_count,
+            'total_questions': total_questions,
+            'percentage': score_percentage,
+            'results': results,  # Sadece kullanıcı sonuçlarını gönder (doğru cevapları içermez)
+            'analysis': analysis['performance']  # Performans değerlendirmesini ekle
+        })
+            
+    except Exception as e:
+        logging.error(f"Çoktan seçmeli sınav sonuçlarını kaydetme hatası: {str(e)}")
+        return jsonify({
+            'success': False,
+            'error': f"Sınav sonuçları kaydedilirken bir hata oluştu: {str(e)}"
+        })
+
+# Quiz raporu oluşturma fonksiyonu
+async def generate_quiz_report(interview_code, interview_data):
+    """Sadece quiz sonuçlarına dayalı rapor oluştur"""
+    try:
+        if not interview_code:
+            logger.error("Rapor oluşturmak için mülakat kodu gereklidir")
+            return False
+            
+        logger.info(f"Quiz raporu oluşturuluyor: {interview_code}")
+        
+        # Quiz sonuçlarını al
+        quiz_results = interview_data.get('quiz_results', {})
+        if not quiz_results:
+            logger.error(f"Quiz raporu oluşturulamadı: Quiz sonuçları bulunamadı. Kod: {interview_code}")
+            return False
+        
+        # Quiz analiz verilerini al
+        quiz_analysis = quiz_results.get('analysis', {})
+        
+        # Sonuç dosyasından detaylı verileri al
+        result_file = quiz_results.get('result_file')
+        detailed_results = []
+        if result_file:
+            result_path = os.path.join(QUESTIONS_DIR, result_file)
+            if os.path.exists(result_path):
+                try:
+                    with open(result_path, 'r', encoding='utf-8') as f:
+                        result_data = json.load(f)
+                        detailed_results = result_data.get('detailed_results', [])
+                except Exception as e:
+                    logger.error(f"Sonuç dosyası okuma hatası: {str(e)}")
+        
+        # Mülakat sonuçlarını kontrol et
+        interview_results = interview_data.get('evaluation_results', {})
+        has_interview_results = bool(interview_results)
+            
+        # Rapor verileri
+        report_data = {
+            'interview_code': interview_code,
+            'candidate_name': interview_data.get('candidate_name', 'İsimsiz Aday'),
+            'position': interview_data.get('position', 'Belirtilmemiş Pozisyon'),
+            'date': datetime.now().strftime('%d.%m.%Y'),
+            'quiz_score': quiz_results.get('score', {}).get('percentage', 0),
+            'quiz_correct': quiz_results.get('score', {}).get('correct', 0),
+            'quiz_total': quiz_results.get('score', {}).get('total', 0),
+            'quiz_only': not has_interview_results,  # Sadece quiz ise True, mülakat da varsa False
+            'quiz_analysis': quiz_analysis,  # Quiz analiz verilerini ekle
+            'detailed_results': detailed_results  # Detaylı soru sonuçlarını ekle
+        }
+        
+        # Mülakat sonuçları varsa, onları da ekle
+        if has_interview_results:
+            report_data.update({
+                'technical_score': interview_results.get('technical_score', 0),
+                'communication_score': interview_results.get('communication_score', 0),
+                'confidence_score': interview_results.get('confidence_score', 0),
+                'overall_score': interview_results.get('overall_score', 0)
+            })
+        else:
+            # Mülakat sonuçları yoksa, quiz skorunu teknik skor olarak kullan
+            report_data.update({
+                'technical_score': quiz_results.get('score', {}).get('percentage', 0),
+                'overall_score': quiz_results.get('score', {}).get('percentage', 0)
+            })
+        
+        # PDF oluştur
+        report_renderer = QuizReportRenderer(report_data)
+        pdf_path = report_renderer.generate_pdf()
+        
+        # PDF dosya adını mülakat verisine ekle
+        if pdf_path:
+            interview_data['report_pdf'] = os.path.basename(pdf_path)
+            interview_data['report_generated_at'] = datetime.now().isoformat()
+            interview_data['report_status'] = 'completed'
+            
+            # Güncellenen veriyi kaydet
+            json_path = os.path.join('interviews', f'{interview_code}.json')
+            with open(json_path, 'w', encoding='utf-8') as f:
+                json.dump(interview_data, f, ensure_ascii=False, indent=2)
+                
+            logger.info(f"Quiz raporu başarıyla oluşturuldu: {pdf_path}")
+            return True
+        else:
+            logger.error(f"Quiz raporu oluşturulamadı: PDF dosyası oluşturulamadı. Kod: {interview_code}")
+            return False
+            
+    except Exception as e:
+        logger.error(f"Quiz raporu oluşturma hatası: {str(e)}")
+        return False
+
+# Çoktan seçmeli sınav giriş sayfası
+@app.route('/quiz_entry')
+def quiz_entry():
+    """Çoktan seçmeli sınav giriş sayfasını göster"""
+    return render_template('quiz_entry.html')
+
+# ReportRenderer sınıfı - PDF raporları oluşturmak için
+class QuizReportRenderer:
+    """Quiz PDF raporlarını oluşturmak için özel sınıf"""
+    def __init__(self, report_data):
+        self.report_data = report_data
+        self.styles = getSampleStyleSheet()
+        
+    def generate_pdf(self):
+        try:
+            # PDF dosya yolu
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            interview_code = self.report_data.get('interview_code', 'unknown')
+            pdf_filename = f"quiz_raporu_{interview_code}_{timestamp}.pdf"
+            pdf_path = os.path.join('reports', pdf_filename)
+            
+            # PDF oluştur
+            doc = SimpleDocTemplate(pdf_path, pagesize=letter)
+            story = []
+            
+            # Başlık
+            title_style = ParagraphStyle(
+                'CustomTitle',
+                parent=self.styles['Heading1'],
+                fontSize=24,
+                spaceAfter=30,
+                alignment=1  # Ortalanmış
+            )
+            story.append(Paragraph("Quiz Değerlendirme Raporu", title_style))
+            story.append(Spacer(1, 12))
+            
+            # Aday Bilgileri
+            info_style = ParagraphStyle(
+                'Info',
+                parent=self.styles['Normal'],
+                fontSize=12,
+                spaceAfter=6
+            )
+            story.append(Paragraph(f"Aday: {self.report_data.get('candidate_name', 'Belirtilmemiş')}", info_style))
+            story.append(Paragraph(f"Pozisyon: {self.report_data.get('position', 'Belirtilmemiş')}", info_style))
+            story.append(Paragraph(f"Tarih: {self.report_data.get('date', datetime.now().strftime('%d.%m.%Y'))}", info_style))
+            story.append(Paragraph(f"Mülakat Kodu: {self.report_data.get('interview_code', 'Belirtilmemiş')}", info_style))
+            story.append(Spacer(1, 20))
+            
+            # Quiz Sonuçları
+            story.append(Paragraph("Quiz Sonuçları", self.styles['Heading2']))
+            story.append(Spacer(1, 12))
+            
+            # Quiz skoru ve istatistikleri
+            quiz_score = self.report_data.get('quiz_score', 0)
+            quiz_correct = self.report_data.get('quiz_correct', 0)
+            quiz_total = self.report_data.get('quiz_total', 0)
+            
+            metrics_data = [
+                ["Metrik", "Değer"],
+                ["Doğru Cevaplar", f"{quiz_correct}"],
+                ["Toplam Soru", f"{quiz_total}"],
+                ["Quiz Skoru", f"{quiz_score}%"],
+                ["Performans", self.report_data.get('quiz_analysis', {}).get('performance', 'Değerlendirilmedi')]
+            ]
+            
+            t = Table(metrics_data, colWidths=[300, 100])
+            t.setStyle(TableStyle([
+                ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+                ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                ('FONTSIZE', (0, 0), (-1, 0), 14),
+                ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+                ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+                ('TEXTCOLOR', (0, 1), (-1, -1), colors.black),
+                ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),
+                ('FONTSIZE', (0, 1), (-1, -1), 12),
+                ('GRID', (0, 0), (-1, -1), 1, colors.black)
+            ]))
+            story.append(t)
+            story.append(Spacer(1, 20))
+            
+            # Quiz Analizi
+            story.append(Paragraph("Quiz Analizi", self.styles['Heading2']))
+            story.append(Spacer(1, 12))
+            
+            # Quiz analizini ekle
+            quiz_analysis = self.report_data.get('quiz_analysis', {})
+            
+            # Başarısız olunan konular
+            failed_topics = quiz_analysis.get('failed_topics', "Veri yok")
+            
+            analysis_text = f"""Aday {quiz_total} sorudan {quiz_correct} tanesine doğru cevap vermiştir (%{quiz_score} başarı).
+
+Performans değerlendirmesi: {quiz_analysis.get('performance', 'Veri yok')}
+
+Eksik görülen konular: {failed_topics}"""
+            
+            story.append(Paragraph(analysis_text, self.styles['Normal']))
+            story.append(Spacer(1, 20))
+            
+            # Doğru/Yanlış Soruları Listele
+            story.append(Paragraph("Soru Detayları", self.styles['Heading2']))
+            story.append(Spacer(1, 12))
+            
+            # Detaylı sonuçları göster
+            detailed_results = self.report_data.get('detailed_results', [])
+            if detailed_results:
+                # Doğru cevaplar
+                correct_questions = [r for r in detailed_results if r.get('is_correct', False)]
+                if correct_questions:
+                    story.append(Paragraph("Doğru Cevaplanan Sorular:", self.styles['Heading3']))
+                    story.append(Spacer(1, 8))
+                    
+                    for i, result in enumerate(correct_questions, 1):
+                        question = result.get('question', '')
+                        correct_answer = result.get('correct_answer', '')
+                        story.append(Paragraph(f"{i}. {question} (Doğru cevap: {correct_answer})", self.styles['Normal']))
+                    
+                    story.append(Spacer(1, 12))
+                
+                # Yanlış cevaplar
+                wrong_questions = [r for r in detailed_results if not r.get('is_correct', False)]
+                if wrong_questions:
+                    story.append(Paragraph("Yanlış Cevaplanan Sorular:", self.styles['Heading3']))
+                    story.append(Spacer(1, 8))
+                    
+                    for i, result in enumerate(wrong_questions, 1):
+                        question = result.get('question', '')
+                        user_answer = result.get('user_answer', '')
+                        correct_answer = result.get('correct_answer', '')
+                        explanation = result.get('explanation', '')
+                        
+                        story.append(Paragraph(f"{i}. {question}", self.styles['Normal']))
+                        story.append(Paragraph(f"   Adayın cevabı: {user_answer}", self.styles['Normal']))
+                        story.append(Paragraph(f"   Doğru cevap: {correct_answer}", self.styles['Normal']))
+                        if explanation:
+                            story.append(Paragraph(f"   Açıklama: {explanation}", self.styles['Normal']))
+                        story.append(Spacer(1, 8))
+                
+            else:
+                story.append(Paragraph("Detaylı soru bilgisi bulunamadı.", self.styles['Normal']))
+            
+            # Genel Değerlendirme ve Yorum
+            story.append(Spacer(1, 20))
+            story.append(Paragraph("Genel Değerlendirme", self.styles['Heading2']))
+            story.append(Spacer(1, 12))
+            
+            # Quiz sonucuna göre değerlendirme
+            performance_text = ""
+            if quiz_score >= 90:
+                performance_text = f"""Aday quiz değerlendirmesinde çok yüksek bir başarı göstermiştir (%{quiz_score}). 
+Sınava konu olan teknik yetkinliklere çok iyi düzeyde hâkimdir.
+Adayın pozisyon için teknik yeterlilik açısından oldukça uygun olduğu düşünülmektedir."""
+            elif quiz_score >= 75:
+                performance_text = f"""Aday quiz değerlendirmesinde iyi düzeyde bir başarı göstermiştir (%{quiz_score}).
+Sınava konu olan teknik yetkinliklere genel olarak hâkimdir.
+Adayın pozisyon için teknik yeterlilik açısından uygun olduğu düşünülmektedir."""
+            elif quiz_score >= 50:
+                performance_text = f"""Aday quiz değerlendirmesinde orta düzeyde bir başarı göstermiştir (%{quiz_score}).
+Sınava konu olan teknik yetkinliklerin bazılarında eksiği vardır.
+Adayın ilgili konularda ek gelişim göstermesi faydalı olacaktır."""
+            else:
+                performance_text = f"""Aday quiz değerlendirmesinde düşük bir başarı göstermiştir (%{quiz_score}).
+Sınava konu olan teknik yetkinliklerde önemli eksiklikleri vardır.
+Adayın bu pozisyon için gerekli teknik yetkinlikleri geliştirmesi gerektiği düşünülmektedir."""
+                
+            story.append(Paragraph(performance_text, self.styles['Normal']))
+            
+            # Mülakat sonuçları da varsa, genel bir değerlendirme ekle
+            if not self.report_data.get('quiz_only', True):
+                story.append(Spacer(1, 12))
+                mulakat_text = """Adayla yapılan mülakat ve teknik quiz sonuçları birlikte değerlendirildiğinde, 
+adayın pozisyon için uygunluğu hakkında daha kapsamlı bir değerlendirme yapılabilir."""
+                story.append(Paragraph(mulakat_text, self.styles['Normal']))
+            
+            # Altbilgi
+            story.append(Spacer(1, 30))
+            footer_style = ParagraphStyle(
+                'Footer',
+                parent=self.styles['Normal'],
+                fontSize=10,
+                textColor=colors.gray,
+                alignment=1  # Ortalanmış
+            )
+            story.append(Paragraph("DUF Tech Mülakat Sistemi tarafından oluşturulmuştur", footer_style))
+            
+            # PDF oluştur
+            doc.build(story)
+            logger.info(f"Quiz raporu başarıyla oluşturuldu: {pdf_path}")
+            return pdf_path
+            
+        except Exception as e:
+            logger.error(f"Quiz raporu PDF oluşturma hatası: {str(e)}")
+            return None
+
+@app.route('/create_quiz', methods=['POST'])
+def create_quiz():
+    """Çoktan seçmeli sınav oluştur"""
+    try:
+        data = request.get_json()
+        position = data.get('position', '')
+        cv_context = data.get('cv_context', '')
+        interview_code = data.get('code')
+        quiz_type = data.get('quiz_type', 'technical') # technical, personality, both
+        
+        if not interview_code:
+            interview_code = generate_interview_code()
+            
+        logger.info(f"Quiz oluşturuluyor: {interview_code} / {position}")
+        
+        # OpenAI'yi yapılandır
+        client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+        
+        # Teknik ya da kişilik sorularına göre prompt'u ayarla
+        if quiz_type == 'technical':
+            quiz_prompt = f"""
+                Verilen pozisyon için 20 adet çoktan seçmeli teknik soru oluştur. 
+                Sorular adayın teknik bilgisini ölçmeye yönelik olmalı.
+                
+                Pozisyon: {position}
+                
+                {cv_context if cv_context else ''}
+                
+                Her soru şu formatta olmalı:
+                {{
+                  "id": "benzersiz numara",
+                  "question": "soru metni",
+                  "options": {{
+                    "A": "seçenek A",
+                    "B": "seçenek B",
+                    "C": "seçenek C",
+                    "D": "seçenek D"
+                  }},
+                  "correct_answer": "doğru cevabın harfi (A, B, C, D formatında)",
+                  "explanation": "doğru cevabın açıklaması"
+                }}
+                
+                Yanıt yalnızca JSON formatında soruların dizisi olmalıdır. Başka bir şey yazma.
+            """
+        elif quiz_type == 'personality':
+            quiz_prompt = f"""
+                Verilen pozisyon için 20 adet çoktan seçmeli kişilik/davranış sorusu oluştur.
+                Sorular adayın iş ortamındaki davranışlarını, problem çözme becerilerini ve kişilik özelliklerini ölçmeye yönelik olmalı.
+                
+                Pozisyon: {position}
+                
+                {cv_context if cv_context else ''}
+                
+                Her soru şu formatta olmalı:
+                {{
+                  "id": "benzersiz numara",
+                  "question": "soru metni",
+                  "options": {{
+                    "A": "seçenek A",
+                    "B": "seçenek B",
+                    "C": "seçenek C", 
+                    "D": "seçenek D"
+                  }},
+                  "correct_answer": "doğru cevabın harfi (A, B, C veya D)",
+                  "explanation": "doğru cevabın açıklaması"
+                }}
+                
+                Yanıt yalnızca JSON formatında soruların dizisi olmalıdır. Başka bir şey yazma.
+            """
+        else: # both
+            quiz_prompt = f"""
+                Verilen pozisyon için 10 adet çoktan seçmeli teknik soru ve 10 adet çoktan seçmeli kişilik/davranış sorusu oluştur.
+                Teknik sorular adayın yetkinliklerini ölçmeye yönelik olmalı.
+                Kişilik soruları adayın iş ortamındaki davranışlarını ve kişilik özelliklerini ölçmeye yönelik olmalı.
+                
+                Pozisyon: {position}
+                
+                {cv_context if cv_context else ''}
+                
+                Her soru şu formatta olmalı:
+                {{
+                  "id": "benzersiz numara",
+                  "question": "soru metni",
+                  "options": {{
+                    "A": "seçenek A",
+                    "B": "seçenek B", 
+                    "C": "seçenek C",
+                    "D": "seçenek D"
+                  }},
+                  "correct_answer": "doğru cevabın harfi (sadece A, B, C veya D olmalıdır)",
+                  "explanation": "doğru cevabın açıklaması"
+                }}
+                
+                Yanıt yalnızca JSON formatında soruların dizisi olmalıdır. Başka bir şey yazma.
+            """
+        
+        # GPT-4 ile sorular oluştur
+        completion = client.chat.completions.create(
+            model="gpt-4-turbo",
+            response_format={"type": "json_object"},
+            messages=[
+                {"role": "system", "content": "Sen bir çoktan seçmeli sınav oluşturma uzmanısın. Belirtilen formatta sorular oluştur."},
+                {"role": "user", "content": quiz_prompt}
+            ]
+        )
+        
+        # GPT'nin cevabını parse et
+        quiz_response = json.loads(completion.choices[0].message.content)
+        questions = quiz_response.get('questions', []) if 'questions' in quiz_response else []
+        
+        # Eğer sorular doğrudan bir liste olarak dönmüşse
+        if not questions and isinstance(quiz_response, list):
+            questions = quiz_response
+            
+        # Eğer hiç soru döndürülmediyse hata ver
+        if not questions:
+            logger.error("Quiz oluşturulamadı: GPT-4 cevabından sorular çıkarılamadı")
+            logger.error(f"GPT-4 cevabı: {completion.choices[0].message.content}")
+            return jsonify({
+                'success': False,
+                'error': "Quiz oluşturulurken bir hata oluştu. Lütfen tekrar deneyin."
+            })
+        
+        # Her sorunun doğru formatta olmasını sağla
+        for i, question in enumerate(questions):
+            # ID'nin string olmasını sağla
+            question['id'] = str(question.get('id', i + 1))
+            
+            # Doğru cevap formatını kontrol et
+            correct_answer = question.get('correct_answer')
+            if correct_answer:
+                # Doğru cevabı standartlaştır: sadece A, B, C, D kullan
+                correct_answer = str(correct_answer).strip().upper()
+                if correct_answer not in ['A', 'B', 'C', 'D']:
+                    logger.warning(f"Geçersiz doğru cevap formatı: {correct_answer}, düzeltiliyor")
+                    # Eğer seçenekler arasında varsa, ilk seçeneği doğru cevap yap
+                    options = question.get('options', {})
+                    if options and len(options) > 0:
+                        question['correct_answer'] = list(options.keys())[0]
+                    else:
+                        question['correct_answer'] = 'A'
+                else:
+                    question['correct_answer'] = correct_answer
+        
+        # GPT-4'ün döndürdüğü cevaplar arasında eşit dağılım oluşturma kontrolü
+        all_answers = [q.get('correct_answer', '').strip().upper() for q in questions]
+        unique_answers = set(all_answers)
+        
+        logger.info(f"GPT-4 tarafından döndürülen cevap dağılımı: {[all_answers.count(a) for a in unique_answers]}")
+        
+        # Eğer tek tip bir cevap varsa (hepsi A, B, C veya D ise) veya çok dengesiz bir dağılım varsa
+        if len(unique_answers) == 1 or max([all_answers.count(a) for a in unique_answers]) > len(all_answers) * 0.7:
+            logger.warning(f"GPT-4 cevaplarında dengesiz dağılım tespit edildi, rastgele düzeltiliyor.")
+            
+            # Seçenekler listesi
+            option_letters = ['A', 'B', 'C', 'D']
+            
+            # Her cevap seçeneği için hedef sayılar (eşit dağılım)
+            target_counts = {opt: len(all_answers) // 4 for opt in option_letters}
+            
+            # Artık değerleri rastgele dağıt
+            remaining = len(all_answers) % 4
+            for i in range(remaining):
+                target_counts[option_letters[i]] += 1
+                
+            logger.info(f"Hedef cevap dağılımı: {target_counts}")
+            
+            # Şu anki sayılar
+            current_counts = {opt: all_answers.count(opt) for opt in option_letters}
+            
+            # Rastgele atama yaparken dağılımı dengele
+            import random
+            random.shuffle(questions)  # Soruları karıştır
+            
+            for question in questions:
+                current_answer = question.get('correct_answer', '').strip().upper()
+                
+                # Eğer bu cevap türünden fazla varsa, değiştir
+                if current_counts.get(current_answer, 0) > target_counts.get(current_answer, 0):
+                    # Hangi seçeneklerin sayısı hedefin altında
+                    need_more = [opt for opt in option_letters if current_counts.get(opt, 0) < target_counts.get(opt, 0)]
+                    
+                    if need_more:
+                        # Rastgele bir eksik seçeneği seç
+                        new_answer = random.choice(need_more)
+                        
+                        # Sayımları güncelle
+                        current_counts[current_answer] = current_counts.get(current_answer, 0) - 1
+                        current_counts[new_answer] = current_counts.get(new_answer, 0) + 1
+                        
+                        # Sorunun cevabını güncelle
+                        question['correct_answer'] = new_answer
+                        logger.info(f"Soru {question.get('id')} için cevap '{current_answer}'dan '{new_answer}'a değiştirildi")
+            
+            # Son dağılımı kontrol et
+            updated_answers = [q.get('correct_answer', '').strip().upper() for q in questions]
+            updated_distribution = {opt: updated_answers.count(opt) for opt in option_letters}
+            logger.info(f"Güncellenmiş cevap dağılımı: {updated_distribution}")
+        
+        # Quiz dosyasını kaydet
+        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+        quiz_filename = f"quiz_{timestamp}_{interview_code}.json"
+        quiz_data = {
+            "position": position,
+            "interview_code": interview_code,
+            "quiz_type": quiz_type,
+            "cv_context": cv_context,
+            "created_at": datetime.now().isoformat(),
+            "questions": questions
+        }
+        
+        # Kayıt dizini oluştur
+        os.makedirs(QUESTIONS_DIR, exist_ok=True)
+        
+        # Quiz dosyasını kaydet
+        quiz_path = os.path.join(QUESTIONS_DIR, quiz_filename)
+        with open(quiz_path, 'w', encoding='utf-8') as f:
+            json.dump(quiz_data, f, ensure_ascii=False, indent=2)
+            
+        logger.info(f"Quiz oluşturuldu: {quiz_filename}")
+        
+        return jsonify({
+            'success': True,
+            'code': interview_code,
+            'message': 'Quiz oluşturuldu'
+        })
+        
+    except Exception as e:
+        logger.error(f"Quiz oluşturma hatası: {str(e)}")
+        traceback.print_exc()
+        return jsonify({
+            'success': False,
+            'error': f"Quiz oluşturulurken bir hata oluştu: {str(e)}"
+        })
+
+@app.route('/admin')
+@login_required
+def admin_dashboard():
+    """Admin paneli ana sayfası"""
+    # Admin kontrolü
+    if not session.get('is_admin'):
+        flash('Bu sayfaya erişim yetkiniz yok.', 'error')
+        return redirect(url_for('create_interview'))
+    
+    try:
+        # Temel istatistikleri topla
+        total_interviews = 0
+        total_quizzes = 0
+        total_reports = 0
+        quiz_scores = []
+        position_counts = {}
+        quiz_distribution = [0, 0, 0, 0, 0]  # 0-20%, 21-40%, 41-60%, 61-80%, 81-100%
+        
+        # Mülakatları ve quiz sonuçlarını topla
+        interviews = []
+        quizzes = []
+        reports = []
+        
+        # interviews klasöründeki tüm mülakat dosyalarını tara
+        if os.path.exists('interviews'):
+            for file in os.listdir('interviews'):
+                if file.endswith('.json'):
+                    interview_path = os.path.join('interviews', file)
+                    with open(interview_path, 'r', encoding='utf-8') as f:
+                        try:
+                            interview_data = json.load(f)
+                            interview_code = file.replace('.json', '')
+                            
+                            # Temel mülakat bilgileri
+                            interview = {
+                                'code': interview_code,
+                                'candidate_name': interview_data.get('candidate_name', 'İsimsiz Aday'),
+                                'position': interview_data.get('position', 'Belirtilmemiş'),
+                                'date': datetime.fromtimestamp(os.path.getctime(interview_path)).strftime('%d.%m.%Y %H:%M'),
+                                'has_quiz_results': 'quiz_results' in interview_data,
+                                'completed': interview_data.get('completed', False),
+                                'has_report': 'report_pdf' in interview_data
+                            }
+                            
+                            # Pozisyon istatistikleri
+                            position = interview.get('position')
+                            if position:
+                                position_counts[position] = position_counts.get(position, 0) + 1
+                            
+                            # Eğer rapor varsa
+                            if interview.get('has_report'):
+                                report_pdf = interview_data.get('report_pdf')
+                                interview['report_url'] = f"/reports/{report_pdf}"
+                                
+                                # Rapor istatistikleri
+                                report = {
+                                    'name': report_pdf,
+                                    'interview_code': interview_code,
+                                    'candidate_name': interview.get('candidate_name'),
+                                    'date': datetime.fromtimestamp(os.path.getctime(os.path.join('reports', report_pdf)) if os.path.exists(os.path.join('reports', report_pdf)) else time.time()).strftime('%d.%m.%Y'),
+                                    'type': 'mülakat',
+                                    'url': f"/reports/{report_pdf}"
+                                }
+                                reports.append(report)
+                                total_reports += 1
+                            
+                            # Quiz sonuçları
+                            if interview.get('has_quiz_results'):
+                                quiz_result = interview_data.get('quiz_results', {})
+                                score = quiz_result.get('score', {})
+                                
+                                quiz = {
+                                    'interview_code': interview_code,
+                                    'candidate_name': interview.get('candidate_name'),
+                                    'position': interview.get('position'),
+                                    'date': datetime.fromtimestamp(time.time() if not quiz_result.get('timestamp') else datetime.strptime(quiz_result.get('timestamp'), "%Y-%m-%d %H:%M:%S").timestamp()).strftime('%d.%m.%Y'),
+                                    'correct_count': score.get('correct', 0),
+                                    'total_questions': score.get('total', 0),
+                                    'percentage': score.get('percentage', 0),
+                                    'has_report': interview.get('has_report'),
+                                    'report_url': interview.get('report_url', '')
+                                }
+                                
+                                # Quiz istatistikleri
+                                if quiz.get('total_questions', 0) > 0:
+                                    quiz_scores.append(quiz.get('percentage', 0))
+                                    
+                                    # Quiz başarı dağılımı
+                                    percentage = quiz.get('percentage', 0)
+                                    if percentage <= 20:
+                                        quiz_distribution[0] += 1
+                                    elif percentage <= 40:
+                                        quiz_distribution[1] += 1
+                                    elif percentage <= 60:
+                                        quiz_distribution[2] += 1
+                                    elif percentage <= 80:
+                                        quiz_distribution[3] += 1
+                                    else:
+                                        quiz_distribution[4] += 1
+                                
+                                quizzes.append(quiz)
+                                total_quizzes += 1
+                            
+                            interviews.append(interview)
+                            total_interviews += 1
+                            
+                        except Exception as e:
+                            logger.error(f"Mülakat dosyası işlenirken hata: {str(e)} - Dosya: {file}")
+        
+        # Özel quiz raporlarını ara
+        if os.path.exists('reports'):
+            for file in os.listdir('reports'):
+                if file.startswith('quiz_raporu_'):
+                    # Bu rapor zaten eklenmiş mi kontrol et
+                    report_already_added = False
+                    for report in reports:
+                        if report.get('name') == file:
+                            report_already_added = True
+                            break
+                    
+                    if not report_already_added:
+                        report_path = os.path.join('reports', file)
+                        # Rapor adından mülakat kodunu çıkar
+                        parts = file.split('_')
+                        if len(parts) > 2:
+                            interview_code = parts[2]
+                            
+                            # Mülakat bilgilerini bul
+                            interview_info = None
+                            for interview in interviews:
+                                if interview.get('code') == interview_code:
+                                    interview_info = interview
+                                    break
+                            
+                            report = {
+                                'name': file,
+                                'interview_code': interview_code,
+                                'candidate_name': interview_info.get('candidate_name', 'İsimsiz') if interview_info else 'İsimsiz',
+                                'date': datetime.fromtimestamp(os.path.getctime(report_path)).strftime('%d.%m.%Y'),
+                                'type': 'quiz',
+                                'url': f"/reports/{file}"
+                            }
+                            reports.append(report)
+                            total_reports += 1
+        
+        # Ortalama başarı oranı
+        average_success_rate = int(sum(quiz_scores) / len(quiz_scores)) if quiz_scores else 0
+        
+        # Sıralama: En yeni mülakatlar ve quizler üstte
+        interviews.sort(key=lambda x: x.get('date', ''), reverse=True)
+        quizzes.sort(key=lambda x: x.get('date', ''), reverse=True)
+        reports.sort(key=lambda x: x.get('date', ''), reverse=True)
+        
+        # Grafikler için veri
+        position_labels = list(position_counts.keys())
+        position_data = list(position_counts.values())
+        
+        return render_template('admin.html', 
+                             total_interviews=total_interviews,
+                             total_quizzes=total_quizzes,
+                             total_reports=total_reports,
+                             average_success_rate=average_success_rate,
+                             interviews=interviews,
+                             quizzes=quizzes,
+                             reports=reports,
+                             position_labels=json.dumps(position_labels),
+                             position_data=json.dumps(position_data),
+                             quiz_distribution=json.dumps(quiz_distribution))
+    
+    except Exception as e:
+        logger.error(f"Admin panel hata: {str(e)}")
+        traceback.print_exc()
+        return render_template('error.html', error=f"Admin paneli yüklenirken bir hata oluştu: {str(e)}")
+
+@app.route('/admin/interview/<interview_code>')
+@login_required
+def admin_interview_details(interview_code):
+    """Belirli bir mülakatın detaylarını görüntüle"""
+    # Admin kontrolü
+    if not session.get('is_admin'):
+        flash('Bu sayfaya erişim yetkiniz yok.', 'error')
+        return redirect(url_for('create_interview'))
+    
+    try:
+        # Mülakat dosyasını kontrol et
+        json_path = os.path.join('interviews', f'{interview_code}.json')
+        if not os.path.exists(json_path):
+            return render_template('error.html', error=f"Mülakat bulunamadı: {interview_code}")
+        
+        # Mülakat verilerini oku
+        with open(json_path, 'r', encoding='utf-8') as f:
+            interview_data = json.load(f)
+        
+        # Rapor URL'si
+        report_url = None
+        if 'report_pdf' in interview_data:
+            report_url = f"/reports/{interview_data['report_pdf']}"
+        
+        # Fotoğraflar varsa
+        photos = []
+        photos_dir = os.path.join('interviews', f'{interview_code}_photos')
+        if os.path.exists(photos_dir):
+            for photo_file in os.listdir(photos_dir):
+                if photo_file.endswith('.jpg') or photo_file.endswith('.jpeg') or photo_file.endswith('.png'):
+                    photos.append({
+                        'url': f"/{photos_dir}/{photo_file}",
+                        'timestamp': datetime.fromtimestamp(os.path.getctime(os.path.join(photos_dir, photo_file))).strftime('%d.%m.%Y %H:%M:%S')
+                    })
+        
+        # Mülakat sorularını ve cevapları formatlı hale getir
+        questions = []
+        for question in interview_data.get('questions', []):
+            questions.append({
+                'question': question.get('question', ''),
+                'answer': question.get('answer', 'Cevap verilmedi'),
+                'timestamp': question.get('timestamp', '')
+            })
+        
+        # Quiz sonuçları
+        quiz_results = None
+        if 'quiz_results' in interview_data:
+            quiz_data = interview_data['quiz_results']
+            score = quiz_data.get('score', {})
+            quiz_results = {
+                'correct_count': score.get('correct', 0),
+                'total_questions': score.get('total', 0),
+                'percentage': score.get('percentage', 0),
+                'timestamp': quiz_data.get('timestamp', ''),
+                'result_file': quiz_data.get('result_file', '')
+            }
+            
+            # Quiz sonuç dosyasını oku
+            if quiz_results.get('result_file'):
+                result_path = os.path.join(QUESTIONS_DIR, quiz_results['result_file'])
+                if os.path.exists(result_path):
+                    with open(result_path, 'r', encoding='utf-8') as f:
+                        result_data = json.load(f)
+                        quiz_results['detailed_results'] = result_data.get('detailed_results', [])
+                        quiz_results['analysis'] = result_data.get('analysis', {})
+        
+        return render_template('admin_interview_details.html',
+                             interview_code=interview_code,
+                             interview=interview_data,
+                             questions=questions,
+                             photos=photos,
+                             quiz_results=quiz_results,
+                             report_url=report_url)
+    
+    except Exception as e:
+        logger.error(f"Mülakat detayları hata: {str(e)}")
+        traceback.print_exc()
+        return render_template('error.html', error=f"Mülakat detayları yüklenirken bir hata oluştu: {str(e)}")
+
+@app.route('/admin/quiz/<interview_code>')
+@login_required
+def admin_quiz_details(interview_code):
+    """Belirli bir quizin detaylarını görüntüle"""
+    # Admin kontrolü
+    if not session.get('is_admin'):
+        flash('Bu sayfaya erişim yetkiniz yok.', 'error')
+        return redirect(url_for('create_interview'))
+    
+    try:
+        # Mülakat dosyasını kontrol et
+        json_path = os.path.join('interviews', f'{interview_code}.json')
+        if not os.path.exists(json_path):
+            return render_template('error.html', error=f"Mülakat bulunamadı: {interview_code}")
+        
+        # Mülakat verilerini oku
+        with open(json_path, 'r', encoding='utf-8') as f:
+            interview_data = json.load(f)
+        
+        # Quiz sonuçları
+        if 'quiz_results' not in interview_data:
+            return render_template('error.html', error=f"Bu mülakat için quiz sonucu bulunamadı: {interview_code}")
+        
+        quiz_data = interview_data['quiz_results']
+        score = quiz_data.get('score', {})
+        quiz_results = {
+            'interview_code': interview_code,
+            'candidate_name': interview_data.get('candidate_name', 'İsimsiz Aday'),
+            'position': interview_data.get('position', 'Belirtilmemiş'),
+            'correct_count': score.get('correct', 0),
+            'total_questions': score.get('total', 0),
+            'percentage': score.get('percentage', 0),
+            'timestamp': quiz_data.get('timestamp', ''),
+            'result_file': quiz_data.get('result_file', '')
+        }
+        
+        # Quiz sonuç dosyasını oku
+        detailed_results = []
+        analysis = {}
+        if quiz_results.get('result_file'):
+            result_path = os.path.join(QUESTIONS_DIR, quiz_results['result_file'])
+            if os.path.exists(result_path):
+                with open(result_path, 'r', encoding='utf-8') as f:
+                    result_data = json.load(f)
+                    detailed_results = result_data.get('detailed_results', [])
+                    analysis = result_data.get('analysis', {})
+        
+        # Rapor URL'si
+        report_url = None
+        if 'report_pdf' in interview_data:
+            report_url = f"/reports/{interview_data['report_pdf']}"
+        
+        return render_template('admin_quiz_details.html',
+                             quiz=quiz_results,
+                             detailed_results=detailed_results,
+                             analysis=analysis,
+                             report_url=report_url)
+    
+    except Exception as e:
+        logger.error(f"Quiz detayları hata: {str(e)}")
+        traceback.print_exc()
+        return render_template('error.html', error=f"Quiz detayları yüklenirken bir hata oluştu: {str(e)}")
+
+@app.route('/reports/<path:filename>')
+def get_report(filename):
+    """Rapor dosyalarını servis et"""
+    # Kullanıcı giriş kontrolü
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    
+    return send_from_directory('reports', filename)
+
+@app.route('/interviews/<path:filename>')
+def get_interview_file(filename):
+    """Mülakat dosyalarını (fotoğraflar vb.) servis et"""
+    # Kullanıcı giriş kontrolü
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    
+    # Dosya yolunu parçala
+    parts = filename.split('/')
+    if len(parts) > 1:
+        directory = os.path.join('interviews', parts[0])
+        file = parts[1]
+        return send_from_directory(directory, file)
+    else:
+        return send_from_directory('interviews', filename)
+
+@app.route('/admin/analyze_cvs', methods=['POST'])
+@login_required
+def analyze_multiple_cvs():
+    try:
+        if 'cvs' not in request.files:
+            return jsonify({
+                'success': False,
+                'error': 'CV dosyaları yüklenmedi.'
+            }), 400
+        
+        cvs = request.files.getlist('cvs')
+        position_id = request.form.get('position_id')
+        
+        if not position_id:
+            return jsonify({
+                'success': False,
+                'error': 'Pozisyon ID gerekli.'
+            }), 400
+        
+        conn = get_db_connection()
+        c = conn.cursor()
+        
+        results = []
+        for cv in cvs:
+            if cv.filename:
+                try:
+                    # CV'yi kaydet
+                    filename = secure_filename(cv.filename)
+                    file_path = os.path.join(app.config['UPLOAD_FOLDER'], 'cvs', filename)
+                    cv.save(file_path)
+                    
+                    # Mülakat kodu oluştur
+                    interview_code = generate_interview_code()
+                    
+                    # CV'yi veritabanına kaydet
+                    c.execute('''
+                        INSERT INTO cvs (position_id, name, email, file_path, interview_code)
+                        VALUES (?, ?, ?, ?, ?)
+                    ''', (position_id, filename.split('.')[0], '', file_path, interview_code))
+                    
+                    cv_id = c.lastrowid
+                    
+                    # CV analizi yap
+                    analyze_cv_content(file_path, position_id, cv_id)
+                    
+                    results.append({
+                        'filename': filename,
+                        'status': 'success',
+                        'interview_code': interview_code
+                    })
+                    
+                except Exception as e:
+                    results.append({
+                        'filename': cv.filename,
+                        'status': 'error',
+                        'error': str(e)
+                    })
+        
+        conn.commit()
+        
+        return jsonify({
+            'success': True,
+            'message': f'{len(results)} CV analiz edildi.',
+            'results': results
+        })
+        
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+    finally:
+        conn.close()
+
+def analyze_cv_content(cv_path, position_id, cv_id):
+    try:
+        if not cv_path:
+            raise ValueError("CV dosya yolu gerekli")
+            
+        if not position_id:
+            raise ValueError("Pozisyon ID gerekli")
+            
+        if not cv_id:
+            raise ValueError("CV ID gerekli")
+        
+        # CV'yi metne çevir
+        cv_text = extract_text_from_cv(cv_path)
+        
+        # Pozisyon gereksinimlerini al
+        conn = get_db_connection()
+        c = conn.cursor()
+        
+        c.execute('''
+            SELECT requirements, preferred_skills
+            FROM positions
+            WHERE id = ?
+        ''', (position_id,))
+        
+        position = c.fetchone()
+        
+        if not position:
+            raise Exception(f"Pozisyon bulunamadı (ID: {position_id})")
+        
+        # CV analizi yap
+        analysis = analyze_cv(cv_text, position['requirements'], position['preferred_skills'])
+        
+        # Sonuçları kaydet
+        c.execute('''
+            UPDATE cvs
+            SET match_score = ?, analysis_data = ?
+            WHERE id = ?
+        ''', (analysis['match_score'], json.dumps(analysis), cv_id))
+        
+        conn.commit()
+        
+    except Exception as e:
+        print(f"CV analizi sırasında hata: {str(e)} - Dosya: {cv_path}")
+        # Hata durumunda varsayılan değerleri kaydet
+        try:
+            c.execute('''
+                UPDATE cvs
+                SET match_score = 0, analysis_data = ?
+                WHERE id = ?
+            ''', (json.dumps({
+                'match_score': 0,
+                'analysis': f"Analiz sırasında bir hata oluştu: {str(e)}"
+            }), cv_id))
+            conn.commit()
+        except Exception as update_error:
+            print(f"Varsayılan değerler kaydedilirken hata: {str(update_error)}")
+    finally:
+        conn.close()
+
+def extract_text_from_cv(cv_path):
+    # PDF'den metin çıkarma
+    if cv_path.lower().endswith('.pdf'):
+        return extract_text_from_pdf(cv_path)
+    # DOC/DOCX'ten metin çıkarma
+    elif cv_path.lower().endswith(('.doc', '.docx')):
+        return extract_text_from_doc(cv_path)
+    else:
+        return ""
+
+def extract_text_from_pdf(pdf_path):
+    try:
+        import PyPDF2
+        with open(pdf_path, 'rb') as file:
+            reader = PyPDF2.PdfReader(file)
+            text = ""
+            for page in reader.pages:
+                text += page.extract_text()
+            return text
+    except Exception as e:
+        print(f"PDF metin çıkarma hatası: {str(e)}")
+        return ""
+
+def extract_text_from_doc(doc_path):
+    try:
+        import docx
+        doc = docx.Document(doc_path)
+        text = ""
+        for paragraph in doc.paragraphs:
+            text += paragraph.text + "\n"
+        return text
+    except Exception as e:
+        print(f"DOC metin çıkarma hatası: {str(e)}")
+        return ""
+
+def analyze_cv(cv_text, requirements, preferred_skills):
+    try:
+        # OpenAI API'yi kullanarak CV analizi yap
+        response = openai.ChatCompletion.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": "Sen bir CV analiz uzmanısın. Verilen CV'yi pozisyon gereksinimlerine göre analiz et."},
+                {"role": "user", "content": f"""
+                CV Metni:
+                {cv_text}
+                
+                Pozisyon Gereksinimleri:
+                {requirements}
+                
+                Tercih Edilen Özellikler:
+                {preferred_skills}
+                
+                Lütfen bu CV'yi analiz et ve aşağıdaki formatta bir yanıt ver:
+                1. Uyum Skoru (0-100 arası)
+                2. Güçlü Yönler
+                3. Gelişim Alanları
+                4. Detaylı Değerlendirme
+                """}
+            ]
+        )
+        
+        analysis_text = response.choices[0].message.content
+        
+        # Uyum skorunu çıkar
+        match_score = extract_score(analysis_text, "Uyum Skoru")
+        
+        return {
+            'match_score': match_score,
+            'analysis': analysis_text
+        }
+        
+    except Exception as e:
+        print(f"CV analiz hatası: {str(e)}")
+        return {
+            'match_score': 0,
+            'analysis': "Analiz sırasında bir hata oluştu."
+        }
+
+@app.route('/positions')
+@login_required
+def positions():
+    return render_template('positions.html')
+
 if __name__ == '__main__':
     try:
         print("\n=== DUF Tech Mülakat Sistemi Başlatılıyor ===")
@@ -2496,12 +4256,9 @@ if __name__ == '__main__':
         # Dosya izleme sistemini başlat
         observer = start_file_watcher()
         
-        # Domain ve port bilgilerini al
-        DOMAIN_NAME = os.getenv('DOMAIN_NAME', 'www.aimulakat.duftech.com.tr')
-        PORT = int(os.getenv('PORT', 5000))
-        
-        print(f"\n[*] Web sunucusu başlatılıyor (Domain: {DOMAIN_NAME}, Port: {PORT})...")
-        app.run(host='0.0.0.0', port=PORT)
+        # Flask uygulamasını başlat
+        print("\n[*] Web sunucusu başlatılıyor (Port: 5004)...")
+        app.run(host='0.0.0.0', port=5006)
         
     except Exception as e:
         print(f"\n[!] Program başlatılamadı: {str(e)}")

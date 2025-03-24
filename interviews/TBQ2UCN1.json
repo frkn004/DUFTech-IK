@@ -1,0 +1,156 @@
+{
+  "code": "TBQ2UCN1",
+  "candidate_name": "İsimsiz Aday",
+  "position": "yazılımcı",
+  "questions": [
+    "1. Yapay zekanın temel bileşenleri hakkında bilgi verebilir misiniz?",
+    "2. Belirli bir veri setinde overfitting problemini nasıl tanımlar ve çözersiniz?",
+    "3. Günlük çalışmalarınızda hangi yapay zeka frameworklerini kullandınız?",
+    "4. Çeşitli regresyon teknikleri hakkında bilgi verebilir misiniz?",
+    "5. NLP konusunda ne gibi deneyimleriniz var?"
+  ],
+  "status": "completed",
+  "created_at": "2025-03-23T23:01:19.305107",
+  "cv_data": {
+    "areas_to_improve": [
+      "Database management versatility",
+      "Debugging and systematic testing skills",
+      "Version control system utilization"
+    ],
+    "certificates": [],
+    "education": [
+      {
+        "degree": "Student",
+        "description": null,
+        "institution": "OSTİM Technical University Ankara",
+        "year": "Graduation Date: Jun 2028"
+      }
+    ],
+    "experience": [
+      {
+        "achievements": [
+          "Developed a vision-based detection system to identify and track humans and objects on water.",
+          "Designing AI models for real-time emergency systems in water environments.",
+          "Created an AI-based surface rescue system for autonomous aquatic rescue devices."
+        ],
+        "company": "Maren Robotics",
+        "description": "Developed and currently working on AI-based safety and detection systems for aquatic environments.",
+        "duration": "Sep 2024 - Present",
+        "title": "Part-Time AI Engineer"
+      },
+      {
+        "achievements": [
+          "Developed an AI-powered HR assistant.",
+          "Initiated AI Call Center projects",
+          "Focused on improving prompt engineering for large language models."
+        ],
+        "company": "AIVA Tech",
+        "description": "Contributed significantly to AI-powered HR and meeting automation projects.",
+        "duration": "Aug 2024 - Present",
+        "title": "AI Technical and Software Engineer"
+      },
+      {
+        "achievements": [
+          "Transformed over 102 million data entries for ML applications.",
+          "Developed AI solutions for real-time safety monitoring and energy optimization."
+        ],
+        "company": "Limak Cement",
+        "description": "Worked on AI applications to improvise operational efficiency and safety at industrial settings.",
+        "duration": "Feb 2024 - Jul 2025",
+        "title": "AI Intern"
+      },
+      {
+        "achievements": [
+          "Developed a machine learning-based revenue forecasting tool."
+        ],
+        "company": "OSTİM Organized Industrial Zone Directorate",
+        "description": "Improved revenue forecasting accuracy with machine learning tools.",
+        "duration": "Jun 2024 - Sep 2024",
+        "title": "AI Intern"
+      }
+    ],
+    "generated_questions": [
+      "Furkan Bey, Maren Robotics'deki part-time AI mühendisi pozisyonunuzda ne tür projeler üzerinde çalıştınız ve bu projelerin size en büyük katkısı ne oldu?",
+      "AIVA Tech'te AI Teknik ve Yazılım Mühendisi olarak hangi teknolojileri kullandınız ve bu teknolojilerin kullanımında en büyük zorluklarınız nelerdi?",
+      "Python, C/C++, JavaScript ve MySQL becerilerinizi nasıl edindiniz ve hangi projelerde bu dilleri kullanarak deneyim kazandınız?",
+      "Microsoft Office programlarına hakimseniz, bu programların bir yazılımcı olarak iş akışınıza yaptığı etkileri ve bu programları hangi durumlardan yararlandığınızı anlatabilir misiniz?",
+      "OSTİM Teknik Üniversitesi'nde aldığınız eğitim, iş hayatınıza nasıl bir katkı sağladı ve üniversitedeyken hangi projelerde yer aldınız?",
+      "Yazılım geliştirme sürecinde hangi metodolojileri tercih edersiniz ve neden? Ayrıca bu metodolojileri kullanırken karşılaştığınız zorluklar nelerdi?",
+      "AIVA Tech'teki AI Teknik ve Yazılım Mühendisi pozisyonunuzda en büyük başarınızı ne olarak görüyorsunuz ve bu başarıyı elde etmek için hangi adımları attınız?",
+      "Son olarak, bir yazılımcının sahip olması gereken en önemli yeteneklerin ne olduğunu düşünüyorsunuz ve kendinizi bu yetenekler açısından nasıl değerlendirirsiniz?"
+    ],
+    "languages": [
+      "English B1"
+    ],
+    "personal_info": {
+      "email": "sevinc.furkan04@gmail.com",
+      "location": "Ankara",
+      "name": "Furkan Sevinç",
+      "phone": "0531 835 41 1 1"
+    },
+    "position_match": {
+      "match_percentage": 75,
+      "matching_skills": [
+        "Python",
+        "JavaScript",
+        "SQL"
+      ],
+      "missing_skills": [
+        "Veritabanı yönetimi (NoSQL)",
+        "Hata ayıklama ve test teknikleri",
+        "Versiyon kontrol sistemleri (Git)"
+      ],
+      "recommendations": [
+        "Deepen understanding of NoSQL databases.",
+        "Enhance skills in debugging and test methodologies.",
+        "Gain experience with version control systems like Git."
+      ]
+    },
+    "profile_summary": "Furkan Sevinç exhibits robust expertise in applying artificial intelligence to create impactful solutions across varying industries. His work ranges from AI-enhanced safety systems in aquatic environments to optimized hiring processes in human resources, showcasing his ability to innovate and integrate AI technologies comprehensively.",
+    "show_quiz_option": true,
+    "skills": [
+      "Microsoft Office (Excel, Word, PowerPoint)",
+      "Python",
+      "C/C++",
+      "JavaScript",
+      "MySQL",
+      "HTML & CSS",
+      "SQL"
+    ],
+    "strengths": [
+      "Advanced AI application development",
+      "Experience across multiple industries",
+      "Innovative integration of AI technologies"
+    ],
+    "success": true,
+    "suggested_questions": [
+      "Can you explain a time when you had to optimize an AI system's performance under pressure?",
+      "How do you keep up with rapidly evolving AI technologies?",
+      "Describe your experience with version control systems and their role in your projects.",
+      "What approach do you take for debugging complex software issues?",
+      "Tell us about a time you utilized NoSQL databases in your projects."
+    ],
+    "summary": "AI-focused Software Engineer with a strong track record in developing AI-based applications particularly related to safety and automation across different sectors including robotics and human resources."
+  },
+  "quiz_results": {
+    "timestamp": "2025-03-23 23:02:20",
+    "score": {
+      "correct": 2,
+      "total": 20,
+      "percentage": 10
+    },
+    "analysis": {
+      "correct_percentage": 10,
+      "correct_count": 2,
+      "total_questions": 20,
+      "failed_topics": "Python'da bir listeyi, SQL'de bir veritabanından, HTML'de bir sayfaya, JavaScript'te bir değişken, C++ dilinde bir, Python'da bir dosyayı, HTML'de bir bağlantı, JavaScript'te bir fonksiyon, SQL'de bir tablodan, C++ dilinde bir, Python'da bir sözlükten, HTML'de bir resim, JavaScript'te bir dizinin, SQL'de bir sütunu, Python'da bir listeye, HTML'de bir form, JavaScript'te bir dizinin, SQL'de bir tablodan",
+      "performance": "Geliştirilebilir"
+    },
+    "result_file": "result_TBQ2UCN1_1742760140.json"
+  },
+  "report_generated": true,
+  "started_at": "2025-03-23T23:02:26.680451",
+  "conversation_history": [],
+  "ended": true,
+  "ended_at": "2025-03-23T23:02:35.355477"
+}

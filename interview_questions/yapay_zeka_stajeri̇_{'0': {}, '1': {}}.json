@@ -1,0 +1,137 @@
+{
+    "position": "YAPAY ZEKA STAJERİ",
+    "questions": [
+        {
+            "id": 1,
+            "question": "Python'da, veri analizi için hangi kütüphane yaygın olarak kullanılır?",
+            "options": {
+                "A": "React",
+                "B": "Pandas",
+                "C": "Flask",
+                "D": "TensorFlow"
+            },
+            "correct_answer": "B",
+            "explanation": "Pandas, Python'da veri manipülasyonu ve analizi için kullanılan açık kaynaklı bir kütüphanedir. AI projelerinde veri ön işleme için sıkça tercih edilir."
+        },
+        {
+            "id": 2,
+            "question": "Aşağıdakilerden hangisi, makine öğreniminde sınıflandırma problemleri için kullanılan popüler bir algoritmadır?",
+            "options": {
+                "A": "Linear Regression",
+                "B": "Support Vector Machine",
+                "C": "Principal Component Analysis",
+                "D": "Fourier Transform"
+            },
+            "correct_answer": "B",
+            "explanation": "Support Vector Machine (SVM), sınıflandırma ve regresyon analizi için kullanılan gözetimli bir öğrenme modelidir. Sınıf ayrımını maksimize eden bir hiper-düzlem oluşturur."
+        },
+        {
+            "id": 3,
+            "question": "JavaScript ile ilgili olarak, DOM nedir?",
+            "options": {
+                "A": "Data Object Model",
+                "B": "Document Object Model",
+                "C": "Display Object Management",
+                "D": "Digital Ordinance Model"
+            },
+            "correct_answer": "B",
+            "explanation": "Document Object Model (DOM), HTML veya XML belgelerinin programatik olarak erişilip değiştirilmesine olanak tanıyan bir arayüzdür. JavaScript'te web sayfalarıyla etkileşim için kullanılır."
+        },
+        {
+            "id": 4,
+            "question": "MySQL veritabanında bir tabloya yeni bir sütun eklemek için kullanılan SQL komutu hangisidir?",
+            "options": {
+                "A": "INSERT COLUMN",
+                "B": "ADD COLUMN",
+                "C": "UPDATE TABLE",
+                "D": "ALTER TABLE"
+            },
+            "correct_answer": "D",
+            "explanation": "ALTER TABLE komutu, mevcut bir tabloyu değiştirmek için kullanılır ve yeni bir sütun eklemek istediğimizde bu komutu kullanırız."
+        },
+        {
+            "id": 5,
+            "question": "Aşağıdaki Python veri yapılarından hangisi sıralı bir koleksiyondur?",
+            "options": {
+                "A": "Set",
+                "B": "Dictionary",
+                "C": "List",
+                "D": "Tuple"
+            },
+            "correct_answer": "C",
+            "explanation": "List, Python'da sıralı bir koleksiyon tipidir. Elemanlarını indeks üzerinden erişerek yönetebiliriz."
+        },
+        {
+            "id": 6,
+            "question": "HTML'de bir web sayfasına başlık eklemek için hangi etiket kullanılır?",
+            "options": {
+                "A": "<header>",
+                "B": "<head>",
+                "C": "<title>",
+                "D": "<h1>"
+            },
+            "correct_answer": "C",
+            "explanation": "<title> etiketi, web tarayıcısının başlık çubuğunda görünen metni tanımlar ve HTML belgesinin başlık bölümünde kullanılır."
+        },
+        {
+            "id": 7,
+            "question": "TensorFlow, hangi tip yapay zeka problemlerinin çözümünde sıklıkla kullanılır?",
+            "options": {
+                "A": "Veritabanı yönetimi",
+                "B": "Makine öğrenimi ve derin öğrenme",
+                "C": "Statik web sayfa geliştirme",
+                "D": "Mobil uygulama geliştirme"
+            },
+            "correct_answer": "B",
+            "explanation": "TensorFlow, özellikle makine öğrenimi ve derin öğrenme modellerini eğitmek ve dağıtmak için kullanılan bir kütüphanedir."
+        },
+        {
+            "id": 8,
+            "question": "C/C++ dillerinde, hafıza yönetimi için kullanılan anahtar kelimeler hangileridir?",
+            "options": {
+                "A": "new ve delete",
+                "B": "malloc ve free",
+                "C": "new ve free",
+                "D": "malloc ve delete"
+            },
+            "correct_answer": "A",
+            "explanation": "C++ dilinde, 'new' ve 'delete' anahtar kelimeleri dinamik hafıza tahsisi ve serbest bırakma işlemleri için kullanılır."
+        },
+        {
+            "id": 9,
+            "question": "Aşağıdakilerden hangisi, makine öğreniminde modelin performansını değerlendirmek için kullanılan bir metriktir?",
+            "options": {
+                "A": "Compiler Efficiency",
+                "B": "Execution Time",
+                "C": "Accuracy",
+                "D": "Code Complexity"
+            },
+            "correct_answer": "C",
+            "explanation": "Accuracy, makine öğrenimi modellerinde doğru tahminlerin toplam tahminlere oranını ifade eder ve modelin performansını değerlendirmek için yaygın olarak kullanılan bir metriktir."
+        },
+        {
+            "id": 10,
+            "question": "SQL'de, bir tablodaki kayıtları benzersiz değerlerle sınırlamak için hangi anahtar kelime kullanılır?",
+            "options": {
+                "A": "UNIQUE",
+                "B": "DISTINCT",
+                "C": "SINGLE",
+                "D": "DIFFERENT"
+            },
+            "correct_answer": "B",
+            "explanation": "DISTINCT anahtar kelimesi, SQL sorgularında tekrar eden değerleri filtrelemek ve yalnızca benzersiz değerleri getirmek için kullanılır."
+        }
+    ],
+    "quiz_type": "both",
+    "cv_based": true,
+    "cv_skills": [
+        "Microsoft Office (Excel, Word, PowerPoint)",
+        "Python",
+        "C/C++",
+        "JavaScript",
+        "MySQL",
+        "HTML & CSS",
+        "SQL"
+    ],
+    "cv_position": "YAPAY ZEKA STAJERİ"
+}

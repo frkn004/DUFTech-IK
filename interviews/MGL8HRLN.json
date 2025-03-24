@@ -1,0 +1,158 @@
+{
+  "code": "MGL8HRLN",
+  "candidate_name": "İsimsiz Aday",
+  "position": "yapay zeka mühendisliği",
+  "questions": [
+    "1. Yapay zekanın temel bileşenleri hakkında bilgi verebilir misiniz?",
+    "2. Belirli bir veri setinde overfitting problemini nasıl tanımlar ve çözersiniz?",
+    "3. Günlük çalışmalarınızda hangi yapay zeka frameworklerini kullandınız?",
+    "4. Çeşitli regresyon teknikleri hakkında bilgi verebilir misiniz?",
+    "5. NLP konusunda ne gibi deneyimleriniz var?"
+  ],
+  "status": "pending",
+  "created_at": "2025-03-21T12:56:15.389816",
+  "cv_data": {
+    "areas_to_improve": [
+      "Formal deep learning expertise",
+      "Statistical methods for data analysis",
+      "Advanced proficiency in big data technologies"
+    ],
+    "certificates": [],
+    "education": [
+      {
+        "degree": "Undergraduate",
+        "description": null,
+        "institution": "OSTİM Technical University",
+        "year": "Graduation Date: Jun 2028"
+      }
+    ],
+    "experience": [
+      {
+        "achievements": [
+          "Developed a vision-based detection system for real-time human and object tracking on water.",
+          "Working on a drowning and fall detection system for pools using ML and computer vision.",
+          "Designed AI models for embedded systems for decision-making in aquatic environments.",
+          "Developed an AI-based surface rescue system improving emergency response efficiency and reliability."
+        ],
+        "company": "Maren Robotics",
+        "description": "Engaged in the development of AI-based solutions and systems for aquatic safety and real-time monitoring.",
+        "duration": "Sep 2024 - Present",
+        "title": "Part-Time AI Engineer"
+      },
+      {
+        "achievements": [
+          "Automated the recruitment process through an AI-powered HR assistant.",
+          "Improved productivity with a meeting automation system that transcribes audio and converts it into tasks.",
+          "Automated customer support processes using NLP for AI Call Center projects.",
+          "Focused on improving prompt engineering for large language models."
+        ],
+        "company": "AIVA Tech",
+        "description": "Developing AI solutions for internal and client-based projects focusing on HR and meeting automation, and customer support.",
+        "duration": "Aug 2024 - Present",
+        "title": "AI Technical and Software Engineer"
+      },
+      {
+        "achievements": [
+          "Processed and transformed extensive datasets for ML applications.",
+          "Integrated a model for helmet detection improving workplace safety.",
+          "Implemented AI solutions for operational efficiency in factory settings."
+        ],
+        "company": "Limak Cement",
+        "description": "Worked on ML models for optimizing energy consumption and enhancing safety through visual data analysis.",
+        "duration": "Feb 2024 - Jul 2025",
+        "title": "AI Intern"
+      },
+      {
+        "achievements": [
+          "Enhanced data processing algorithms to increase prediction accuracy."
+        ],
+        "company": "OSTİM Organized Industrial Zone Directorate",
+        "description": "Developed a revenue forecasting tool using ML improving prediction accuracy.",
+        "duration": "Jun 2024 - Sep 2024",
+        "title": "AI Intern"
+      },
+      {
+        "achievements": [],
+        "company": "OSTİMTech Technology Transfer Office",
+        "description": "Experience in technology transfer operations and academic-industrial collaborations.",
+        "duration": "Feb 2024 - Jun 2025",
+        "title": "Intern"
+      }
+    ],
+    "generated_questions": [
+      "Furkan Bey, CV'nizde yer alan becerilerinizden biri olan Microsoft Office programlarıyla ilgili daha fazla bilgi verebilir misiniz? Özellikle Excel ile birlikte gerçekleştirdiğiniz karmaşık projeler, veri analizi veya sunum hazırlığı gibi konuları detaylandırabilir misiniz?",
+      "Python, C/C++, JavaScript ve MySQL gibi programlama dilleri ve veritabanı yönetim sistemlerindeki yeteneklerinizden bahsedebilir misiniz? Bu dilleri kullanarak hangi projelerde yer aldınız, hangi sorunları çözdünüz ve bu dillerin hangi özelliklerini en etkili şekilde kullandınız?",
+      "Maren Robotics'te part-time AI mühendisi olarak ne tür projelerde yer aldınız? Bu projelerde karşılaştığınız zorluklar nelerdi ve bu zorlukları nasıl aştınız?",
+      "AIVA Tech'teki AI Teknik ve Yazılım Mühendisi pozisyonunuzda, hangi projelerde çalıştınız ve bu projelerdeki görevleriniz nelerdi? Bu deneyiminiz, yapay zeka mühendisliği alanındaki becerilerinizi ve yeteneklerinizi nasıl geliştirdi?",
+      "OSTİM Teknik Üniversitesi'nde aldığınız eğitim, sizin yapay zeka mühendisliği kariyerinize nasıl bir katkı sağlamıştır? Özellikle hangi dersler veya projeler, bu alanda daha fazla bilgi ve deneyim kazanmanızı sağlamıştır?",
+      "Yapay zeka mühendisliği konusunda en son ne zaman bir araştırma yaptınız veya bir kurs aldınız? Kendinizi bu alanda sürekli olarak nasıl güncel tutuyorsunuz?",
+      "Son olarak, sizinle çalışacak bir ekip arkadaşınızın veya yöneticinizin sizin hakkınızda bilmesini isteyeceğiniz en önemli üç şey nedir?"
+    ],
+    "languages": [
+      "English B1"
+    ],
+    "personal_info": {
+      "email": "sevinc.furkan04@gmail.com",
+      "location": "Ankara",
+      "name": "Furkan Sevinç",
+      "phone": "0531 835 41 11"
+    },
+    "position_match": {
+      "match_percentage": 80,
+      "matching_skills": [
+        "Python",
+        "Machine learning",
+        "Computer vision",
+        "NLP"
+      ],
+      "missing_skills": [
+        "TensorFlow or PyTorch",
+        "Deep learning",
+        "Statistical analysis"
+      ],
+      "recommendations": [
+        "Acquire practical experience in TensorFlow or PyTorch.",
+        "Explore deeper aspects of deep learning.",
+        "Enrich statistical analysis skills through coursework or projects."
+      ]
+    },
+    "profile_summary": "Furkan Sevinç is a burgeoning AI engineering professional specializing in integrating AI technologies into practical applications, notably within aquatic safety and HR automation. With experience across startups and industrial internships, he shows a robust capability in machine learning, computer vision, and NLP.",
+    "show_quiz_option": true,
+    "skills": [
+      "Microsoft Office (Excel, Word, PowerPoint)",
+      "Python",
+      "C/C++",
+      "JavaScript",
+      "MySQL",
+      "HTML & CSS",
+      "SQL"
+    ],
+    "strengths": [
+      "Project-based experience",
+      "Integration of AI models into practical applications",
+      "Experience in diverse AI projects"
+    ],
+    "success": true,
+    "suggested_questions": [
+      "Can you describe a situation where you successfully integrated a machine-learning model into a real-world application?",
+      "How do you approach debugging and optimizing AI systems?",
+      "What are your strategies for keeping up-to-date with advancements in AI technologies?",
+      "Can you provide an example of how you have used deep learning in your projects?",
+      "How would you handle a project where the AI model performs below the expected accuracy?"
+    ],
+    "summary": null
+  },
+  "quiz_results": {
+    "timestamp": "2025-03-21 13:46:20",
+    "score": {
+      "correct": 0,
+      "total": 10,
+      "percentage": 0
+    },
+    "result_file": "result_MGL8HRLN_1742553980.json"
+  },
+  "report_pdf": "mulakat_raporu_MGL8HRLN_20250321_125932.pdf",
+  "report_generated_at": "2025-03-21T12:59:32.093790",
+  "report_status": "completed",
+  "report_generated": true
+}

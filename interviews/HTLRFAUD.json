@@ -1,0 +1,20 @@
+{
+  "code": "HTLRFAUD",
+  "candidate_name": "Nisa Duru",
+  "position": "Part-Time AI Engineer",
+  "requirements": [],
+  "questions": [
+    "Nisa Hanım, OSTİM Teknik Üniversitesi'nde Mühendislik eğitimi almanız ve özellikle AI alanında deneyim kazanmanız oldukça etkileyici. Bu eğitim ve deneyimlerinizin sizi bu role nasıl hazırladığını anlatır mısınız?",
+    "Maren Robotics'te çalışırken Python ve C/C++ dillerinde hangi projeler üzerinde çalıştınız ve bu projelerde karşılaştığınız en büyük zorluklar nelerdi? Bu zorlukların üstesinden nasıl geldiniz?",
+    "AI teknikleri ve yazılım mühendisliği konusundaki deneyiminizden bahsedebilir misiniz? AIVA Tech'te tam olarak ne tür görevler üstlendiniz ve bu görevlerin size bu rol için hangi becerileri kazandırdığını düşünüyorsunuz?",
+    "AI mühendisliği alanında hangi bilgi ve yeteneklerinizi en çok kullanmayı umuyorsunuz ve bu becerileri nasıl geliştirdiniz? Python, C/C++ ve JavaScript dillerindeki yetkinliğinizin bu rolde nasıl bir etkisi olacağını düşünüyorsunuz?",
+    "Ayrıca, AI projelerinizin birinde MySQL veri tabanı yönetim sistemini kullanma deneyiminiz oldu mu? Eğer olduysa, bu projenin detaylarını ve MySQL'i nasıl kullandığınızı paylaşabilir misiniz?",
+    "Son olarak, hangi Microsoft Office uygulamalarını en iyi şekilde kullanabiliyorsunuz ve bu becerilerinizi bu rolde nasıl kullanmayı planlıyorsunuz? Excel, Word ve PowerPoint kullanımında hangi seviyede olduğunuzu ve bu konuda neler yapabileceğinizi belirtebilir misiniz?"
+  ],
+  "created_at": "2025-03-11T11:18:11.762232",
+  "status": "completed",
+  "started_at": "2025-03-11T11:18:34.047290",
+  "conversation_history": [],
+  "ended": true,
+  "ended_at": "2025-03-11T23:08:17.282159"
+}

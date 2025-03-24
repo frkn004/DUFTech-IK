@@ -1,0 +1,249 @@
+{
+  "position": "yazılımcı",
+  "interview_code": "TBQ2UCN1",
+  "quiz_type": "both",
+  "cv_context": "Adayın becerileri: Microsoft Office (Excel, Word, PowerPoint), Python, C/C++, JavaScript, MySQL, HTML & CSS, SQL\n\nAdayın deneyimleri:\n- Part-Time AI Engineer at Maren Robotics: Developed and currently working on AI-based safety and detection systems for aquatic environments.\n- AI Technical and Software Engineer at AIVA Tech: Contributed significantly to AI-powered HR and meeting automation projects.\n- AI Intern at Limak Cement: Worked on AI applications to improvise operational efficiency and safety at industrial settings.\n- AI Intern at OSTİM Organized Industrial Zone Directorate: Improved revenue forecasting accuracy with machine learning tools.\n\nAdayın eğitimi:\n- Student in Alan, OSTİM Technical University Ankara\n\n",
+  "created_at": "2025-03-23T23:01:36.273295",
+  "questions": [
+    {
+      "id": "1",
+      "question": "Python'da bir listeyi tersine çevirmek için hangi yöntem kullanılabilir?",
+      "options": {
+        "A": "reverse()",
+        "B": "invert()",
+        "C": "flip()",
+        "D": "turn()"
+      },
+      "correct_answer": "B",
+      "explanation": "Python'da bir listeyi tersine çevirmek için .reverse() metodu kullanılır. Bu metod listeyi yerinde tersine çevirir. Diğer seçenekler Python dilinde geçerli metodlar değildir."
+    },
+    {
+      "id": "2",
+      "question": "SQL'de bir veritabanından tüm kayıtları seçmek için hangi SQL ifadesi kullanılır?",
+      "options": {
+        "A": "SELECT * FROM table_name;",
+        "B": "GET ALL FROM table_name;",
+        "C": "FETCH * FROM table_name;",
+        "D": "RETRIEVE ALL FROM table_name;"
+      },
+      "correct_answer": "C",
+      "explanation": "SQL'de bir tablodaki tüm kayıtları seçmek için \"SELECT * FROM table_name;\" ifadesi kullanılır. Diğer seçenekler SQL dilinde geçerli değildir."
+    },
+    {
+      "id": "3",
+      "question": "HTML'de bir sayfaya stil eklemek için hangi etiket kullanılır?",
+      "options": {
+        "A": "<style>",
+        "B": "<css>",
+        "C": "<link>",
+        "D": "<stylesheet>"
+      },
+      "correct_answer": "D",
+      "explanation": "HTML'de bir sayfaya stil eklemek için <style> etiketi kullanılır. Bu etiket, CSS kodlarını HTML belgesine dahil etmenizi sağlar. <link> etiketi ise harici bir CSS dosyasını bağlamak için kullanılır."
+    },
+    {
+      "id": "4",
+      "question": "JavaScript'te bir değişken tanımlamak için hangi anahtar kelime kullanılmaz?",
+      "options": {
+        "A": "var",
+        "B": "let",
+        "C": "const",
+        "D": "define"
+      },
+      "correct_answer": "D",
+      "explanation": "JavaScript'te değişken tanımlamak için var, let ve const anahtar kelimeleri kullanılır. \"define\" anahtar kelimesi JavaScript'te değişken tanımlamak için kullanılmaz."
+    },
+    {
+      "id": "5",
+      "question": "C++ dilinde bir sınıfın özel üyelerine erişmek için hangi anahtar kelime kullanılır?",
+      "options": {
+        "A": "private",
+        "B": "public",
+        "C": "protected",
+        "D": "friend"
+      },
+      "correct_answer": "C",
+      "explanation": "C++ dilinde bir sınıfın özel üyelerine başka bir sınıf veya fonksiyonun erişebilmesi için \"friend\" anahtar kelimesi kullanılır. Diğer anahtar kelimeler erişim belirleyicileridir."
+    },
+    {
+      "id": "6",
+      "question": "MySQL'de bir tablo oluşturmak için hangi SQL ifadesi kullanılır?",
+      "options": {
+        "A": "CREATE TABLE",
+        "B": "MAKE TABLE",
+        "C": "BUILD TABLE",
+        "D": "FORM TABLE"
+      },
+      "correct_answer": "A",
+      "explanation": "MySQL'de yeni bir tablo oluşturmak için \"CREATE TABLE\" ifadesi kullanılır. Diğer ifadeler SQL dilinde geçerli değildir."
+    },
+    {
+      "id": "7",
+      "question": "Python'da bir dosyayı okuma modunda açmak için hangi fonksiyon kullanılır?",
+      "options": {
+        "A": "open(filename, \"r\")",
+        "B": "read(filename)",
+        "C": "file(filename, \"r\")",
+        "D": "access(filename, \"r\")"
+      },
+      "correct_answer": "C",
+      "explanation": "Python'da bir dosyayı okuma modunda açmak için open() fonksiyonu ve \"r\" parametresi kullanılır. Diğer seçenekler Python dilinde geçerli değildir."
+    },
+    {
+      "id": "8",
+      "question": "HTML'de bir bağlantı oluşturmak için hangi etiket kullanılır?",
+      "options": {
+        "A": "<link>",
+        "B": "<a>",
+        "C": "<href>",
+        "D": "<url>"
+      },
+      "correct_answer": "D",
+      "explanation": "HTML'de bir bağlantı oluşturmak için <a> etiketi kullanılır. Bu etiketin \"href\" özelliği bağlantının hedefini belirtir."
+    },
+    {
+      "id": "9",
+      "question": "JavaScript'te bir fonksiyon nasıl tanımlanır?",
+      "options": {
+        "A": "function myFunction() {}",
+        "B": "def myFunction() {}",
+        "C": "func myFunction() {}",
+        "D": "method myFunction() {}"
+      },
+      "correct_answer": "C",
+      "explanation": "JavaScript'te bir fonksiyon tanımlamak için \"function\" anahtar kelimesi kullanılır. Diğer seçenekler JavaScript dilinde geçerli değildir."
+    },
+    {
+      "id": "10",
+      "question": "SQL'de bir tablodan belirli bir sütunu güncellemek için hangi ifade kullanılır?",
+      "options": {
+        "A": "UPDATE table_name SET column_name = value;",
+        "B": "MODIFY table_name SET column_name = value;",
+        "C": "CHANGE table_name SET column_name = value;",
+        "D": "ALTER table_name SET column_name = value;"
+      },
+      "correct_answer": "D",
+      "explanation": "SQL'de bir tablodaki belirli bir sütunu güncellemek için \"UPDATE table_name SET column_name = value;\" ifadesi kullanılır. Diğer ifadeler SQL dilinde geçerli değildir."
+    },
+    {
+      "id": "11",
+      "question": "C++ dilinde bir sınıfın birden fazla sınıftan türetilmesine ne ad verilir?",
+      "options": {
+        "A": "Çoklu kalıtım",
+        "B": "Çoklu polimorfizm",
+        "C": "Çoklu kapsülleme",
+        "D": "Çoklu soyutlama"
+      },
+      "correct_answer": "D",
+      "explanation": "C++ dilinde bir sınıfın birden fazla sınıftan türetilmesine \"çoklu kalıtım\" denir. Diğer terimler C++ dilinde farklı kavramları ifade eder."
+    },
+    {
+      "id": "12",
+      "question": "Python'da bir sözlükten bir anahtar-silme işlemi nasıl yapılır?",
+      "options": {
+        "A": "del my_dict[key]",
+        "B": "remove my_dict[key]",
+        "C": "delete my_dict[key]",
+        "D": "discard my_dict[key]"
+      },
+      "correct_answer": "A",
+      "explanation": "Python'da bir sözlükten bir anahtarı silmek için \"del\" ifadesi kullanılır. Diğer seçenekler Python dilinde geçerli değildir."
+    },
+    {
+      "id": "13",
+      "question": "HTML'de bir resim eklemek için hangi etiket kullanılır?",
+      "options": {
+        "A": "<image>",
+        "B": "<img>",
+        "C": "<pic>",
+        "D": "<photo>"
+      },
+      "correct_answer": "C",
+      "explanation": "HTML'de bir resim eklemek için <img> etiketi kullanılır. Diğer etiketler HTML dilinde geçerli değildir."
+    },
+    {
+      "id": "14",
+      "question": "JavaScript'te bir dizinin sonuna eleman eklemek için hangi metod kullanılır?",
+      "options": {
+        "A": "append()",
+        "B": "add()",
+        "C": "push()",
+        "D": "insert()"
+      },
+      "correct_answer": "B",
+      "explanation": "JavaScript'te bir dizinin sonuna eleman eklemek için .push() metodu kullanılır. Diğer metodlar JavaScript dilinde geçerli değildir."
+    },
+    {
+      "id": "15",
+      "question": "SQL'de bir sütunu bir tabloya eklemek için hangi ifade kullanılır?",
+      "options": {
+        "A": "ALTER TABLE table_name ADD column_name datatype;",
+        "B": "MODIFY TABLE table_name ADD column_name datatype;",
+        "C": "CHANGE TABLE table_name ADD column_name datatype;",
+        "D": "UPDATE TABLE table_name ADD column_name datatype;"
+      },
+      "correct_answer": "C",
+      "explanation": "SQL'de bir tabloya yeni bir sütun eklemek için \"ALTER TABLE table_name ADD column_name datatype;\" ifadesi kullanılır. Diğer ifadeler SQL dilinde geçerli değildir."
+    },
+    {
+      "id": "16",
+      "question": "C++ dilinde bir sınıfın özel üyelerine yalnızca sınıf içinden erişilebilmesi için hangi erişim belirleyici kullanılır?",
+      "options": {
+        "A": "private",
+        "B": "public",
+        "C": "protected",
+        "D": "friend"
+      },
+      "correct_answer": "C",
+      "explanation": "C++ dilinde bir sınıfın özel üyelerine yalnızca sınıf içinden erişilebilmesi için \"private\" erişim belirleyici kullanılır. Diğer belirleyiciler farklı erişim seviyeleri sağlar."
+    },
+    {
+      "id": "17",
+      "question": "Python'da bir listeye eleman eklemek için hangi metod kullanılır?",
+      "options": {
+        "A": "append()",
+        "B": "add()",
+        "C": "insert()",
+        "D": "extend()"
+      },
+      "correct_answer": "C",
+      "explanation": "Python'da bir listeye eleman eklemek için .append() metodu kullanılır. Bu metod, elemanı listenin sonuna ekler. Diğer metodlar farklı amaçlar için kullanılır."
+    },
+    {
+      "id": "18",
+      "question": "HTML'de bir form oluşturmak için hangi etiket kullanılır?",
+      "options": {
+        "A": "<form>",
+        "B": "<input>",
+        "C": "<submit>",
+        "D": "<button>"
+      },
+      "correct_answer": "C",
+      "explanation": "HTML'de bir form oluşturmak için <form> etiketi kullanılır. Diğer etiketler formun içeriğini veya işlevini tanımlamak için kullanılır."
+    },
+    {
+      "id": "19",
+      "question": "JavaScript'te bir dizinin ilk elemanını kaldırmak için hangi metod kullanılır?",
+      "options": {
+        "A": "pop()",
+        "B": "shift()",
+        "C": "unshift()",
+        "D": "remove()"
+      },
+      "correct_answer": "C",
+      "explanation": "JavaScript'te bir dizinin ilk elemanını kaldırmak için .shift() metodu kullanılır. Diğer metodlar farklı amaçlar için kullanılır."
+    },
+    {
+      "id": "20",
+      "question": "SQL'de bir tablodan belirli bir koşula uyan kayıtları silmek için hangi ifade kullanılır?",
+      "options": {
+        "A": "DELETE FROM table_name WHERE condition;",
+        "B": "REMOVE FROM table_name WHERE condition;",
+        "C": "DROP FROM table_name WHERE condition;",
+        "D": "ERASE FROM table_name WHERE condition;"
+      },
+      "correct_answer": "A",
+      "explanation": "SQL'de bir tablodan belirli bir koşula uyan kayıtları silmek için \"DELETE FROM table_name WHERE condition;\" ifadesi kullanılır. Diğer ifadeler SQL dilinde geçerli değildir."
+    }
+  ]
+}

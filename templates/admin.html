@@ -1,0 +1,1954 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DUF Tech - Admin Paneli</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #3B82F6;
+            --primary-dark: #2563EB;
+            --secondary-color: #64748B;
+            --accent-color: #F59E0B;
+            --success-color: #10B981;
+            --warning-color: #F59E0B;
+            --danger-color: #EF4444;
+            --light-color: #F3F4F6;
+            --dark-color: #1F2937;
+        }
+        
+        .admin-card {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .admin-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        .table-row {
+            transition: background-color 0.2s;
+        }
+        .table-row:hover {
+            background-color: #f0f4f8;
+        }
+        .sidebar {
+            height: calc(100vh - 70px);
+            position: sticky;
+            top: 70px;
+        }
+        .logo {
+            max-height: 40px;
+            width: auto;
+        }
+        .custom-gradient {
+            background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+        }
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            transition: background-color 0.2s;
+        }
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+        .nav-active {
+            border-left: 4px solid var(--primary-color);
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+        .user-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background-color: #DBEAFE;
+            color: #2563EB;
+        }
+        .user-badge.admin {
+            background-color: #FEF3C7;
+            color: #D97706;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- Üst Menü -->
+    <header class="bg-white shadow-md">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-10">
+                <div class="flex items-center">
+                    <img src="https://placehold.co/200x50/3B82F6/FFFFFF?text=DUF+Tech" alt="DUF Tech Logo" class="logo h-10">
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="/admin" class="text-gray-700 hover:text-blue-600 font-medium">Dashboard</a>
+                    <a href="/create_interview" class="text-gray-700 hover:text-blue-600 font-medium">Yeni Mülakat</a>
+                    <a href="/quiz_entry" class="text-gray-700 hover:text-blue-600 font-medium">Quiz</a>
+                </nav>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="flex flex-col items-end">
+                    <span class="text-sm font-medium text-gray-800">Hoşgeldiniz, Admin</span>
+                    <span class="user-badge admin"><i class="fas fa-shield-alt mr-1"></i> Admin</span>
+                </div>
+                <a href="/logout" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 flex items-center">
+                    <i class="fas fa-sign-out-alt mr-2"></i>Çıkış
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-6 py-8 flex">
+        <!-- Kenar Çubuğu -->
+        <aside class="w-64 bg-white rounded-lg shadow-md sidebar overflow-y-auto p-4">
+            <nav>
+                <div class="mb-8">
+                    <h2 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-th-large mr-2 text-blue-500"></i> Yönetim Paneli
+                    </h2>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="#" class="block py-2 px-4 rounded hover:bg-blue-100 text-blue-700 font-medium border-l-4 border-blue-500 flex items-center">
+                                <i class="fas fa-home mr-2"></i> Genel Bakış
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" id="interviews-tab" class="block py-2 px-4 rounded hover:bg-blue-100 text-gray-700 flex items-center">
+                                <i class="fas fa-users mr-2"></i> Mülakatlar
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" id="quizzes-tab" class="block py-2 px-4 rounded hover:bg-blue-100 text-gray-700 flex items-center">
+                                <i class="fas fa-clipboard-check mr-2"></i> Quiz Sonuçları
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" id="reports-tab" class="block py-2 px-4 rounded hover:bg-blue-100 text-gray-700 flex items-center">
+                                <i class="fas fa-file-alt mr-2"></i> Raporlar
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" id="cvs-tab" class="block py-2 px-4 rounded hover:bg-blue-100 text-gray-700 flex items-center">
+                                <i class="fas fa-id-card mr-2"></i> CV Yönetimi
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-cog mr-2 text-blue-500"></i> Sistem
+                    </h2>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="/create_interview" class="block py-2 px-4 rounded hover:bg-blue-100 text-gray-700 flex items-center">
+                                <i class="fas fa-plus-circle mr-2"></i> Yeni Mülakat
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" id="users-tab" class="block py-2 px-4 rounded hover:bg-blue-100 text-gray-700 flex items-center">
+                                <i class="fas fa-user-cog mr-2"></i> Kullanıcı Yönetimi
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#settings" class="block py-2 px-4 rounded hover:bg-blue-100 text-gray-700 flex items-center">
+                                <i class="fas fa-sliders-h mr-2"></i> Ayarlar
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Ana İçerik -->
+        <main class="flex-1 ml-8">
+            <!-- İstatistik kartları -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8" id="dashboard-section">
+                <div class="admin-card p-6 border-t-4 border-blue-500">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">Toplam Mülakat</p>
+                            <p class="text-2xl font-bold text-gray-800">{{ total_interviews }}</p>
+                        </div>
+                        <div class="bg-blue-100 p-3 rounded-full">
+                            <i class="fas fa-users text-blue-500 text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-sm">
+                        <span class="text-green-500 font-medium"><i class="fas fa-arrow-up mr-1"></i> %14</span>
+                        <span class="text-gray-500 ml-2">Son aydan bu yana</span>
+                    </div>
+                </div>
+                <div class="admin-card p-6 border-t-4 border-green-500">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">Quiz Katılımı</p>
+                            <p class="text-2xl font-bold text-gray-800">{{ total_quizzes }}</p>
+                        </div>
+                        <div class="bg-green-100 p-3 rounded-full">
+                            <i class="fas fa-clipboard-check text-green-500 text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-sm">
+                        <span class="text-green-500 font-medium"><i class="fas fa-arrow-up mr-1"></i> %8</span>
+                        <span class="text-gray-500 ml-2">Son aydan bu yana</span>
+                    </div>
+                </div>
+                <div class="admin-card p-6 border-t-4 border-yellow-500">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">Ortalama Başarı</p>
+                            <p class="text-2xl font-bold text-gray-800">{{ average_success_rate }}%</p>
+                        </div>
+                        <div class="bg-yellow-100 p-3 rounded-full">
+                            <i class="fas fa-chart-line text-yellow-500 text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-sm">
+                        <span class="text-yellow-500 font-medium"><i class="fas fa-equals mr-1"></i> %0</span>
+                        <span class="text-gray-500 ml-2">Son aydan bu yana</span>
+                    </div>
+                </div>
+                <div class="admin-card p-6 border-t-4 border-purple-500">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">Raporlar</p>
+                            <p class="text-2xl font-bold text-gray-800">{{ total_reports }}</p>
+                        </div>
+                        <div class="bg-purple-100 p-3 rounded-full">
+                            <i class="fas fa-file-alt text-purple-500 text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-sm">
+                        <span class="text-green-500 font-medium"><i class="fas fa-arrow-up mr-1"></i> %12</span>
+                        <span class="text-gray-500 ml-2">Son aydan bu yana</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hızlı Erişim Butonları -->
+            <div class="flex flex-wrap gap-4 mb-8">
+                <a href="/create_interview" class="flex items-center py-3 px-5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow transition-colors">
+                    <i class="fas fa-plus-circle mr-2"></i> Yeni Mülakat Oluştur
+                </a>
+                <a href="#" id="quick-cv-tab" class="flex items-center py-3 px-5 bg-green-600 hover:bg-green-700 text-white rounded-lg shadow transition-colors">
+                    <i class="fas fa-id-card mr-2"></i> CV Analiz Et
+                </a>
+                <a href="/quiz_entry" class="flex items-center py-3 px-5 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg shadow transition-colors">
+                    <i class="fas fa-clipboard-list mr-2"></i> Quiz Oluştur
+                </a>
+                <a href="#users-content" id="user-management-quick" class="flex items-center py-3 px-5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg shadow transition-colors">
+                    <i class="fas fa-user-plus mr-2"></i> Kullanıcı Ekle
+                </a>
+            </div>
+
+            <!-- Grafikler -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8" id="charts-section">
+                <div class="admin-card p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">Pozisyonlara Göre Başvurular</h3>
+                    <div class="h-64">
+                        <canvas id="positionsChart"></canvas>
+                    </div>
+                </div>
+                <div class="admin-card p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">Quiz Başarı Oranları</h3>
+                    <div class="h-64">
+                        <canvas id="quizSuccessChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mülakatlar İçeriği -->
+            <div id="interviews-content" class="tab-content hidden">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Mülakatlar</h2>
+                
+                <!-- Arama ve Filtreleme -->
+                <div class="bg-white p-4 rounded-lg shadow-md mb-6">
+                    <div class="flex flex-wrap items-center">
+                        <div class="w-full md:w-1/3 mb-4 md:mb-0 md:pr-2">
+                            <label for="interview-search" class="block text-sm font-medium text-gray-700 mb-1">Arama</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-search text-gray-400"></i>
+                                </div>
+                                <input type="text" id="interview-search" class="search-input block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="Aday adı veya pozisyon ara...">
+                            </div>
+                        </div>
+                        <div class="w-full md:w-1/3 mb-4 md:mb-0 md:px-2">
+                            <label for="interview-status" class="block text-sm font-medium text-gray-700 mb-1">Durum</label>
+                            <select id="interview-status" class="filter-select block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                <option value="all">Tümü</option>
+                                <option value="completed">Tamamlandı</option>
+                                <option value="ongoing">Devam Ediyor</option>
+                            </select>
+                        </div>
+                        <div class="w-full md:w-1/3 md:pl-2">
+                            <label for="interview-sort" class="block text-sm font-medium text-gray-700 mb-1">Sıralama</label>
+                            <select id="interview-sort" class="filter-select block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                <option value="date-desc">En Yeni</option>
+                                <option value="date-asc">En Eski</option>
+                                <option value="name-asc">İsim (A-Z)</option>
+                                <option value="name-desc">İsim (Z-A)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mülakat Listesi -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200" id="interviews-table">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Mülakat Kodu
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Aday Adı
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Pozisyon
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Tarih
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Durum
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Quiz
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Rapor
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        İşlemler
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                {% for interview in interviews %}
+                                <tr class="interview-item" 
+                                    data-name="{{ interview.candidate_name|lower }}" 
+                                    data-position="{{ interview.position|lower }}" 
+                                    data-status="{{ 'completed' if interview.completed else 'ongoing' }}">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">{{ interview.code }}</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm font-medium text-gray-900">{{ interview.candidate_name }}</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-500">{{ interview.position }}</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-500">{{ interview.date }}</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        {% if interview.completed %}
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                            Tamamlandı
+                                        </span>
+                                        {% else %}
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                            Devam Ediyor
+                                        </span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        {% if interview.has_quiz_results %}
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                            <i class="fas fa-check mr-1"></i> Var
+                                        </span>
+                                        {% else %}
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
+                                            <i class="fas fa-times mr-1"></i> Yok
+                                        </span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        {% if interview.has_report %}
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                            <i class="fas fa-check mr-1"></i> Var
+                                        </span>
+                                        {% else %}
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
+                                            <i class="fas fa-times mr-1"></i> Yok
+                                        </span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <a href="/admin/interview/{{ interview.code }}" class="text-blue-600 hover:text-blue-900 mr-2">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        {% if interview.has_quiz_results %}
+                                        <a href="/admin/quiz/{{ interview.code }}" class="text-purple-600 hover:text-purple-900 mr-2">
+                                            <i class="fas fa-tasks"></i>
+                                        </a>
+                                        {% endif %}
+                                        {% if interview.has_report %}
+                                        <a href="{{ interview.report_url }}" target="_blank" class="text-green-600 hover:text-green-900">
+                                            <i class="fas fa-file-pdf"></i>
+                                        </a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Sonuç bulunamadı mesajı -->
+                    <div id="interviews-not-found" class="hidden py-8 text-center">
+                        <i class="fas fa-search text-gray-400 text-4xl mb-3"></i>
+                        <p class="text-gray-500">Aramanızla eşleşen mülakat bulunamadı.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Sonuçları İçeriği -->
+            <div id="quizzes-content" class="tab-content hidden">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Quiz Sonuçları</h2>
+                
+                <!-- Arama ve Filtreleme -->
+                <div class="bg-white p-4 rounded-lg shadow-md mb-6">
+                    <div class="flex flex-wrap items-center">
+                        <div class="w-full md:w-1/3 mb-4 md:mb-0 md:pr-2">
+                            <label for="quiz-search" class="block text-sm font-medium text-gray-700 mb-1">Arama</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-search text-gray-400"></i>
+                                </div>
+                                <input type="text" id="quiz-search" class="search-input block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="Aday adı veya pozisyon ara...">
+                            </div>
+                        </div>
+                        <div class="w-full md:w-1/3 mb-4 md:mb-0 md:px-2">
+                            <label for="quiz-result" class="block text-sm font-medium text-gray-700 mb-1">Sonuç</label>
+                            <select id="quiz-result" class="filter-select block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                <option value="all">Tümü</option>
+                                <option value="success">Başarılı</option>
+                                <option value="medium">Orta</option>
+                                <option value="fail">Başarısız</option>
+                            </select>
+                        </div>
+                        <div class="w-full md:w-1/3 md:pl-2">
+                            <label for="quiz-sort" class="block text-sm font-medium text-gray-700 mb-1">Sıralama</label>
+                            <select id="quiz-sort" class="filter-select block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                <option value="date-desc">En Yeni</option>
+                                <option value="date-asc">En Eski</option>
+                                <option value="score-desc">En Yüksek Puan</option>
+                                <option value="score-asc">En Düşük Puan</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quiz Sonuçları Listesi -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200" id="quizzes-table">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Mülakat Kodu
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Aday Adı
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Pozisyon
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Tarih
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Doğru / Toplam
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Başarı Oranı
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Sonuç
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        İşlemler
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                {% for quiz in quizzes %}
+                                <tr class="quiz-item" 
+                                    data-name="{{ quiz.candidate_name|lower }}" 
+                                    data-position="{{ quiz.position|lower }}" 
+                                    data-score="{{ quiz.percentage }}"
+                                    data-result="{{ 'success' if quiz.percentage >= 70 else ('medium' if quiz.percentage >= 50 else 'fail') }}">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">{{ quiz.interview_code }}</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm font-medium text-gray-900">{{ quiz.candidate_name }}</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-500">{{ quiz.position }}</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-500">{{ quiz.date }}</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">{{ quiz.correct_count }} / {{ quiz.total_questions }}</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                            <div class="h-2.5 rounded-full 
+                                                    {% if quiz.percentage >= 70 %}bg-green-600
+                                                    {% elif quiz.percentage >= 50 %}bg-yellow-500
+                                                    {% else %}bg-red-600{% endif %}"
+                                                 style="width: {{ quiz.percentage }}%"></div>
+                                        </div>
+                                        <div class="text-sm text-gray-500 mt-1">{{ quiz.percentage }}%</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        {% if quiz.percentage >= 70 %}
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                            Başarılı
+                                        </span>
+                                        {% elif quiz.percentage >= 50 %}
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                            Orta
+                                        </span>
+                                        {% else %}
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                            Başarısız
+                                        </span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <a href="/admin/quiz/{{ quiz.interview_code }}" class="text-blue-600 hover:text-blue-900 mr-2">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        {% if quiz.has_report %}
+                                        <a href="{{ quiz.report_url }}" target="_blank" class="text-green-600 hover:text-green-900">
+                                            <i class="fas fa-file-pdf"></i>
+                                        </a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Sonuç bulunamadı mesajı -->
+                    <div id="quizzes-not-found" class="hidden py-8 text-center">
+                        <i class="fas fa-search text-gray-400 text-4xl mb-3"></i>
+                        <p class="text-gray-500">Aramanızla eşleşen quiz sonucu bulunamadı.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Raporlar İçeriği -->
+            <div id="reports-content" class="tab-content hidden">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Raporlar</h2>
+                
+                <!-- Arama -->
+                <div class="bg-white p-4 rounded-lg shadow-md mb-6">
+                    <div class="flex flex-wrap items-center">
+                        <div class="w-full md:w-1/2 mb-4 md:mb-0 md:pr-2">
+                            <label for="report-search" class="block text-sm font-medium text-gray-700 mb-1">Arama</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-search text-gray-400"></i>
+                                </div>
+                                <input type="text" id="report-search" class="search-input block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="Aday adı veya mülakat kodu ara...">
+                            </div>
+                        </div>
+                        <div class="w-full md:w-1/2 md:pl-2">
+                            <label for="report-type" class="block text-sm font-medium text-gray-700 mb-1">Rapor Tipi</label>
+                            <select id="report-type" class="filter-select block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                <option value="all">Tümü</option>
+                                <option value="mülakat">Mülakat Raporları</option>
+                                <option value="quiz">Quiz Raporları</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Raporlar Listesi -->
+                <div class="bg-white rounded-lg shadow-md">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200" id="reports-table">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Rapor Adı
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Mülakat Kodu
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Aday Adı
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Tarih
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Tip
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        İşlemler
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                {% for report in reports %}
+                                <tr class="report-item" 
+                                    data-name="{{ report.candidate_name|lower }}" 
+                                    data-interview="{{ report.interview_code|lower }}"
+                                    data-type="{{ report.type|lower }}">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">{{ report.name }}</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">{{ report.interview_code }}</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm font-medium text-gray-900">{{ report.candidate_name }}</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-500">{{ report.date }}</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        {% if report.type == 'mülakat' %}
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                                            Mülakat
+                                        </span>
+                                        {% else %}
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800">
+                                            Quiz
+                                        </span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <a href="{{ report.url }}" target="_blank" class="text-green-600 hover:text-green-900 mr-3">
+                                            <i class="fas fa-file-pdf mr-1"></i> Görüntüle
+                                        </a>
+                                        <a href="{{ report.url }}" download class="text-blue-600 hover:text-blue-900">
+                                            <i class="fas fa-download mr-1"></i> İndir
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Sonuç bulunamadı mesajı -->
+                    <div id="reports-not-found" class="hidden py-8 text-center">
+                        <i class="fas fa-search text-gray-400 text-4xl mb-3"></i>
+                        <p class="text-gray-500">Aramanızla eşleşen rapor bulunamadı.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CV Yönetimi İçeriği -->
+            <div id="cvs-content" class="tab-content hidden">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">CV Yönetimi</h2>
+                
+                <!-- CV Yükleme Formu -->
+                <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">Toplu CV Yükleme</h3>
+                    
+                    <form id="cv-upload-form" enctype="multipart/form-data" class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="cv-position" class="block text-sm font-medium text-gray-700 mb-1">Pozisyon</label>
+                                <div class="flex space-x-2">
+                                    <select id="cv-position" name="position" class="block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                        <option value="">Pozisyon Seçin</option>
+                                        <option value="frontend">Frontend Developer</option>
+                                        <option value="backend">Backend Developer</option>
+                                        <option value="fullstack">Fullstack Developer</option>
+                                        <option value="mobile">Mobile Developer</option>
+                                        <option value="devops">DevOps Engineer</option>
+                                        <option value="data">Data Scientist</option>
+                                        <option value="ui_ux">UI/UX Designer</option>
+                                        <option value="pm">Product Manager</option>
+                                        <option value="qa">QA Engineer</option>
+                                        <option value="custom">Özel Pozisyon...</option>
+                                    </select>
+                                    <input type="text" id="custom-position" name="custom_position" placeholder="Özel pozisyon adı" class="hidden w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="cv-files" class="block text-sm font-medium text-gray-700 mb-1">CV Dosyaları (.pdf, .docx)</label>
+                                <input type="file" id="cv-files" name="cv_files" accept=".pdf,.docx" multiple required class="block w-full text-sm text-gray-500 
+                                file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold
+                                file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 border rounded-md">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="cv-requirements" class="block text-sm font-medium text-gray-700 mb-1">Gereksinimler (Her satıra bir gereksinim yazın)</label>
+                            <textarea id="cv-requirements" name="requirements" rows="5" class="block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="- En az 3 yıl React deneyimi&#10;- TypeScript bilgisi&#10;- RESTful API deneyimi"></textarea>
+                        </div>
+                        
+                        <div class="flex justify-end">
+                            <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                <i class="fas fa-upload mr-2"></i> CV'leri Yükle ve Analiz Et
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- CV Analiz Sonuçları -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden mb-6 hidden" id="cv-results-container">
+                    <div class="p-4 bg-blue-50 border-b border-blue-100">
+                        <h3 class="text-lg font-medium text-blue-800">Analiz Sonuçları</h3>
+                        <p class="text-sm text-blue-600">Pozisyon: <span id="result-position"></span></p>
+                    </div>
+                    
+                    <div class="p-4">
+                        <div id="analyzing-message" class="text-center py-8">
+                            <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-700 mb-3"></div>
+                            <p class="text-gray-600">CV'ler analiz ediliyor, lütfen bekleyin...</p>
+                        </div>
+                        
+                        <div id="cv-results-list" class="hidden">
+                            <!-- CV sonuçları buraya dinamik olarak eklenecek -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Karşılaştırma Tablosu -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hidden" id="cv-comparison-container">
+                    <div class="p-4 bg-green-50 border-b border-green-100">
+                        <h3 class="text-lg font-medium text-green-800">CV Karşılaştırma</h3>
+                        <p class="text-sm text-green-600">Öne çıkan adaylar ve gereksinimler</p>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200" id="comparison-table">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Aday
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Eşleşme Puanı
+                                    </th>
+                                    <!-- Gereksinimler için dinamik kolonlar eklenecek -->
+                                </tr>
+                            </thead>
+                            <tbody id="comparison-body" class="bg-white divide-y divide-gray-200">
+                                <!-- Karşılaştırma verileri buraya dinamik olarak eklenecek -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kullanıcı Yönetimi İçeriği -->
+            <div id="users-content" class="tab-content hidden">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Kullanıcı Yönetimi</h2>
+                
+                <!-- Yeni Kullanıcı Ekleme -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h2 class="text-xl font-semibold mb-4">Yeni Kullanıcı Ekle</h2>
+                    <form id="user-form" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Ad Soyad</label>
+                            <input type="text" name="name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">E-posta</label>
+                            <input type="email" name="email" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Şifre</label>
+                            <input type="password" name="password" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Kullanıcı Tipi</label>
+                            <select name="role" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                <option value="user">Normal Kullanıcı</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Departman</label>
+                            <input type="text" name="department" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Paket Tipi</label>
+                            <select name="package_type" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                <option value="basic">Temel Paket (5 Mülakat/Quiz)</option>
+                                <option value="professional">Profesyonel Paket (20 Mülakat/Quiz)</option>
+                                <option value="enterprise">Kurumsal Paket (100 Mülakat/Quiz)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Durum</label>
+                            <select name="is_active" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                <option value="1">Aktif</option>
+                                <option value="0">Pasif</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                            Kullanıcı Ekle
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Kullanıcı Listesi -->
+                <div class="mt-8 bg-white rounded-lg shadow">
+                    <div class="p-6">
+                        <h2 class="text-xl font-semibold mb-4">Kullanıcı Listesi</h2>
+                        <div class="mb-4">
+                            <input type="text" id="user-search" placeholder="Kullanıcı ara..." class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ad Soyad</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">E-posta</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tip</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Departman</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Paket</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Durum</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Son Giriş</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">İşlemler</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="user-list" class="bg-white divide-y divide-gray-200">
+                                    <!-- Kullanıcılar JavaScript ile buraya eklenecek -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Diğer tab içeriklerinden sonra -->
+    <div id="settings-content" class="tab-content hidden">
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-2xl font-bold mb-6">Sistem Ayarları</h2>
+            
+            <!-- Pozisyonlar Bölümü -->
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold mb-4">Pozisyon Yönetimi</h3>
+                <p class="text-gray-600 mb-4">Sistemde kullanılabilecek pozisyonları yönetin. Bu pozisyonlar mülakat ve quiz oluşturulurken seçilebilir.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <!-- Pozisyon Ekleme Formu -->
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                        <h4 class="font-medium mb-3">Yeni Pozisyon Ekle</h4>
+                        <div class="mb-4">
+                            <label for="new-position" class="block text-sm font-medium text-gray-700 mb-1">Pozisyon Adı</label>
+                            <input type="text" id="new-position" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" placeholder="Örn: Frontend Developer">
+                        </div>
+                        <div class="mb-4">
+                            <label for="position-department" class="block text-sm font-medium text-gray-700 mb-1">Departman</label>
+                            <select id="position-department" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                                <option value="Yazılım">Yazılım</option>
+                                <option value="Tasarım">Tasarım</option>
+                                <option value="Pazarlama">Pazarlama</option>
+                                <option value="İnsan Kaynakları">İnsan Kaynakları</option>
+                                <option value="Yönetim">Yönetim</option>
+                                <option value="Operasyon">Operasyon</option>
+                                <option value="Diğer">Diğer</option>
+                            </select>
+                        </div>
+                        <button id="add-position-btn" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md transition-colors flex items-center justify-center">
+                            <i class="fas fa-plus mr-2"></i> Pozisyon Ekle
+                        </button>
+                    </div>
+                    
+                    <!-- Pozisyon Listesi -->
+                    <div class="bg-white p-4 rounded-lg border border-gray-200">
+                        <h4 class="font-medium mb-3">Mevcut Pozisyonlar</h4>
+                        <div class="max-h-60 overflow-y-auto">
+                            <ul id="positions-list" class="divide-y divide-gray-200">
+                                <li class="py-2 px-2 flex justify-between items-center">
+                                    <span>Frontend Developer</span>
+                                    <span class="text-sm text-gray-500">Yazılım</span>
+                                    <button class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
+                                </li>
+                                <li class="py-2 px-2 flex justify-between items-center">
+                                    <span>Backend Developer</span>
+                                    <span class="text-sm text-gray-500">Yazılım</span>
+                                    <button class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
+                                </li>
+                                <li class="py-2 px-2 flex justify-between items-center">
+                                    <span>UI/UX Designer</span>
+                                    <span class="text-sm text-gray-500">Tasarım</span>
+                                    <button class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
+                                </li>
+                                <li class="py-2 px-2 flex justify-between items-center">
+                                    <span>Product Manager</span>
+                                    <span class="text-sm text-gray-500">Yönetim</span>
+                                    <button class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Diğer Ayarlar -->
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold mb-4">Görünüm Ayarları</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                        <h4 class="font-medium mb-3">Logo ve Marka</h4>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Varsayılan Logo</label>
+                            <div class="flex items-center">
+                                <img src="{{ url_for('static', filename='duftech-interlocked-3d.svg') }}" class="h-12 mr-4" alt="DUF Tech Logo">
+                                <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 text-sm py-1 px-3 rounded">Değiştir</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                        <h4 class="font-medium mb-3">Renkler ve Tema</h4>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Ana Renk</label>
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 rounded-full bg-blue-500 mr-2"></div>
+                                <input type="text" value="#3B82F6" class="w-24 px-2 py-1 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kullanıcı Düzenleme Modalı -->
+    <div id="edit-user-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div class="mt-3">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Kullanıcı Düzenle</h3>
+                <form id="edit-user-form" class="space-y-4">
+                    <input type="hidden" id="edit-user-id">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Ad Soyad</label>
+                        <input type="text" id="edit-user-name" name="name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">E-posta</label>
+                        <input type="email" id="edit-user-email" name="email" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Kullanıcı Tipi</label>
+                        <select id="edit-user-role" name="role" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                            <option value="user">Normal Kullanıcı</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Departman</label>
+                        <input type="text" id="edit-user-department" name="department" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Paket Tipi</label>
+                        <select id="edit-user-package" name="package_type" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                            <option value="basic">Temel Paket (5 Mülakat/Quiz)</option>
+                            <option value="professional">Profesyonel Paket (20 Mülakat/Quiz)</option>
+                            <option value="enterprise">Kurumsal Paket (100 Mülakat/Quiz)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Durum</label>
+                        <select id="edit-user-status" name="is_active" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                            <option value="1">Aktif</option>
+                            <option value="0">Pasif</option>
+                        </select>
+                    </div>
+                    <div class="flex justify-end space-x-3 mt-4">
+                        <button type="button" onclick="closeEditModal()" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                            İptal
+                        </button>
+                        <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Kaydet
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab geçişleri
+        document.querySelectorAll('[id$="-tab"]').forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Tüm menü seçeneklerini sıfırla
+                document.querySelectorAll('aside a').forEach(item => {
+                    item.classList.remove('text-blue-700', 'border-l-4', 'border-blue-500');
+                    item.classList.add('text-gray-700');
+                });
+                
+                // Aktif sekmeyi vurgula
+                this.classList.remove('text-gray-700');
+                this.classList.add('text-blue-700', 'border-l-4', 'border-blue-500');
+                
+                // Tüm içerik bölümlerini gizle
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.add('hidden');
+                });
+                
+                // Dashboard ve grafikler bölümünü gizle
+                document.getElementById('dashboard-section').classList.add('hidden');
+                document.getElementById('charts-section').classList.add('hidden');
+                
+                // İlgili bölümü göster (tab-id -> content-id)
+                const tabId = this.getAttribute('id').replace('-tab', '');
+                document.getElementById(tabId + '-content').classList.remove('hidden');
+            });
+        });
+        
+        // Genel bakış tabına tıklandığında dashboard ve grafikleri göster
+        document.querySelector('aside a[href="#"]').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Tüm menü seçeneklerini sıfırla
+            document.querySelectorAll('aside a').forEach(item => {
+                item.classList.remove('text-blue-700', 'border-l-4', 'border-blue-500');
+                item.classList.add('text-gray-700');
+            });
+            
+            // Aktif sekmeyi vurgula
+            this.classList.remove('text-gray-700');
+            this.classList.add('text-blue-700', 'border-l-4', 'border-blue-500');
+            
+            // Tüm içerik bölümlerini gizle
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            // Dashboard ve grafikler bölümlerini göster
+            document.getElementById('dashboard-section').classList.remove('hidden');
+            document.getElementById('charts-section').classList.remove('hidden');
+        });
+        
+        // Kullanıcı yönetimi
+        document.getElementById('users-tab').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Tüm menü seçeneklerini sıfırla
+            document.querySelectorAll('aside a').forEach(item => {
+                item.classList.remove('text-blue-700', 'border-l-4', 'border-blue-500');
+                item.classList.add('text-gray-700');
+            });
+            
+            // Aktif sekmeyi vurgula
+            this.classList.remove('text-gray-700');
+            this.classList.add('text-blue-700', 'border-l-4', 'border-blue-500');
+            
+            // Tüm içerik bölümlerini gizle
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            // Dashboard ve grafikler bölümünü gizle
+            document.getElementById('dashboard-section').classList.add('hidden');
+            document.getElementById('charts-section').classList.add('hidden');
+            
+            // Kullanıcı yönetimi bölümünü göster
+            document.getElementById('users-content').classList.remove('hidden');
+        });
+        
+        // Hızlı erişim butonları
+        document.getElementById('quick-cv-tab').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Tüm menü seçeneklerini sıfırla
+            document.querySelectorAll('aside a').forEach(item => {
+                item.classList.remove('text-blue-700', 'border-l-4', 'border-blue-500');
+                item.classList.add('text-gray-700');
+            });
+            
+            // CV yönetimi sekmesini aktif et
+            document.getElementById('cvs-tab').classList.remove('text-gray-700');
+            document.getElementById('cvs-tab').classList.add('text-blue-700', 'border-l-4', 'border-blue-500');
+            
+            // Tüm içerik bölümlerini gizle
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            // Dashboard ve grafikler bölümünü gizle
+            document.getElementById('dashboard-section').classList.add('hidden');
+            document.getElementById('charts-section').classList.add('hidden');
+            
+            // CV yönetimi bölümünü göster
+            document.getElementById('cvs-content').classList.remove('hidden');
+        });
+        
+        document.getElementById('user-management-quick').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Tüm menü seçeneklerini sıfırla
+            document.querySelectorAll('aside a').forEach(item => {
+                item.classList.remove('text-blue-700', 'border-l-4', 'border-blue-500');
+                item.classList.add('text-gray-700');
+            });
+            
+            // Kullanıcı yönetimi sekmesini aktif et
+            document.getElementById('users-tab').classList.remove('text-gray-700');
+            document.getElementById('users-tab').classList.add('text-blue-700', 'border-l-4', 'border-blue-500');
+            
+            // Tüm içerik bölümlerini gizle
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            // Dashboard ve grafikler bölümünü gizle
+            document.getElementById('dashboard-section').classList.add('hidden');
+            document.getElementById('charts-section').classList.add('hidden');
+            
+            // Kullanıcı yönetimi bölümünü göster
+            document.getElementById('users-content').classList.remove('hidden');
+        });
+        
+        // Kullanıcı formunu işle
+        const userForm = document.getElementById('user-form');
+        if (userForm) {
+            userForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('user-name').value;
+                const email = document.getElementById('user-email').value;
+                const password = document.getElementById('user-password').value;
+                const role = document.getElementById('user-role').value;
+                const department = document.getElementById('user-department').value;
+                const active = document.querySelector('input[name="active"]:checked').value;
+                
+                // API çağrısı simülasyonu
+                Swal.fire({
+                    title: 'Başarılı!',
+                    text: `${name} kullanıcısı başarıyla eklendi.`,
+                    icon: 'success',
+                    confirmButtonText: 'Tamam'
+                }).then(() => {
+                    // Formun sıfırlanması
+                    userForm.reset();
+                    
+                    // Kullanıcı listesine ekleme (gerçek uygulamada API'den güncel liste alınır)
+                    const userList = document.getElementById('user-list');
+                    const newRow = document.createElement('tr');
+                    newRow.className = 'user-item';
+                    
+                    const initials = name.split(' ').map(n => n[0]).join('').toUpperCase();
+                    const bgColor = role === 'admin' ? 'yellow' : 'blue';
+                    const roleLabel = role === 'admin' ? 'Admin' : 'Kullanıcı';
+                    const roleBg = role === 'admin' ? 'bg-yellow-100 text-yellow-800' : 'bg-blue-100 text-blue-800';
+                    
+                    newRow.innerHTML = `
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0 h-10 w-10">
+                                    <div class="h-10 w-10 rounded-full bg-${bgColor}-100 flex items-center justify-center text-${bgColor}-500 font-bold">
+                                        ${initials}
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <div class="text-sm font-medium text-gray-900">${name}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-gray-500">${email}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${roleBg}">
+                                ${roleLabel}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            ${department}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                Aktif
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            Şimdi
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                            <a href="#" class="text-blue-600 hover:text-blue-900 mr-3">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="#" class="text-red-600 hover:text-red-900">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+                    `;
+                    
+                    userList.prepend(newRow);
+                });
+            });
+        }
+        
+        // Kullanıcı arama
+        const userSearch = document.getElementById('user-search');
+        if (userSearch) {
+            userSearch.addEventListener('keyup', function() {
+                const query = this.value.toLowerCase();
+                const rows = document.querySelectorAll('#user-list .user-item');
+                
+                rows.forEach(row => {
+                    const text = row.textContent.toLowerCase();
+                    if (text.includes(query)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+        }
+        
+        // Arama işlevleri
+        document.getElementById('interview-search').addEventListener('keyup', function() {
+            filterTable(this.value, 'interviews-section');
+        });
+        
+        document.getElementById('quiz-search').addEventListener('keyup', function() {
+            filterTable(this.value, 'quizzes-section');
+        });
+        
+        document.getElementById('report-search').addEventListener('keyup', function() {
+            filterTable(this.value, 'reports-section');
+        });
+        
+        function filterTable(query, sectionId) {
+            const rows = document.querySelectorAll(`#${sectionId} tbody tr`);
+            query = query.toLowerCase();
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                if (text.includes(query)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+        
+        // Rapor indirme
+        function downloadReport(url) {
+            window.open(url, '_blank');
+        }
+        
+        // Grafikler
+        document.addEventListener('DOMContentLoaded', function() {
+            // Pozisyonlara göre başvurular grafiği
+            const positionsCtx = document.getElementById('positionsChart').getContext('2d');
+            const positionsData = {
+                labels: {{ position_labels|safe }},
+                datasets: [{
+                    label: 'Başvuru Sayısı',
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)'
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)'
+                    ],
+                    borderWidth: 1,
+                    data: {{ position_data|safe }}
+                }]
+            };
+            
+            new Chart(positionsCtx, {
+                type: 'doughnut',
+                data: positionsData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                        }
+                    }
+                }
+            });
+            
+            // Quiz başarı oranları grafiği
+            const quizSuccessCtx = document.getElementById('quizSuccessChart').getContext('2d');
+            const quizSuccessData = {
+                labels: ['0-20%', '21-40%', '41-60%', '61-80%', '81-100%'],
+                datasets: [{
+                    label: 'Aday Sayısı',
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1,
+                    data: {{ quiz_distribution|safe }}
+                }]
+            };
+            
+            new Chart(quizSuccessCtx, {
+                type: 'bar',
+                data: quizSuccessData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                precision: 0
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // CV Yükleme ve Analiz İşlemleri
+            const cvUploadForm = document.getElementById('cv-upload-form');
+            if (cvUploadForm) {
+                // Özel pozisyon seçimi kontrolü
+                const positionSelect = document.getElementById('cv-position');
+                const customPositionInput = document.getElementById('custom-position');
+                
+                positionSelect.addEventListener('change', function() {
+                    if (this.value === 'custom') {
+                        customPositionInput.classList.remove('hidden');
+                        customPositionInput.focus();
+                    } else {
+                        customPositionInput.classList.add('hidden');
+                    }
+                });
+                
+                cvUploadForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Analiz sonuçları gösterilirken "yükleniyor" durumunu göster
+                    document.getElementById('cv-results-container').classList.remove('hidden');
+                    document.getElementById('analyzing-message').classList.remove('hidden');
+                    document.getElementById('cv-results-list').classList.add('hidden');
+                    document.getElementById('cv-comparison-container').classList.add('hidden');
+                    
+                    // Form verilerini al
+                    const positionSelect = document.getElementById('cv-position');
+                    const customPositionInput = document.getElementById('custom-position');
+                    let position = positionSelect.value;
+                    let positionText = positionSelect.options[positionSelect.selectedIndex].text;
+                    
+                    // Özel pozisyon kontrolü
+                    if (position === 'custom') {
+                        position = customPositionInput.value;
+                        positionText = customPositionInput.value;
+                    }
+                    
+                    const files = document.getElementById('cv-files').files;
+                    const requirementsText = document.getElementById('cv-requirements').value;
+                    
+                    // Pozisyon kontrolü
+                    if (!position) {
+                        Swal.fire({
+                            title: 'Uyarı!',
+                            text: 'Lütfen bir pozisyon seçin veya girin.',
+                            icon: 'warning',
+                            confirmButtonText: 'Tamam'
+                        });
+                        document.getElementById('analyzing-message').classList.add('hidden');
+                        return;
+                    }
+                    
+                    // Pozisyon başlığını güncelle
+                    document.getElementById('result-position').textContent = positionText;
+                    
+                    // Gereksinimleri dizi haline getir
+                    const requirements = requirementsText
+                        .split('\n')
+                        .map(line => line.trim())
+                        .filter(line => line.length > 0);
+                    
+                    // FormData oluştur
+                    const formData = new FormData();
+                    formData.append('position', position);
+                    formData.append('requirements', JSON.stringify(requirements));
+                    
+                    // Dosyaları ekle
+                    for (let i = 0; i < files.length; i++) {
+                        formData.append('cv_files', files[i]);
+                    }
+                    
+                    // CV'leri analiz et
+                    fetch('/admin/analyze_cvs', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            displayCVResults(data.results, requirements);
+                        } else {
+                            Swal.fire({
+                                title: 'Hata!',
+                                text: data.error || 'CV analiz edilirken bir hata oluştu.',
+                                icon: 'error',
+                                confirmButtonText: 'Tamam'
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('CV analiz hatası:', error);
+                        Swal.fire({
+                            title: 'Hata!',
+                            text: 'CV analiz edilirken bir hata oluştu.',
+                            icon: 'error',
+                            confirmButtonText: 'Tamam'
+                        });
+                    })
+                    .finally(() => {
+                        document.getElementById('analyzing-message').classList.add('hidden');
+                    });
+                });
+            }
+            
+            // CV Sonuçlarını Göster
+            function displayCVResults(results, requirements) {
+                const resultsContainer = document.getElementById('cv-results-list');
+                resultsContainer.innerHTML = '';
+                resultsContainer.classList.remove('hidden');
+                
+                // Sonuçları eşleşme puanına göre sırala
+                results.sort((a, b) => b.match_score - a.match_score);
+                
+                // Karşılaştırma tablosunu hazırla
+                prepareComparisonTable(results, requirements);
+                
+                // Her CV için sonuç kartı oluştur
+                results.forEach(result => {
+                    const card = document.createElement('div');
+                    card.className = 'admin-card mb-4 p-4 border-l-4 border-blue-500';
+                    
+                    const matchScoreClass = result.match_score >= 80 ? 'text-green-600' :
+                                           result.match_score >= 60 ? 'text-blue-600' :
+                                           result.match_score >= 40 ? 'text-yellow-600' : 'text-red-600';
+                    
+                    // Kart içeriğini oluştur
+                    card.innerHTML = `
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h4 class="text-lg font-bold text-gray-800">${result.candidate_name}</h4>
+                                <p class="text-sm text-gray-600 mb-2">${result.file_name}</p>
+                                <div class="space-y-2">
+                                    <p><span class="font-medium">E-posta:</span> ${result.email || 'Belirtilmemiş'}</p>
+                                    <p><span class="font-medium">Telefon:</span> ${result.phone || 'Belirtilmemiş'}</p>
+                                    <p><span class="font-medium">Beceriler:</span> ${result.skills.join(', ') || 'Belirtilmemiş'}</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-3xl font-bold ${matchScoreClass}">${result.match_score}%</div>
+                                <p class="text-sm text-gray-600">Eşleşme Puanı</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <h5 class="font-medium text-gray-700 mb-2">Eşleşen Gereksinimler</h5>
+                            <ul class="space-y-1">
+                                ${result.matched_requirements.map(req => 
+                                    `<li class="flex items-start">
+                                        <span class="text-green-500 mr-2"><i class="fas fa-check"></i></span>
+                                        <span>${req}</span>
+                                    </li>`
+                                ).join('')}
+                            </ul>
+                        </div>
+                        
+                        ${result.missing_requirements.length > 0 ? `
+                        <div class="mt-3">
+                            <h5 class="font-medium text-gray-700 mb-2">Eksik Gereksinimler</h5>
+                            <ul class="space-y-1">
+                                ${result.missing_requirements.map(req => 
+                                    `<li class="flex items-start">
+                                        <span class="text-red-500 mr-2"><i class="fas fa-times"></i></span>
+                                        <span>${req}</span>
+                                    </li>`
+                                ).join('')}
+                            </ul>
+                        </div>
+                        ` : ''}
+                    `;
+                    
+                    resultsContainer.appendChild(card);
+                });
+            }
+            
+            // Karşılaştırma Tablosu Hazırla
+            function prepareComparisonTable(results, requirements) {
+                const comparisonContainer = document.getElementById('cv-comparison-container');
+                const tableHeader = document.querySelector('#comparison-table thead tr');
+                const tableBody = document.getElementById('comparison-body');
+                
+                // Mevcut gereksinim kolonlarını temizle (ilk iki kolon dışında)
+                while (tableHeader.children.length > 2) {
+                    tableHeader.removeChild(tableHeader.lastChild);
+                }
+                
+                // Gereksinimler için kolon başlıkları ekle
+                requirements.forEach(req => {
+                    const th = document.createElement('th');
+                    th.className = 'px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider';
+                    th.textContent = req.substring(0, 30) + (req.length > 30 ? '...' : '');
+                    th.setAttribute('title', req);
+                    tableHeader.appendChild(th);
+                });
+                
+                // Tablo içeriğini temizle
+                tableBody.innerHTML = '';
+                
+                // En iyi 5 adayı karşılaştırma tablosuna ekle
+                const topCandidates = results.slice(0, 5);
+                
+                topCandidates.forEach(result => {
+                    const tr = document.createElement('tr');
+                    tr.className = 'table-row';
+                    
+                    const matchScoreClass = result.match_score >= 80 ? 'text-green-600 bg-green-50' :
+                                           result.match_score >= 60 ? 'text-blue-600 bg-blue-50' :
+                                           result.match_score >= 40 ? 'text-yellow-600 bg-yellow-50' : 'text-red-600 bg-red-50';
+                    
+                    // Aday adı hücresi
+                    const nameTd = document.createElement('td');
+                    nameTd.className = 'px-6 py-4 whitespace-nowrap';
+                    nameTd.innerHTML = `
+                        <div class="text-sm font-medium text-gray-900">${result.candidate_name}</div>
+                        <div class="text-xs text-gray-500">${result.file_name}</div>
+                    `;
+                    tr.appendChild(nameTd);
+                    
+                    // Eşleşme puanı hücresi
+                    const scoreTd = document.createElement('td');
+                    scoreTd.className = 'px-6 py-4 whitespace-nowrap';
+                    scoreTd.innerHTML = `
+                        <div class="text-sm font-bold ${matchScoreClass} px-2 py-1 rounded-full text-center">
+                            ${result.match_score}%
+                        </div>
+                    `;
+                    tr.appendChild(scoreTd);
+                    
+                    // Her gereksinim için eşleşme durumunu ekle
+                    requirements.forEach(req => {
+                        const reqTd = document.createElement('td');
+                        reqTd.className = 'px-6 py-4 whitespace-nowrap text-center';
+                        
+                        const isMatched = result.matched_requirements.includes(req);
+                        
+                        reqTd.innerHTML = isMatched 
+                            ? '<span class="text-green-500"><i class="fas fa-check"></i></span>'
+                            : '<span class="text-red-500"><i class="fas fa-times"></i></span>';
+                        
+                        tr.appendChild(reqTd);
+                    });
+                    
+                    tableBody.appendChild(tr);
+                });
+                
+                // Karşılaştırma tablosunu göster
+                comparisonContainer.classList.remove('hidden');
+            }
+            
+            // Settings Tab
+            document.querySelector('a[href="#settings"]').addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Aktif tab'ı değiştirelim
+                document.querySelectorAll('.sidebar a').forEach(link => {
+                    link.classList.remove('bg-blue-100', 'text-blue-600', 'font-medium');
+                });
+                this.classList.add('bg-blue-100', 'text-blue-600', 'font-medium');
+                
+                // İçeriği gösterelim
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.add('hidden');
+                });
+                document.getElementById('settings-content').classList.remove('hidden');
+            });
+            
+            // Pozisyon Yönetimi
+            const addPositionBtn = document.getElementById('add-position-btn');
+            const newPositionInput = document.getElementById('new-position');
+            const positionDepartmentSelect = document.getElementById('position-department');
+            const positionsList = document.getElementById('positions-list');
+            
+            // Pozisyon ekleme fonksiyonu
+            addPositionBtn.addEventListener('click', function() {
+                const positionName = newPositionInput.value.trim();
+                const department = positionDepartmentSelect.value;
+                
+                if (!positionName) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Hata',
+                        text: 'Lütfen bir pozisyon adı girin',
+                        confirmButtonColor: '#3B82F6'
+                    });
+                    return;
+                }
+                
+                // Pozisyonu listeye ekleyelim
+                const li = document.createElement('li');
+                li.className = 'py-2 px-2 flex justify-between items-center';
+                li.innerHTML = `
+                    <span>${positionName}</span>
+                    <span class="text-sm text-gray-500">${department}</span>
+                    <button class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
+                `;
+                
+                // Silme butonuna click event ekleyelim
+                li.querySelector('button').addEventListener('click', function() {
+                    Swal.fire({
+                        title: 'Emin misiniz?',
+                        text: `${positionName} pozisyonunu silmek istediğinize emin misiniz?`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3B82F6',
+                        cancelButtonColor: '#EF4444',
+                        confirmButtonText: 'Evet, sil',
+                        cancelButtonText: 'İptal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            li.remove();
+                            
+                            // LocalStorage'a pozisyonları kaydedelim
+                            savePositions();
+                            
+                            Swal.fire({
+                                title: 'Silindi!',
+                                text: `${positionName} pozisyonu başarıyla silindi.`,
+                                icon: 'success',
+                                confirmButtonColor: '#3B82F6'
+                            });
+                        }
+                    });
+                });
+                
+                // Listeye ekleyelim
+                positionsList.appendChild(li);
+                
+                // Formu temizleyelim
+                newPositionInput.value = '';
+                
+                // LocalStorage'a pozisyonları kaydedelim
+                savePositions();
+                
+                // Başarılı mesajı gösterelim
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Başarılı',
+                    text: `${positionName} pozisyonu başarıyla eklendi.`,
+                    confirmButtonColor: '#3B82F6',
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+            });
+            
+            // Pozisyonları LocalStorage'a kaydetme fonksiyonu
+            function savePositions() {
+                const positions = [];
+                document.querySelectorAll('#positions-list li').forEach(li => {
+                    positions.push({
+                        name: li.querySelector('span:first-child').textContent,
+                        department: li.querySelector('span:nth-child(2)').textContent
+                    });
+                });
+                
+                localStorage.setItem('duftech_positions', JSON.stringify(positions));
+            }
+            
+            // LocalStorage'dan pozisyonları yükleme
+            function loadPositions() {
+                const savedPositions = localStorage.getItem('duftech_positions');
+                
+                if (savedPositions) {
+                    try {
+                        const positions = JSON.parse(savedPositions);
+                        
+                        // Önce mevcut pozisyonları temizleyelim
+                        positionsList.innerHTML = '';
+                        
+                        // Pozisyonları ekleyelim
+                        positions.forEach(position => {
+                            const li = document.createElement('li');
+                            li.className = 'py-2 px-2 flex justify-between items-center';
+                            li.innerHTML = `
+                                <span>${position.name}</span>
+                                <span class="text-sm text-gray-500">${position.department}</span>
+                                <button class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
+                            `;
+                            
+                            // Silme butonuna click event ekleyelim
+                            li.querySelector('button').addEventListener('click', function() {
+                                const positionName = li.querySelector('span:first-child').textContent;
+                                
+                                Swal.fire({
+                                    title: 'Emin misiniz?',
+                                    text: `${positionName} pozisyonunu silmek istediğinize emin misiniz?`,
+                                    icon: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#3B82F6',
+                                    cancelButtonColor: '#EF4444',
+                                    confirmButtonText: 'Evet, sil',
+                                    cancelButtonText: 'İptal'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        li.remove();
+                                        
+                                        // LocalStorage'a pozisyonları kaydedelim
+                                        savePositions();
+                                        
+                                        Swal.fire({
+                                            title: 'Silindi!',
+                                            text: `${positionName} pozisyonu başarıyla silindi.`,
+                                            icon: 'success',
+                                            confirmButtonColor: '#3B82F6'
+                                        });
+                                    }
+                                });
+                            });
+                            
+                            // Listeye ekleyelim
+                            positionsList.appendChild(li);
+                        });
+                    } catch (error) {
+                        console.error('Pozisyonlar yüklenirken hata oluştu:', error);
+                    }
+                }
+            }
+            
+            // Sayfa yüklendiğinde pozisyonları yükleyelim
+            loadPositions();
+        });
+
+        // Kullanıcı listesini güncelle
+        function updateUserList(users) {
+            const userList = document.getElementById('user-list');
+            userList.innerHTML = '';
+            
+            users.forEach(user => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap">${user.name}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">${user.email}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${user.role === 'admin' ? 'bg-purple-100 text-purple-800' : 'bg-green-100 text-green-800'}">
+                            ${user.role === 'admin' ? 'Admin' : 'Kullanıcı'}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">${user.department || '-'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getPackageBadgeClass(user.package_type)}">
+                            ${getPackageName(user.package_type)}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${user.is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                            ${user.is_active ? 'Aktif' : 'Pasif'}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${user.last_login || '-'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <button onclick="editUser(${user.id})" class="text-blue-600 hover:text-blue-900 mr-3">Düzenle</button>
+                        <button onclick="deleteUser(${user.id})" class="text-red-600 hover:text-red-900">Sil</button>
+                    </td>
+                `;
+                userList.appendChild(row);
+            });
+        }
+
+        // Paket badge rengini belirle
+        function getPackageBadgeClass(packageType) {
+            switch(packageType) {
+                case 'basic':
+                    return 'bg-gray-100 text-gray-800';
+                case 'professional':
+                    return 'bg-blue-100 text-blue-800';
+                case 'enterprise':
+                    return 'bg-purple-100 text-purple-800';
+                default:
+                    return 'bg-gray-100 text-gray-800';
+            }
+        }
+
+        // Paket adını getir
+        function getPackageName(packageType) {
+            switch(packageType) {
+                case 'basic':
+                    return 'Temel';
+                case 'professional':
+                    return 'Profesyonel';
+                case 'enterprise':
+                    return 'Kurumsal';
+                default:
+                    return 'Temel';
+            }
+        }
+
+        // Kullanıcı düzenleme modalını göster
+        function editUser(userId) {
+            // API'den kullanıcı bilgilerini al
+            fetch(`/api/users/${userId}`)
+                .then(response => response.json())
+                .then(user => {
+                    // Modal içeriğini güncelle
+                    document.getElementById('edit-user-id').value = user.id;
+                    document.getElementById('edit-user-name').value = user.name;
+                    document.getElementById('edit-user-email').value = user.email;
+                    document.getElementById('edit-user-role').value = user.role;
+                    document.getElementById('edit-user-department').value = user.department || '';
+                    document.getElementById('edit-user-package').value = user.package_type;
+                    document.getElementById('edit-user-status').value = user.is_active ? '1' : '0';
+                    
+                    // Modalı göster
+                    document.getElementById('edit-user-modal').classList.remove('hidden');
+                });
+        }
+
+        // Kullanıcı silme işlemi
+        function deleteUser(userId) {
+            if (confirm('Bu kullanıcıyı silmek istediğinizden emin misiniz?')) {
+                fetch(`/api/users/${userId}`, {
+                    method: 'DELETE'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Kullanıcı listesini güncelle
+                        loadUsers();
+                    } else {
+                        alert('Kullanıcı silinirken bir hata oluştu.');
+                    }
+                });
+            }
+        }
+
+        // Kullanıcı arama
+        document.getElementById('user-search').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('#user-list tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        });
+
+        // Sayfa yüklendiğinde kullanıcıları yükle
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUsers();
+        });
+
+        // Kullanıcı düzenleme modalını kapat
+        function closeEditModal() {
+            document.getElementById('edit-user-modal').classList.add('hidden');
+        }
+
+        // Kullanıcı düzenleme formunu gönder
+        document.getElementById('edit-user-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const userId = document.getElementById('edit-user-id').value;
+            const formData = {
+                name: document.getElementById('edit-user-name').value,
+                email: document.getElementById('edit-user-email').value,
+                role: document.getElementById('edit-user-role').value,
+                department: document.getElementById('edit-user-department').value,
+                package_type: document.getElementById('edit-user-package').value,
+                is_active: document.getElementById('edit-user-status').value === '1'
+            };
+            
+            fetch(`/api/users/${userId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    closeEditModal();
+                    loadUsers();
+                } else {
+                    alert('Kullanıcı güncellenirken bir hata oluştu.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Kullanıcı güncellenirken bir hata oluştu.');
+            });
+        });
+
+        // Kullanıcı ekleme formunu gönder
+        document.getElementById('user-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: this.elements['name'].value,
+                email: this.elements['email'].value,
+                password: this.elements['password'].value,
+                role: this.elements['role'].value,
+                department: this.elements['department'].value,
+                package_type: this.elements['package_type'].value,
+                is_active: this.elements['is_active'].value === '1'
+            };
+            
+            fetch('/api/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    this.reset();
+                    loadUsers();
+                } else {
+                    alert(data.error || 'Kullanıcı eklenirken bir hata oluştu.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Kullanıcı eklenirken bir hata oluştu.');
+            });
+        });
+
+        // Kullanıcıları yükle
+        function loadUsers() {
+            fetch('/api/users')
+                .then(response => response.json())
+                .then(users => {
+                    updateUserList(users);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Kullanıcılar yüklenirken bir hata oluştu.');
+                });
+        }
+    </script>
+</body>
+</html> 

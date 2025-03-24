@@ -1,0 +1,262 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col">
+            <h2>Pozisyon Yönetimi</h2>
+        </div>
+        <div class="col text-end">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newPositionModal">
+                <i class="bi bi-plus-circle"></i> Yeni Pozisyon
+            </button>
+        </div>
+    </div>
+
+    <!-- Pozisyon Listesi -->
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Pozisyon Adı</th>
+                            <th>Departman</th>
+                            <th>Yüklenen CV Sayısı</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody id="positionsList">
+                        <tr>
+                            <td colspan="4" class="text-center">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Yükleniyor...</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Yeni Pozisyon Modalı -->
+<div class="modal fade" id="newPositionModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Yeni Pozisyon Oluştur</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="newPositionForm">
+                    <div class="mb-3">
+                        <label class="form-label">Pozisyon Adı</label>
+                        <input type="text" class="form-control" name="title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Departman</label>
+                        <input type="text" class="form-control" name="department" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Pozisyon Gereksinimleri</label>
+                        <textarea class="form-control" name="requirements" rows="4" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Tercih Edilen Özellikler</label>
+                        <textarea class="form-control" name="preferred_skills" rows="4"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">CV'ler</label>
+                        <input type="file" class="form-control" name="cvs" multiple accept=".pdf,.doc,.docx" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                <button type="button" class="btn btn-primary" id="createPosition">Oluştur</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CV Analiz Sonuçları Modalı -->
+<div class="modal fade" id="cvResultsModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">CV Analiz Sonuçları</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Ad Soyad</th>
+                                <th>E-posta</th>
+                                <th>Mülakat Kodu</th>
+                                <th>Uyum Skoru</th>
+                                <th>İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cvResultsList">
+                            <tr>
+                                <td colspan="5" class="text-center">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="visually-hidden">Yükleniyor...</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+let positionsModal = null;
+let cvResultsModal = null;
+
+document.addEventListener('DOMContentLoaded', function() {
+    positionsModal = new bootstrap.Modal(document.getElementById('newPositionModal'));
+    cvResultsModal = new bootstrap.Modal(document.getElementById('cvResultsModal'));
+    loadPositions();
+});
+
+function loadPositions() {
+    fetch('/api/positions')
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById('positionsList');
+            
+            if (data.success) {
+                container.innerHTML = data.positions.map(position => `
+                    <tr>
+                        <td>${position.title}</td>
+                        <td>${position.department}</td>
+                        <td>${position.cv_count}</td>
+                        <td>
+                            <button class="btn btn-sm btn-info" onclick="viewCVResults(${position.id})">
+                                <i class="bi bi-eye"></i> Sonuçlar
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="deletePosition(${position.id})">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        })
+        .catch(error => {
+            console.error('Pozisyonlar yüklenirken hata oluştu:', error);
+        });
+}
+
+document.getElementById('createPosition').addEventListener('click', function() {
+    const form = document.getElementById('newPositionForm');
+    const formData = new FormData(form);
+    
+    fetch('/api/positions', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            positionsModal.hide();
+            form.reset();
+            loadPositions();
+            showAlert('success', 'Pozisyon başarıyla oluşturuldu!');
+        } else {
+            showAlert('danger', data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Pozisyon oluşturulurken hata oluştu:', error);
+        showAlert('danger', 'Pozisyon oluşturulurken bir hata oluştu.');
+    });
+});
+
+function viewCVResults(positionId) {
+    fetch(`/api/positions/${positionId}/cvs`)
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById('cvResultsList');
+            
+            if (data.success) {
+                container.innerHTML = data.candidates.map(candidate => `
+                    <tr>
+                        <td>${candidate.name}</td>
+                        <td>${candidate.email}</td>
+                        <td>${candidate.interview_code}</td>
+                        <td>
+                            <div class="progress" style="height: 20px;">
+                                <div class="progress-bar" role="progressbar" style="width: ${candidate.match_score}%">
+                                    ${candidate.match_score}%
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-primary" onclick="startInterview('${candidate.interview_code}')">
+                                <i class="bi bi-play-circle"></i> Mülakat
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+                
+                cvResultsModal.show();
+            }
+        })
+        .catch(error => {
+            console.error('CV sonuçları yüklenirken hata oluştu:', error);
+        });
+}
+
+function deletePosition(positionId) {
+    if (confirm('Bu pozisyonu silmek istediğinizden emin misiniz?')) {
+        fetch(`/api/positions/${positionId}`, {
+            method: 'DELETE'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                loadPositions();
+                showAlert('success', 'Pozisyon başarıyla silindi!');
+            } else {
+                showAlert('danger', data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Pozisyon silinirken hata oluştu:', error);
+            showAlert('danger', 'Pozisyon silinirken bir hata oluştu.');
+        });
+    }
+}
+
+function startInterview(interviewCode) {
+    window.location.href = `/interview?code=${interviewCode}`;
+}
+
+function showAlert(type, message) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+    alertDiv.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    
+    document.querySelector('.container').insertBefore(alertDiv, document.querySelector('.card'));
+    
+    setTimeout(() => {
+        alertDiv.remove();
+    }, 5000);
+}
+</script>
+{% endblock %} 

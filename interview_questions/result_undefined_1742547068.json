@@ -1,0 +1,172 @@
+{
+  "interview_code": "undefined",
+  "position": "yapay zeka mühendisliği",
+  "timestamp": "2025-03-21 11:51:08",
+  "score": {
+    "correct": 1,
+    "total": 20,
+    "percentage": 5
+  },
+  "results": [
+    {
+      "id": "1",
+      "question": "Python'da bir liste içerisindeki en büyük sayıyı bulmak için hangi fonksiyonu kullanabilirsiniz?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Python'da bir liste içerisindeki en büyük sayıyı bulmak için max() fonksiyonu kullanılır. min() en küçük sayıyı bulur, sort() listeyi sıralar ve sum() listedeki elemanların toplamını verir."
+    },
+    {
+      "id": "2",
+      "question": "TensorFlow'da bir modelin eğitiminde hangi fonksiyon kayıp fonksiyonunu optimize eder?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "TensorFlow'da modelin eğitiminde fit() fonksiyonu kullanılır ve bu süreçte kayıp fonksiyonu optimize edilir. compile() modeli derler, evaluate() modeli test eder ve predict() tahminlerde bulunur."
+    },
+    {
+      "id": "3",
+      "question": "Aşağıdaki kütüphanelerden hangisi veri görselleştirme için kullanılır?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Matplotlib, Python'da veri görselleştirme için yaygın olarak kullanılan bir kütüphanedir. Scikit-Learn ve TensorFlow makine öğrenimi için, Keras ise derin öğrenme için kullanılır."
+    },
+    {
+      "id": "4",
+      "question": "JavaScript'te bir değişkenin veri tipini kontrol etmek için hangi operatör kullanılır?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "JavaScript'te bir değişkenin veri tipini kontrol etmek için typeof operatörü kullanılır. instanceof bir nesnenin bir sınıfa ait olup olmadığını kontrol eder. typeof() ve getType() geçerli JavaScript fonksiyonları değildir."
+    },
+    {
+      "id": "5",
+      "question": "Aşağıdaki yöntemlerden hangisi R dilinde veri çerçevesi oluşturmak için kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "R dilinde veri çerçevesi oluşturmak için data.frame() fonksiyonu kullanılır. Diğer seçenekler R dilinde geçerli fonksiyonlar değildir."
+    },
+    {
+      "id": "6",
+      "question": "OpenAI API'si ile bir ChatBot'u fine-tune etmek için hangi yöntem daha uygundur?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "OpenAI API'si ile bir ChatBot'u fine-tune etmek için Transfer Learning yöntemi uygundur. Bu yöntem, önceden eğitilmiş modelleri yeni görevler için uyarlamaya olanak tanır."
+    },
+    {
+      "id": "7",
+      "question": "Pandas kütüphanesinde bir DataFrame'in sütun isimlerini değiştirmek için hangi fonksiyon kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Pandas kütüphanesinde bir DataFrame'in sütun isimlerini değiştirmek için rename() fonksiyonu kullanılır. columns() sütun isimlerine erişim sağlar, diğer seçenekler ise geçerli fonksiyonlar değildir."
+    },
+    {
+      "id": "8",
+      "question": "C++ dilinde bir sınıfın özel üyelerine erişim sağlamak için hangi anahtar kelime kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "C++ dilinde bir sınıfın özel üyelerine erişim sağlamak için friend anahtar kelimesi kullanılır. public, private ve protected erişim belirleyicileri olarak kullanılır."
+    },
+    {
+      "id": "9",
+      "question": "Scikit-Learn kütüphanesinde bir veri kümesini eğitim ve test setlerine ayırmak için hangi fonksiyon kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Scikit-Learn kütüphanesinde bir veri kümesini eğitim ve test setlerine ayırmak için train_test_split() fonksiyonu kullanılır. Diğer seçenekler geçerli Scikit-Learn fonksiyonları değildir."
+    },
+    {
+      "id": "10",
+      "question": "HTML'de bir sayfanın başlığını belirlemek için hangi etiket kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "HTML'de bir sayfanın başlığını belirlemek için <title> etiketi kullanılır. <head> sayfanın baş kısmını, <header> sayfanın üst kısmını, <meta> ise meta bilgilerini belirtir."
+    },
+    {
+      "id": "11",
+      "question": "Python'da bir sözlükten bir anahtar-değer çiftini silmek için hangi yöntem kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Python'da bir sözlükten bir anahtar-değer çiftini silmek için pop() yöntemi kullanılır. del ifadesi de kullanılabilir ancak pop() daha yaygındır. remove() ve discard() listeler ve kümeler için kullanılır."
+    },
+    {
+      "id": "12",
+      "question": "Keras'ta bir modelin ağırlıklarını kaydetmek için hangi fonksiyon kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Keras'ta bir modelin ağırlıklarını kaydetmek için save_weights() fonksiyonu kullanılır. save_model() tüm modeli kaydeder, diğer seçenekler ise geçerli Keras fonksiyonları değildir."
+    },
+    {
+      "id": "13",
+      "question": "C dilinde bir dizi (array) tanımlarken hangi ifade doğrudur?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "C dilinde bir dizi tanımlarken veri tipi önce gelir ve ardından dizi ismi belirtilir. int array[10]; ifadesi doğru bir dizin tanımıdır."
+    },
+    {
+      "id": "14",
+      "question": "Python'da bir numpy dizisinin boyutunu öğrenmek için hangi yöntem kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Python'da bir numpy dizisinin boyutunu öğrenmek için shape özelliği kullanılır. size() eleman sayısını verir, diğer seçenekler ise geçerli numpy yöntemleri değildir."
+    },
+    {
+      "id": "15",
+      "question": "Bir OCR sistemi geliştirmek için hangi kütüphane en uygun seçenek olabilir?",
+      "user_answer": "C",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Tesseract, OCR (Optical Character Recognition) sistemleri geliştirmek için yaygın olarak kullanılan bir kütüphanedir. OpenCV görüntü işleme için kullanılırken, TensorFlow ve PyTorch makine öğrenimi ve derin öğrenme için kullanılır."
+    },
+    {
+      "id": "16",
+      "question": "JavaScript'te bir fonksiyon tanımlarken hangi anahtar kelime kullanılır?",
+      "user_answer": "B",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "JavaScript'te bir fonksiyon tanımlarken function anahtar kelimesi kullanılır. define, def ve func JavaScript'te geçerli anahtar kelimeler değildir."
+    },
+    {
+      "id": "17",
+      "question": "Python'da veri analizi için yaygın olarak kullanılan Pandas kütüphanesinde bir DataFrame'i CSV dosyasına yazmak için hangi fonksiyon kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Pandas kütüphanesinde bir DataFrame'i CSV dosyasına yazmak için to_csv() fonksiyonu kullanılır. Diğer seçenekler geçerli Pandas fonksiyonları değildir."
+    },
+    {
+      "id": "18",
+      "question": "R dilinde bir vektörün elemanlarının toplamını hesaplamak için hangi fonksiyon kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "R dilinde bir vektörün elemanlarının toplamını hesaplamak için sum() fonksiyonu kullanılır. Diğer seçenekler R dilinde geçerli fonksiyonlar değildir."
+    },
+    {
+      "id": "19",
+      "question": "Python'da bir değişkenin türünü kontrol etmek için hangi fonksiyon kullanılır?",
+      "user_answer": "A",
+      "correct_answer": "D",
+      "is_correct": false,
+      "explanation": "Python'da bir değişkenin türünü kontrol etmek için type() fonksiyonu kullanılır. typeof(), getType() ve checkType() Python'da geçerli fonksiyonlar değildir."
+    },
+    {
+      "id": "20",
+      "question": "Aşağıdaki programlama dillerinden hangisi tipik olarak web geliştirme için kullanılmaz?",
+      "user_answer": "D",
+      "correct_answer": "D",
+      "is_correct": true,
+      "explanation": "C++ genellikle sistem programlama ve uygulama geliştirme için kullanılırken, JavaScript ve HTML web geliştirme için yaygın olarak kullanılır. Python ise hem web geliştirme hem de diğer birçok alanda kullanılabilir."
+    }
+  ]
+}

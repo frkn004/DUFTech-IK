@@ -1,0 +1,74 @@
+{
+  "code": "14QPHM6M",
+  "candidate_name": "Furkan Sevinç",
+  "position": "YAPAY ZEKA STAJERİ",
+  "requirements": [],
+  "questions": [
+    "- Furkan, CV'nizde yer alan deneyimlerinizi göz önünde bulundurarak, Yapay Zeka konusunda hangi projelerde yer aldınız ve bu projelerde ne tür görevler üstlendiniz?",
+    "- İlginç bir durum, OSTİM Organized Industrial Zone Directorate ve OSTİMTech Technology Transfer Office'de staj yapmışsınız. Bu deneyimlerin sizi bu pozisyon için neden uygun bir aday yaptığını düşünüyorsunuz?",
+    "- Python, C/C++, JavaScript ve SQL gibi birçok programlama dilinde yetenekleriniz olduğunu belirtmişsiniz. Bu dilleri kullanarak hangi Yapay Zeka projelerinde yer aldınız ve bu projelerde karşılaştığınız en büyük zorluk neydi?",
+    "- Bir problemle karşılaştığınızda nasıl bir yaklaşım sergiliyorsunuz? Özellikle bir Yapay Zeka projesinde karşılaştığınız bir problemi ve bu problemi nasıl çözdüğünüzü örnek verebilir misiniz?",
+    "- Takım çalışmasının önemli olduğu bir pozisyonda yer almayı düşünüyorsunuz. Önceki deneyimlerinizde bir takım içerisinde nasıl bir rol üstlendiniz ve takım içindeki iletişimin sizin için ne kadar önemli olduğunu düşünüyorsunuz?"
+  ],
+  "created_at": "2025-03-17T13:44:23.427893",
+  "status": "completed",
+  "started_at": "2025-03-17T13:44:54.307091",
+  "photos": [
+    {
+      "filename": "20250317134510.jpg",
+      "timestamp": "2025-03-17T10:45:10.689Z",
+      "path": "14QPHM6M_photos/20250317134510.jpg"
+    },
+    {
+      "filename": "20250317134525.jpg",
+      "timestamp": "2025-03-17T10:45:25.670Z",
+      "path": "14QPHM6M_photos/20250317134525.jpg"
+    },
+    {
+      "filename": "20250317134545.jpg",
+      "timestamp": "2025-03-17T10:45:45.669Z",
+      "path": "14QPHM6M_photos/20250317134545.jpg"
+    },
+    {
+      "filename": "20250317134610.jpg",
+      "timestamp": "2025-03-17T10:46:10.685Z",
+      "path": "14QPHM6M_photos/20250317134610.jpg"
+    }
+  ],
+  "conversation_history": [
+    {
+      "role": "user",
+      "content": "Merhaba."
+    },
+    {
+      "role": "assistant",
+      "content": "Mülakata başlamak için 'Başlayalım' diyebilirsiniz."
+    },
+    {
+      "role": "user",
+      "content": "Hoşçakalın."
+    },
+    {
+      "role": "assistant",
+      "content": "Mülakata başlamak için 'Başlayalım' diyebilirsiniz."
+    },
+    {
+      "role": "user",
+      "content": "Hoşçakalın."
+    },
+    {
+      "role": "assistant",
+      "content": "Mülakata başlamak için 'Başlayalım' diyebilirsiniz."
+    },
+    {
+      "role": "user",
+      "content": "Başlayalım."
+    },
+    {
+      "role": "assistant",
+      "content": "Merhaba Furkan Sevinç, YAPAY ZEKA STAJERİ pozisyonu için mülakatımıza hoş geldiniz.\n\nPozisyonun gerektirdiği yetkinlikler hakkında konuşacağız.\n\nİlk olarak, - Furkan, CV'nizde yer alan deneyimlerinizi göz önünde bulundurarak, Yapay Zeka konusunda hangi projelerde yer aldınız ve bu projelerde ne tür görevler üstlendiniz?"
+    }
+  ],
+  "ended": true,
+  "ended_at": "2025-03-17T13:46:28.266149"
+}

@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ position }} Teknik Sınavı | DUF Tech</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css">
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f8fc;
+        }
+        .quiz-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        .quiz-card:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+        .option-label {
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+        }
+        .option-label:hover {
+            background-color: #f0f4f8;
+        }
+        .option-input:checked + .option-label {
+            background-color: #8B5CF6;
+            color: white;
+            border-color: #8B5CF6;
+        }
+        .option-input {
+            position: absolute;
+            opacity: 0;
+        }
+        .timer {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+        .result-card {
+            background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+            color: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
+        }
+        .progress-bar {
+            height: 8px;
+            border-radius: 4px;
+            background-color: #e2e8f0;
+            overflow: hidden;
+        }
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #a78bfa, #8b5cf6);
+            transition: width 0.5s ease;
+        }
+        .duftech-logo {
+            height: 40px;
+        }
+        .question-number {
+            background: #8B5CF6;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 12px;
+        }
+        .submit-btn {
+            background: linear-gradient(135deg, #8B5CF6, #6D28D9);
+            transition: all 0.3s ease;
+        }
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(109, 40, 217, 0.3);
+        }
+        .correct-answer {
+            background-color: #10B981;
+            color: white;
+            border-color: #10B981;
+        }
+        .wrong-answer {
+            background-color: #EF4444;
+            color: white;
+            border-color: #EF4444;
+        }
+        .explanation-card {
+            background-color: #F8FAFC;
+            border-left: 4px solid #8B5CF6;
+        }
+        
+        /* Kamera için yeni stiller */
+        .camera-container {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            width: 240px;
+            height: 180px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+            z-index: 40;
+            display: none; /* Başlangıçta gizli */
+            border: 2px solid #8B5CF6;
+        }
+        #videoElement {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scaleX(-1); /* Ayna görüntüsü */
+        }
+        .photo-flash {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            opacity: 0;
+            transition: opacity 0.1s;
+        }
+        .photo-flash.active {
+            opacity: 0.8;
+            animation: flash 0.3s ease-out;
+        }
+        @keyframes flash {
+            0% { opacity: 0.8; }
+            100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body class="min-h-screen py-8 px-4">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-8">
+            <div>
+                <img src="{{ url_for('static', filename='duftech-interlocked-3d.svg') }}" alt="DUF Tech Logo" class="duftech-logo">
+            </div>
+            <div class="text-right">
+                <div id="timer" class="timer text-xl font-bold text-purple-700">00:00:00</div>
+                <div class="text-sm text-gray-500">Geçen Süre</div>
+            </div>
+        </div>
+        
+        <!-- Quiz Info -->
+        <div class="bg-white p-6 rounded-xl shadow-sm mb-8">
+            <h1 class="text-2xl font-bold text-gray-800 mb-2">{{ position }} Teknik Sınavı</h1>
+            <p class="text-gray-600">Bu sınavda {{ position }} pozisyonuna ilişkin teknik bilgileriniz değerlendirilecektir.</p>
+            
+            <!-- Progress Bar -->
+            <div class="mt-4">
+                <div class="flex justify-between text-sm text-gray-600 mb-1">
+                    <span>İlerleme</span>
+                    <span id="progressText">0/{{ questions|length }}</span>
+                </div>
+                <div class="progress-bar">
+                    <div id="progress" class="progress" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quiz Questions -->
+        <div id="questionsContainer">
+            {% for question in questions %}
+            <div id="question_{{ question.id }}" class="quiz-card p-6 mb-6" data-question-id="{{ question.id }}">
+                <div class="flex items-start mb-4">
+                    <span class="question-number">{{ loop.index }}</span>
+                    <h3 class="text-lg font-medium text-gray-800">{{ question.question }}</h3>
+                </div>
+                
+                <div class="space-y-3 ml-10">
+                    {% for option_key, option_text in question.options.items() %}
+                    <div class="relative">
+                        <input type="radio"
+                               name="question_{{ question.id }}"
+                               id="option_{{ question.id }}_{{ option_key }}"
+                               value="{{ option_key }}"
+                               class="option-input">
+                        <label for="option_{{ question.id }}_{{ option_key }}"
+                               class="option-label block p-3 text-gray-700">
+                            <span class="font-semibold mr-2">{{ option_key }}.</span>
+                            {{ option_text }}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Submit Button -->
+        <div class="text-center mb-10">
+            <button id="submitBtn" class="submit-btn text-white px-8 py-3 rounded-xl font-medium text-lg">
+                <i class="fas fa-check-circle mr-2"></i>
+                Sınavı Tamamla
+            </button>
+        </div>
+        
+        <!-- Results (Initially Hidden) -->
+        <div id="resultsContainer" class="hidden space-y-6">
+            <!-- Result Summary -->
+            <div class="result-card p-8">
+                <h2 class="text-2xl font-bold mb-4">Sınav Sonuçları</h2>
+                <div class="flex justify-between items-center">
+                    <div>
+                        <div class="text-4xl font-bold mb-1" id="scorePercentage">0%</div>
+                        <div class="text-lg opacity-90" id="scoreCount">0/0 doğru</div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-lg font-semibold" id="completionTime">00:00:00</div>
+                        <div class="text-sm opacity-90">Tamamlanma Süresi</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mülakata Devam Et butonu -->
+            <div class="text-center my-6">
+                <button id="continueToInterviewBtn" class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-8 py-3 rounded-xl font-medium hover:shadow-lg transition-all duration-300 flex items-center justify-center mx-auto">
+                    <i class="fas fa-video mr-2"></i>
+                    Mülakata Devam Et
+                </button>
+            </div>
+            
+            <!-- Detailed Results -->
+            <div id="detailedResults" class="space-y-4">
+                <!-- Buraya dinamik olarak eklenecek -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Kamera Bileşeni -->
+    <div class="camera-container" id="cameraContainer">
+        <video id="videoElement" autoplay playsinline></video>
+        <canvas id="photoCanvas" style="display:none;"></canvas>
+        <div class="photo-flash" id="photoFlash"></div>
+    </div>
+    
+    <script>
+        // Global değişkenler
+        let startTime = new Date();
+        let timerInterval;
+        let answers = {};
+        let cameraActive = false;
+        let videoStream = null;
+        let photoInterval = null;
+        let lastPhotoTime = 0;
+        let photoCounter = 0;
+        
+        // Timer fonksiyonu
+        function startTimer() {
+            timerInterval = setInterval(updateTimer, 1000);
+            updateTimer();
+        }
+        
+        function updateTimer() {
+            const now = new Date();
+            const diff = new Date(now - startTime);
+            const hours = diff.getUTCHours().toString().padStart(2, '0');
+            const minutes = diff.getUTCMinutes().toString().padStart(2, '0');
+            const seconds = diff.getUTCSeconds().toString().padStart(2, '0');
+            
+            document.getElementById('timer').textContent = `${hours}:${minutes}:${seconds}`;
+        }
+        
+        function stopTimer() {
+            clearInterval(timerInterval);
+            return document.getElementById('timer').textContent;
+        }
+        
+        // İlerleme çubuğunu güncelle
+        function updateProgress() {
+            const totalQuestions = {{ questions|length }};
+            const answeredCount = Object.keys(answers).length;
+            
+            const progressBar = document.getElementById('progress');
+            const progressText = document.getElementById('progressText');
+            
+            const percentage = (answeredCount / totalQuestions) * 100;
+            progressBar.style.width = `${percentage}%`;
+            progressText.textContent = `${answeredCount}/${totalQuestions}`;
+        }
+        
+        // Cevapları topla
+        function collectAnswers() {
+            const radioButtons = document.querySelectorAll('.option-input:checked');
+            
+            radioButtons.forEach(radio => {
+                const questionId = radio.name.replace('question_', '');
+                const answer = radio.value;
+                answers[questionId] = answer;
+            });
+            
+            return answers;
+        }
+        
+        // Sınavı tamamla
+        function submitQuiz() {
+            const finalAnswers = collectAnswers();
+            const completionTime = stopTimer();
+            
+            // Eğer hiç cevap verilmemişse uyarı göster
+            if (Object.keys(finalAnswers).length === 0) {
+                Swal.fire({
+                    title: 'Uyarı!',
+                    text: 'Lütfen en az bir soruyu cevaplayın.',
+                    icon: 'warning',
+                    confirmButtonText: 'Tamam'
+                });
+                return;
+            }
+            
+            // Eğer tüm sorular cevaplanmadıysa onay iste
+            if (Object.keys(finalAnswers).length < {{ questions|length }}) {
+                Swal.fire({
+                    title: 'Emin misiniz?',
+                    text: `${Object.keys(finalAnswers).length}/{{ questions|length }} soru cevaplanmış. Sınavı tamamlamak istiyor musunuz?`,
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Evet, Tamamla',
+                    cancelButtonText: 'Hayır, Devam Et'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        processResults(finalAnswers, completionTime);
+                    }
+                });
+            } else {
+                processResults(finalAnswers, completionTime);
+            }
+        }
+        
+        // Sonuçları işle
+        function processResults(finalAnswers, completionTime) {
+            // Yükleniyor göster
+            Swal.fire({
+                title: 'Sonuçlar Hesaplanıyor',
+                text: 'Lütfen bekleyin...',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+            
+            // Sonuçları sunucuya gönder
+            fetch('/submit_quiz/{{ interview_code }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(finalAnswers)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Yükleniyor göstergesini kapat
+                Swal.close();
+                
+                if (data.success) {
+                    // Sonuçları göster
+                    displayResults(data, completionTime);
+                    
+                    // Kamerayı kapat
+                    stopCamera();
+                } else {
+                    // Hata göster
+                    Swal.fire({
+                        title: 'Hata!',
+                        text: data.error || 'Sınav sonuçları kaydedilirken bir hata oluştu.',
+                        icon: 'error',
+                        confirmButtonText: 'Tamam'
+                    });
+                }
+            })
+            .catch(error => {
+                Swal.close();
+                console.error('Sonuç gönderme hatası:', error);
+                Swal.fire({
+                    title: 'Hata!',
+                    text: 'Sınav sonuçları kaydedilirken bir hata oluştu.',
+                    icon: 'error',
+                    confirmButtonText: 'Tamam'
+                });
+            });
+        }
+        
+        // Sonuçları görüntüle
+        function displayResults(data, completionTime) {
+            // Soru konteynerini gizle
+            document.getElementById('questionsContainer').classList.add('hidden');
+            document.getElementById('submitBtn').classList.add('hidden');
+            
+            // Sonuçları göster
+            const resultsContainer = document.getElementById('resultsContainer');
+            resultsContainer.classList.remove('hidden');
+            
+            // Skor bilgilerini güncelle
+            document.getElementById('scorePercentage').textContent = `${data.percentage}%`;
+            document.getElementById('scoreCount').textContent = `${data.correct_count}/${data.total_questions} doğru`;
+            document.getElementById('completionTime').textContent = completionTime;
+            
+            // Detaylı sonuçları göster
+            const detailedResults = document.getElementById('detailedResults');
+            detailedResults.innerHTML = '';
+            
+            data.results.forEach(result => {
+                const resultItem = document.createElement('div');
+                resultItem.className = 'quiz-card p-6';
+                
+                // Soru doğru mu yanlış mı?
+                const statusIcon = result.is_correct 
+                    ? '<i class="fas fa-check-circle text-green-500 text-xl"></i>' 
+                    : '<i class="fas fa-times-circle text-red-500 text-xl"></i>';
+                
+                resultItem.innerHTML = `
+                    <div class="flex items-start mb-4">
+                        <div class="mr-3">${statusIcon}</div>
+                        <h3 class="text-lg font-medium text-gray-800">${result.question}</h3>
+                    </div>
+                    
+                    <div class="pl-8 mb-4 space-y-2">
+                        <!-- Kullanıcının cevabı -->
+                        <div class="flex items-center">
+                            <span class="inline-block w-24 text-sm text-gray-600">Cevabınız:</span>
+                            <span class="font-semibold ${result.is_correct ? 'text-green-600' : 'text-red-600'}">
+                                ${result.user_answer || 'Cevaplanmadı'}
+                            </span>
+                        </div>
+                        
+                        <!-- Doğru/Yanlış durumu -->
+                        <div class="flex items-center">
+                            <span class="inline-block w-24 text-sm text-gray-600">Sonuç:</span>
+                            <span class="font-semibold ${result.is_correct ? 'text-green-600' : 'text-red-600'}">
+                                ${result.is_correct ? 'Doğru' : 'Yanlış'}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <!-- Açıklama kısmı -->
+                    <div class="explanation-card p-4 text-sm text-gray-700">
+                        <p class="mb-1 font-semibold">Not:</p>
+                        <p>${result.is_correct ? 
+                            'Bu soruya doğru cevap verdiniz.' : 
+                            'Bu soruya yanlış cevap verdiniz. Doğru cevaplar sadece sınav raporunda görüntülenecektir.'}</p>
+                    </div>
+                `;
+                
+                detailedResults.appendChild(resultItem);
+            });
+            
+            // Mülakata devam et butonu
+            document.getElementById('continueToInterviewBtn').addEventListener('click', function() {
+                const interviewUrl = `/interview?code={{ interview_code }}`;
+                window.location.href = interviewUrl;
+            });
+            
+            // Başarı mesajı göster
+            let messageTitle, messageText;
+            
+            if (data.percentage >= 80) {
+                messageTitle = 'Tebrikler!';
+                messageText = 'Harika bir performans gösterdiniz! Dilerseniz mülakata devam edebilirsiniz.';
+            } else if (data.percentage >= 60) {
+                messageTitle = 'İyi İş!';
+                messageText = 'Güzel bir performans gösterdiniz. Dilerseniz mülakata devam edebilirsiniz.';
+            } else {
+                messageTitle = 'Tamamlandı';
+                messageText = 'Sınav sonuçlarınız kaydedildi. Dilerseniz mülakata devam edebilirsiniz.';
+            }
+            
+            Swal.fire({
+                title: messageTitle,
+                text: messageText,
+                icon: 'success',
+                confirmButtonText: 'Tamam'
+            });
+        }
+        
+        // Kamera işlemleri
+        async function initCamera() {
+            try {
+                if (!cameraActive) {
+                    // Kamera erişimi için izin iste
+                    videoStream = await navigator.mediaDevices.getUserMedia({ 
+                        video: { 
+                            width: { ideal: 1280 },
+                            height: { ideal: 720 },
+                            facingMode: "user" 
+                        } 
+                    });
+                    
+                    const videoElement = document.getElementById('videoElement');
+                    if (videoElement) {
+                        videoElement.srcObject = videoStream;
+                        
+                        // Kamera konteynerini göster
+                        const cameraContainer = document.getElementById('cameraContainer');
+                        if (cameraContainer) {
+                            cameraContainer.style.display = 'block';
+                        }
+                        cameraActive = true;
+                        
+                        // Rastgele fotoğraf çekme zamanlamasını başlat
+                        startRandomPhotoCapture();
+                    }
+                }
+            } catch (error) {
+                console.error('Kamera erişim hatası:', error);
+                // Sessizce başarısız ol - kamera olmadan da devam etmeye izin ver
+            }
+        }
+        
+        function startRandomPhotoCapture() {
+            // Rastgele zamanlarda fotoğraf çekme
+            photoInterval = setInterval(() => {
+                // 10-30 saniye arasında rastgele bir süre sonra fotoğraf çek
+                const randomDelay = Math.floor(Math.random() * 20000) + 10000; // 10-30 saniye arası
+                
+                // Son fotoğraftan bu yana yeterli süre geçtiyse
+                const now = Date.now();
+                if (now - lastPhotoTime > randomDelay) {
+                    capturePhoto();
+                    lastPhotoTime = now;
+                }
+            }, 5000); // 5 saniyede bir kontrol et
+        }
+        
+        function capturePhoto() {
+            if (!cameraActive) return;
+            
+            const video = document.getElementById('videoElement');
+            const canvas = document.getElementById('photoCanvas');
+            const photoFlash = document.getElementById('photoFlash');
+            
+            // Canvas boyutunu video boyutuna ayarla
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            
+            // Fotoğraf çek
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            // Flaş efekti
+            photoFlash.classList.add('active');
+            setTimeout(() => {
+                photoFlash.classList.remove('active');
+            }, 300);
+            
+            // Fotoğrafı base64 formatına çevir
+            const photoData = canvas.toDataURL('image/jpeg');
+            
+            // Fotoğrafı sunucuya gönder
+            sendPhotoToServer(photoData);
+            
+            photoCounter++;
+        }
+        
+        async function sendPhotoToServer(photoData) {
+            try {
+                const response = await fetch('/save_photo', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        code: '{{ interview_code }}',
+                        photo: photoData,
+                        timestamp: new Date().toISOString()
+                    })
+                });
+                
+                const data = await response.json();
+                if (!data.success) {
+                    console.error('Fotoğraf kaydedilemedi:', data.error);
+                    // Sessizce başarısız ol - denemeye devam et, kullanıcıyı rahatsız etme
+                }
+            } catch (error) {
+                console.error('Fotoğraf gönderme hatası:', error);
+                // Sessizce başarısız ol - denemeye devam et, kullanıcıyı rahatsız etme
+            }
+        }
+        
+        // Kamerayı kapat
+        function stopCamera() {
+            if (videoStream) {
+                videoStream.getTracks().forEach(track => track.stop());
+                videoStream = null;
+            }
+            
+            if (photoInterval) {
+                clearInterval(photoInterval);
+                photoInterval = null;
+            }
+            
+            document.getElementById('cameraContainer').style.display = 'none';
+            cameraActive = false;
+        }
+        
+        // Olay dinleyicileri
+        document.addEventListener('DOMContentLoaded', function() {
+            // Timer'ı başlat
+            startTimer();
+            
+            // Kamerayı başlat
+            initCamera();
+            
+            // Submit butonuna tıklama olayı
+            document.getElementById('submitBtn').addEventListener('click', submitQuiz);
+            
+            // Radyo butonları değiştiğinde ilerlemeyi güncelle
+            document.querySelectorAll('.option-input').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    collectAnswers();
+                    updateProgress();
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

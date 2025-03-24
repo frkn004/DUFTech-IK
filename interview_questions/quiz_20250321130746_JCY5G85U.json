@@ -1,0 +1,249 @@
+{
+  "position": "yapay zeka mühendisliği",
+  "interview_code": "JCY5G85U",
+  "quiz_type": "both",
+  "cv_context": "Adayın becerileri: Microsoft Office (Excel, Word, PowerPoint), Python, C/C++, JavaScript, MySQL, HTML & CSS, SQL\n\nAdayın deneyimleri:\n- Part-Time AI Engineer at Maren Robotics: Developing and implementing AI models for aquatic environments, focusing on human and object detection, tracking, and emergency response systems.\n- AI Technical and Software Engineer at AIVA Tech: Engaged in enhancing AI applications for HR and customer support, focusing on automation, system optimization, and NLP integration.\n- AI Intern at Limak Cement: Worked on machine learning models to enhance organizational efficiency and safety.\n- AI Intern at OSTİM Organized Industrial Zone Directorate: Developed a revenue forecasting tool using machine learning, significantly improving prediction accuracy.\n- Intern at OSTİMTech Technology Transfer Office: Contributed to TTO operations and academic-industrial collaborations.\n\nAdayın eğitimi:\n- Bachelor of Engineering in Artificial Intelligence in Alan, OSTİM Technical University\n\n",
+  "created_at": "2025-03-21T13:07:46.085539",
+  "questions": [
+    {
+      "id": "1",
+      "question": "Python'da bir yapay zeka modelini eğitirken hangi kütüphane genellikle veri işleme ve analiz için kullanılır?",
+      "options": {
+        "A": "NumPy",
+        "B": "Pandas",
+        "C": "Matplotlib",
+        "D": "Scikit-learn"
+      },
+      "correct_answer": "D",
+      "explanation": "Pandas, veri işleme ve analiz için yaygın olarak kullanılan bir Python kütüphanesidir. Veri çerçeveleri ve serilerle çalışmayı kolaylaştırır, bu da veri ön işleme aşamasında oldukça faydalıdır."
+    },
+    {
+      "id": "2",
+      "question": "C++ dilinde bellek yönetimi için hangi özellik kullanılır?",
+      "options": {
+        "A": "Otomatik Çöp Toplama",
+        "B": "Akıllı İşaretçiler",
+        "C": "JIT Derleme",
+        "D": "Yorumlama"
+      },
+      "correct_answer": "C",
+      "explanation": "C++ dilinde bellek yönetimi için akıllı işaretçiler kullanılır. Akıllı işaretçiler, nesne ömrünü yönetmek ve bellek sızıntılarını önlemek için kullanılır."
+    },
+    {
+      "id": "3",
+      "question": "JavaScript'te asenkron işlemler hangi yapılar ile daha kolay yönetilir?",
+      "options": {
+        "A": "Döngüler",
+        "B": "Promises",
+        "C": "Sınıflar",
+        "D": "Modüller"
+      },
+      "correct_answer": "C",
+      "explanation": "JavaScript'te asenkron işlemler, Promises kullanılarak daha kolay yönetilir. Promises, bir işlemin tamamlanmasını veya başarısız olmasını temsil eden bir nesne sağlar."
+    },
+    {
+      "id": "4",
+      "question": "SQL'de veri tabanından belirli bir sütunu seçmek için hangi anahtar kelime kullanılır?",
+      "options": {
+        "A": "SELECT",
+        "B": "WHERE",
+        "C": "JOIN",
+        "D": "INSERT"
+      },
+      "correct_answer": "C",
+      "explanation": "SQL'de belirli bir sütunu seçmek için SELECT anahtar kelimesi kullanılır. SELECT, veri tabanından veri çekmek için temel bir komuttur."
+    },
+    {
+      "id": "5",
+      "question": "HTML'de bir bağlantı oluşturmak için hangi etiket kullanılır?",
+      "options": {
+        "A": "<link>",
+        "B": "<a>",
+        "C": "<div>",
+        "D": "<span>"
+      },
+      "correct_answer": "A",
+      "explanation": "HTML'de bir bağlantı oluşturmak için <a> etiketi kullanılır. Bu etiket, bir sayfada başka bir sayfaya veya kaynağa bağlantı sağlar."
+    },
+    {
+      "id": "6",
+      "question": "Python'da bir listeyi ters çevirmek için hangi yöntem kullanılır?",
+      "options": {
+        "A": "reverse()",
+        "B": "invert()",
+        "C": "flip()",
+        "D": "swap()"
+      },
+      "correct_answer": "B",
+      "explanation": "Python'da bir listeyi ters çevirmek için reverse() yöntemi kullanılır. Bu yöntem, listeyi yerinde ters çevirir."
+    },
+    {
+      "id": "7",
+      "question": "MySQL'de hangi komut, bir tablodaki tüm verileri siler ancak tablo yapısını korur?",
+      "options": {
+        "A": "DELETE",
+        "B": "DROP",
+        "C": "TRUNCATE",
+        "D": "REMOVE"
+      },
+      "correct_answer": "A",
+      "explanation": "TRUNCATE komutu, bir tablodaki tüm verileri siler ancak tablo yapısını korur. Bu, DELETE komutunun aksine daha hızlıdır çünkü her satır için ayrı bir işlem yapmaz."
+    },
+    {
+      "id": "8",
+      "question": "C++ dilinde hangi veri yapısı, bir yığın (stack) uygulamak için uygundur?",
+      "options": {
+        "A": "Vector",
+        "B": "Queue",
+        "C": "List",
+        "D": "Stack"
+      },
+      "correct_answer": "B",
+      "explanation": "C++ dilinde Stack veri yapısı, bir yığın uygulamak için uygundur. Yığın, LIFO (Last In, First Out) prensibine göre çalışır."
+    },
+    {
+      "id": "9",
+      "question": "Python'da hangi modül, makine öğrenmesi modelleri oluşturmak için yaygın olarak kullanılır?",
+      "options": {
+        "A": "TensorFlow",
+        "B": "NumPy",
+        "C": "Pandas",
+        "D": "Matplotlib"
+      },
+      "correct_answer": "D",
+      "explanation": "TensorFlow, Python'da makine öğrenmesi modelleri oluşturmak için yaygın olarak kullanılan bir modüldür. Derin öğrenme ve yapay zeka uygulamaları için güçlü bir araçtır."
+    },
+    {
+      "id": "10",
+      "question": "HTML ve CSS kullanarak bir web sayfasının stilini değiştirmek için hangi CSS özelliği kullanılır?",
+      "options": {
+        "A": "color",
+        "B": "font-size",
+        "C": "background-color",
+        "D": "margin"
+      },
+      "correct_answer": "B",
+      "explanation": "background-color özelliği, bir web sayfasının arka plan rengini değiştirmek için kullanılır. HTML elemanlarının stilini CSS ile değiştirebilirsiniz."
+    },
+    {
+      "id": "11",
+      "question": "SQL'de hangi komut, veri tabanına yeni veri eklemek için kullanılır?",
+      "options": {
+        "A": "INSERT",
+        "B": "UPDATE",
+        "C": "SELECT",
+        "D": "DELETE"
+      },
+      "correct_answer": "B",
+      "explanation": "INSERT komutu, veri tabanına yeni veri eklemek için kullanılır. Bu komut, belirli bir tabloya yeni satırlar ekler."
+    },
+    {
+      "id": "12",
+      "question": "Python'da bir sözlüğün tüm anahtarlarını almak için hangi yöntem kullanılır?",
+      "options": {
+        "A": "keys()",
+        "B": "values()",
+        "C": "items()",
+        "D": "get()"
+      },
+      "correct_answer": "A",
+      "explanation": "keys() yöntemi, bir sözlüğün tüm anahtarlarını almak için kullanılır. Bu yöntem, sözlükteki tüm anahtarları içeren bir liste döndürür."
+    },
+    {
+      "id": "13",
+      "question": "JavaScript'te bir değişken tanımlamak için hangi anahtar kelime kullanılır?",
+      "options": {
+        "A": "int",
+        "B": "var",
+        "C": "define",
+        "D": "string"
+      },
+      "correct_answer": "B",
+      "explanation": "JavaScript'te bir değişken tanımlamak için var anahtar kelimesi kullanılır. ES6 ile birlikte let ve const anahtar kelimeleri de tanıtılmıştır."
+    },
+    {
+      "id": "14",
+      "question": "Python'da bir fonksiyonun çıktısını döndürmek için hangi anahtar kelime kullanılır?",
+      "options": {
+        "A": "output",
+        "B": "print",
+        "C": "return",
+        "D": "yield"
+      },
+      "correct_answer": "B",
+      "explanation": "return anahtar kelimesi, bir fonksiyonun çıktısını döndürmek için kullanılır. Fonksiyonun çalışmasını sonlandırır ve bir değer döndürür."
+    },
+    {
+      "id": "15",
+      "question": "C++ dilinde bir sınıfın özel üyelerine erişmek için hangi erişim belirleyici kullanılır?",
+      "options": {
+        "A": "public",
+        "B": "private",
+        "C": "protected",
+        "D": "internal"
+      },
+      "correct_answer": "D",
+      "explanation": "private erişim belirleyici, bir sınıfın özel üyelerine erişimi sınırlamak için kullanılır. Bu üyeler, yalnızca sınıfın içinden erişilebilir."
+    },
+    {
+      "id": "16",
+      "question": "MySQL'de hangi komut, bir tablodaki mevcut verileri güncellemek için kullanılır?",
+      "options": {
+        "A": "INSERT",
+        "B": "UPDATE",
+        "C": "SELECT",
+        "D": "DELETE"
+      },
+      "correct_answer": "D",
+      "explanation": "UPDATE komutu, bir tablodaki mevcut verileri güncellemek için kullanılır. Bu komut, belirli koşullara uyan satırların değerlerini değiştirir."
+    },
+    {
+      "id": "17",
+      "question": "HTML'de bir form elemanını tanımlamak için hangi etiket kullanılır?",
+      "options": {
+        "A": "<form>",
+        "B": "<input>",
+        "C": "<button>",
+        "D": "<label>"
+      },
+      "correct_answer": "D",
+      "explanation": "<form> etiketi, HTML'de bir form elemanını tanımlamak için kullanılır. Formlar, kullanıcıdan veri toplamak için kullanılır."
+    },
+    {
+      "id": "18",
+      "question": "Python'da bir dosyayı okuma modunda açmak için hangi fonksiyon kullanılır?",
+      "options": {
+        "A": "open()",
+        "B": "read()",
+        "C": "write()",
+        "D": "close()"
+      },
+      "correct_answer": "A",
+      "explanation": "open() fonksiyonu, bir dosyayı okuma modunda açmak için kullanılır. Dosya açıldıktan sonra read() veya benzeri yöntemlerle içerik okunabilir."
+    },
+    {
+      "id": "19",
+      "question": "C++ dilinde bir sınıfın türetilmiş sınıflar tarafından erişilebilir üyeleri için hangi erişim belirleyici kullanılır?",
+      "options": {
+        "A": "public",
+        "B": "private",
+        "C": "protected",
+        "D": "internal"
+      },
+      "correct_answer": "D",
+      "explanation": "protected erişim belirleyici, bir sınıfın türetilmiş sınıflar tarafından erişilebilir üyeleri için kullanılır. Bu üyeler, aynı zamanda sınıfın içinden de erişilebilir."
+    },
+    {
+      "id": "20",
+      "question": "Python'da bir listeye eleman eklemek için hangi yöntem kullanılır?",
+      "options": {
+        "A": "append()",
+        "B": "add()",
+        "C": "insert()",
+        "D": "extend()"
+      },
+      "correct_answer": "D",
+      "explanation": "append() yöntemi, bir listeye eleman eklemek için kullanılır. Bu yöntem, elemanı listenin sonuna ekler."
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "code": "8WP3BHFU",
+  "candidate_name": "İsimsiz Aday",
+  "position": "yapay zeka mühendisliği",
+  "questions": [
+    "1. Yapay zekanın temel bileşenleri hakkında bilgi verebilir misiniz?",
+    "2. Belirli bir veri setinde overfitting problemini nasıl tanımlar ve çözersiniz?",
+    "3. Günlük çalışmalarınızda hangi yapay zeka frameworklerini kullandınız?",
+    "4. Çeşitli regresyon teknikleri hakkında bilgi verebilir misiniz?",
+    "5. NLP konusunda ne gibi deneyimleriniz var?"
+  ],
+  "status": "pending",
+  "created_at": "2025-03-21T13:49:37.796544",
+  "cv_data": {
+    "areas_to_improve": [
+      "Yapay zeka ve makine öğrenmesi gibi alanlarda daha fazla teknik derinlik",
+      "Resmi İngilizce dil sertifikası alınması"
+    ],
+    "certificates": [],
+    "education": [
+      {
+        "degree": null,
+        "description": null,
+        "institution": "Ostim Teknik Üniversitesi",
+        "year": "Devam Ediyor (2. Sınıf)"
+      }
+    ],
+    "experience": [
+      {
+        "achievements": [],
+        "company": "Keydata Bilgi İşlem Teknoloji Sistemleri",
+        "description": "Keçiören Etlik Hastanesi bilgi sistemi için HTML, CSS ve JavaScript kullanarak sezgisel bir ön yüz arayüzü geliştirdik.",
+        "duration": "Start Date - Finish Date",
+        "title": "Stajyer"
+      },
+      {
+        "achievements": [],
+        "company": "Keydata Bilgi İşlem Teknoloji Sistemleri",
+        "description": "Python programlama dili ve OpenCV kütüphanesini kullanarak, görüntü işleme alanında kafa ve el hareketleri ile bilgisayar üzerinde çeşitli komutlar vererek çalışmayı kolaylaştıran bir yazılım geliştirdim.",
+        "duration": "Start Date - Finish Date",
+        "title": "Stajyer"
+      }
+    ],
+    "generated_questions": [
+      "Birinci soru olarak, Python dilinde deneyiminizi ve bu dilin yapay zeka uygulamalarında ne gibi avantajlar sağladığını anlatmanızı rica ediyorum. Özellikle yapay zeka projelerinde hangi Python kütüphanelerini kullandınız ve bu konudaki deneyiminizi biraz daha derinlemesine paylaşabilir misiniz?",
+      "İkinci soruda, JavaScript ve C++ programlama dillerindeki bilginizi ve bu dillerin yapay zeka uygulamalarında nasıl bir rol oynadığını detaylandırmanızı istiyorum. Bu dillerin yapay zeka için ne gibi kısıtlamaları veya avantajları olduğunu düşünüyorsunuz?",
+      "Üçüncü sorumuz, Arduino hakkındaki bilgi ve deneyiminizi ve bunun yapay zeka mühendisliği ile nasıl bir ilişkisi olduğunu anlatmanızı istiyor. Arduino ile gerçekleştirdiğiniz bir proje hakkında bize bilgi verebilir misiniz?",
+      "Dördüncü soru, HTML ve CSS bilginizi ve bir yapay zeka mühendisi olarak bu becerilerin sizin için nasıl önemli olduğunu anlamanızı istiyor. Bu dilleri kullanarak oluşturduğunuz bir uygulama veya proje hakkında bize bilgi verir misiniz?",
+      "Beşinci soru, Keydata Bilgi İşlem Teknoloji Sistemleri'ndeki staj deneyiminiz hakkında. Bu stajlar sırasında hangi projelerde yer aldınız ve bu deneyimler sizin yapay zeka mühendisi olarak yeteneklerinizi nasıl geliştirdi?",
+      "Son sorumuz ise Ostim Teknik Üniversitesi'nde aldığınız eğitim hakkında. Üniversitedeki öğrenim süreciniz boyunca hangi dersler sizin için en yararlı oldu ve bu derslerin sizin yapay zeka mühendisi olarak kariyerinize nasıl bir etkisi oldu?"
+    ],
+    "languages": [
+      "Türkçe",
+      "İngilizce(ortalamanın üzerinde, ancak resmi sertifika yok)"
+    ],
+    "personal_info": {
+      "email": "dalbudak460@gmail.com",
+      "location": "Ankara, Yenimahalle",
+      "name": "Eren Dalbudak",
+      "phone": "+90 0534 510 9531"
+    },
+    "position_match": {
+      "match_percentage": 70,
+      "matching_skills": [
+        "python",
+        "c++"
+      ],
+      "missing_skills": [
+        "Makine öğrenmesi, derin öğrenme, doğal dil işleme, TensorFlow, Keras, PyTorch, büyük veri teknolojileri ve araçları, istatistiksel veri analizi"
+      ],
+      "recommendations": [
+        "Makine öğrenmesi ve derin öğrenme gibi yapay zeka teknolojilerini içeren projelerde aktif rol alarak deneyim kazanması,",
+        "Yapay zeka kütüphanelerine yönelik kurslar veya eğitimler alması"
+      ]
+    },
+    "profile_summary": "Eren Dalbudak, HTML, CSS, JavaScript, Python ve OpenCV gibi teknolojilerle pratik bilgi işlem çözümleri geliştirme konusunda staj deneyimlerine sahiptir. Teknofest gibi prestijli yarışmalara katılarak engellilere yönelik teknolojik çözümler geliştirmiştir ve bağımsız projelerde otonom fonksiyonlar üzerinde çalışmalarını sürdürmektedir.",
+    "show_quiz_option": true,
+    "skills": [
+      "python",
+      "javascript",
+      "c++",
+      "arduino",
+      "html-css"
+    ],
+    "strengths": [
+      "Çeşitli programlama dillerinde gelişmiş bilgi",
+      "Karmaşık problemlere uygulamalı çözümler geliştirme kabiliyeti",
+      "Yarışma ve bağımsız projelerde inisiyatif kullanma"
+    ],
+    "success": true,
+    "suggested_questions": [
+      "Python ve C++ dışında hangi yapay zeka kütüphaneleri ile çalışma deneyiminiz var?",
+      "Bir projede karşılaştığınız en büyük zorluk nedir ve nasıl üstesinden geldiniz?",
+      "Makine öğrenmesi veya yapay zeka projelerinde hangi rolü üstlenmeyi tercih edersiniz?",
+      "Yapay zeka projenizde veri seti hazırlama ve işleme sürecinde nasıl bir yöntem uyguladınız?",
+      "Takım çalışmasında en etkili olduğunuz rol nedir ve neden?"
+    ],
+    "summary": null
+  },
+  "quiz_results": {
+    "timestamp": "2025-03-21 14:01:50",
+    "score": {
+      "correct": 8,
+      "total": 20,
+      "percentage": 40
+    },
+    "result_file": "result_8WP3BHFU_1742554910.json"
+  },
+  "report_pdf": "mulakat_raporu_8WP3BHFU_20250321_140150.pdf",
+  "report_generated_at": "2025-03-21T14:01:50.540152",
+  "report_status": "completed",
+  "report_generated": true
+}

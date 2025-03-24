@@ -1,0 +1,94 @@
+{
+  "code": "D8IPAZ3M",
+  "candidate_name": "İsimsiz Aday",
+  "position": "YAPAY ZEKA STAJERİ",
+  "questions": [
+    "1. Yapay zekanın temel bileşenleri hakkında bilgi verebilir misiniz?",
+    "2. Belirli bir veri setinde overfitting problemini nasıl tanımlar ve çözersiniz?",
+    "3. Günlük çalışmalarınızda hangi yapay zeka frameworklerini kullandınız?",
+    "4. Çeşitli regresyon teknikleri hakkında bilgi verebilir misiniz?",
+    "5. NLP konusunda ne gibi deneyimleriniz var?"
+  ],
+  "status": "completed",
+  "created_at": "2025-03-17T16:58:49.699044",
+  "cv_data": {
+    "certificates": [],
+    "education": [
+      {
+        "degree": "Bachelor (Devam Ediyor)",
+        "description": "2. sınıfta eğitimime devam etmekteyim.",
+        "institution": "Ostim Teknik Üniversitesi",
+        "year": "Ankara, Yenimahalle"
+      }
+    ],
+    "experience": [
+      {
+        "achievements": [],
+        "company": "Keydata Bilgi İşlem Teknoloji Sistemleri",
+        "description": "Keçiören Etlik Hastanesi bilgi sistemi için HTML, CSS ve JavaScript kullanarak sezgisel bir ön yüz arayüzü geliştirdik ve tasarladık.",
+        "duration": "Start Date - Finish Date",
+        "title": "Stajyer"
+      },
+      {
+        "achievements": [],
+        "company": "Keydata Bilgi İşlem Teknoloji Sistemleri",
+        "description": "Python programlama dili ve OpenCV kütüphanesini kullanarak, görüntü işleme alanında kafa ve el hareketleri ile bilgisayar üzerinde çeşitli komutlar vererek çalışmayı kolaylaştıran bir yazılım geliştirdim.",
+        "duration": "Start Date - Finish Date",
+        "title": "Stajyer"
+      }
+    ],
+    "generated_questions": [
+      "Eren Bey, CV'nizde belirttiğiniz dillerden Python, JavaScript ve C++'ı ne şekilde ve hangi projelerde kullandınız? Bu projelerinizi detaylandırabilir misiniz? Özellikle Python dilinde yapay zeka ile ilgili yaptığınız bir çalışma olup olmadığını öğrenebilir miyim?",
+      "Arduino ile ilgili deneyiminizi bize biraz daha ayrıntılı anlatabilir misiniz? Hangi projelerde Arduino kullandınız ve bu projelerde ne tür problemlerle karşılaştınız? Bu problemleri nasıl çözdünüz?",
+      "Keydata Bilgi İşlem Teknoloji Sistemleri'nde stajyer olarak ne tür görevler üstlendiniz ve burada edindiğiniz deneyimler, yapay zeka stajyeri olarak bizimle çalışmayı düşündüğünüz pozisyon için sizce nasıl bir katkı sağlayacak?",
+      "Şu anda devam etmekte olan Ostim Teknik Üniversitesi'ndeki eğitiminizde hangi derslerden en çok etkilendiniz ve bu derslerin sizin kariyer hedeflerinize nasıl bir katkısı olacağını düşünüyorsunuz?",
+      "HTML bilginizi ne düzeyde olduğunu ve bunu bir web geliştirme projesinde nasıl kullandığınızı anlatabilir misiniz?",
+      "En son tamamladığınız projenizde karşılaştığınız en büyük zorluk neydi ve bu zorluğu nasıl aştınız? Bu deneyimin sizin problem çözme yeteneklerinizi nasıl etkilediğini düşünüyorsunuz?",
+      "Son olarak, yapay zeka alanında kendi kendinize ya da üniversitenizde hangi konuları araştırdınız ve bu konuları öğrenmek için hangi kaynakları kullandınız? Kendi kendinize öğrenme konusunda ne tür bir stratejiniz var?"
+    ],
+    "languages": [
+      "Türkçe (Ana Dil)",
+      "İngilizce (Ortalamanın Üzerinde)"
+    ],
+    "personal_info": {
+      "email": "dalbudak460@gmail.com",
+      "location": "Ankara, Turkey",
+      "name": "Eren Dalbudak",
+      "phone": "+90 0534 510 9531"
+    },
+    "position_match": {
+      "match_percentage": 75,
+      "matching_skills": [
+        "Python",
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ],
+      "missing_skills": [
+        "Makine öğrenmesi temelleri",
+        "Veri analizi",
+        "Matematiksel modelleme",
+        "İstatistiksel analiz"
+      ],
+      "recommendations": [
+        "Makine öğrenmesi ve istatistiksel analiz kurslarına kaydolmak.",
+        "Veri analizi ve matematiksel modelleme üzerine daha fazla proje deneyimi kazanmaya çalışmak."
+      ]
+    },
+    "profile_summary": "Eren Dalbudak, teknoloji ve yazılım geliştirme alanlarında etkileyici bir tutkuya ve önemli pratik deneyimlere sahip olan bir bilgisayar mühendisliği öğrencisidir. Staj süreleri ve teknoloji yarışmaları sırasında kazandığı deneyimlerle, bir yapay zeka stajeri pozisyonunda önemli bir katkı sağlayabilir.",
+    "skills": [
+      "Python",
+      "JavaScript",
+      "C++",
+      "Arduino",
+      "HTML",
+      "CSS"
+    ],
+    "success": true,
+    "summary": "Aktif olarak bilgi işlem ve yazılım geliştirme alanında eğitimine devam eden, projelerde ve staj yerlerinde önemli deneyimler kazanan bir Bilgisayar Mühendisliği öğrencisi."
+  },
+  "started_at": "2025-03-17T17:09:52.656258",
+  "conversation_history": [],
+  "ended": true,
+  "ended_at": "2025-03-17T17:10:07.418715"
+}

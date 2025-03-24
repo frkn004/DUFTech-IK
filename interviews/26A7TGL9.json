@@ -1,0 +1,146 @@
+{
+  "code": "26A7TGL9",
+  "candidate_name": "İsimsiz Aday",
+  "position": "yapay zeka mühendisliği",
+  "questions": [
+    "1. Yapay zekanın temel bileşenleri hakkında bilgi verebilir misiniz?",
+    "2. Belirli bir veri setinde overfitting problemini nasıl tanımlar ve çözersiniz?",
+    "3. Günlük çalışmalarınızda hangi yapay zeka frameworklerini kullandınız?",
+    "4. Çeşitli regresyon teknikleri hakkında bilgi verebilir misiniz?",
+    "5. NLP konusunda ne gibi deneyimleriniz var?"
+  ],
+  "status": "pending",
+  "created_at": "2025-03-21T13:32:15.186207",
+  "cv_data": {
+    "areas_to_improve": [
+      "Deep learning frameworks",
+      "Statistical analysis methods",
+      "Large scale data processing capabilities"
+    ],
+    "certificates": [],
+    "education": [
+      {
+        "degree": "Bachelor of Engineering",
+        "description": "Specialization in AI Engineering with a focus on practical and theoretical aspects of AI technology.",
+        "institution": "OSTİM Technical University",
+        "year": "Jun 2028"
+      }
+    ],
+    "experience": [
+      {
+        "achievements": [
+          "Developed a vision-based detection system to track humans and objects on water.",
+          "Created a product to detect drowning and fall incidents using ML and computer vision.",
+          "Integrated AI models with embedded systems for real-time data processing.",
+          "Improved object recognition and tracking in dynamic water settings.",
+          "Developed an AI-based surface rescue system for autonomous aquatic rescue devices."
+        ],
+        "company": "Maren Robotics",
+        "description": "Develop and implement artificial intelligence models and algorithms in aquatic environments for safety and emergency responses.",
+        "duration": "Sep 2024 - Present",
+        "title": "Part-Time AI Engineer"
+      },
+      {
+        "achievements": [
+          "Developed an AI-powered HR Assistant to automate CV analysis and interview processes.",
+          "Implemented an AI-powered meeting automation system for task transcription and action item tracking.",
+          "Contributed to AI Call Center automation using NLP.",
+          "Integrated AI-driven chatbots to enhance customer support efficiency."
+        ],
+        "company": "AIVA Tech",
+        "description": "Focused on developing AI-driven solutions for HR and customer support, enhancing automation, performance, and productivity.",
+        "duration": "Aug 2024 - Present",
+        "title": "AI Technical and Software Engineer"
+      },
+      {
+        "achievements": [
+          "Transformed over 102 million data entries for ML use.",
+          "Optimized energy usage in grinding mill operations via ML models.",
+          "Developed a safety monitoring system through visual data analysis."
+        ],
+        "company": "Limak Cement",
+        "description": "Managed data for AI applications and developed ML models for operational efficiency and safety.",
+        "duration": "Feb 2024 - Jul 2025",
+        "title": "AI Intern"
+      }
+    ],
+    "generated_questions": [
+      "Nisa Hanım, Maren Robotics'teki part-time AI mühendislik deneyiminizle ilgili biraz daha bilgi verebilir misiniz? Orada kaç kişilik bir ekip ile çalıştınız ve hangi projeler üzerinde görev aldınız?",
+      "Python, C/C++, JavaScript ve MySQL gibi programlama dilleri ve teknolojilerindeki yeteneklerinizi nerede ve nasıl kullanma fırsatı buldunuz? Bu dilleri ve teknolojileri kullanarak hangi projeleri tamamladınız?",
+      "AIVA Tech'teki AI Teknik ve Yazılım Mühendisi pozisyonunuzda ne tür projelerde yer aldınız? Bu projelerin başarılı olmasında sizin katkınız neler oldu?",
+      "Microsoft Office programlarındaki yetenekleriniz iş arama sürecinizde size hangi avantajları sağlıyor? Excel, Word ve PowerPoint'i hangi iş süreçlerinde ve hangi düzeyde kullandınız?",
+      "Bir yapay zeka mühendisi olarak en büyük başarınız nedir? Bu başarının sağlanmasında hangi yeteneklerinizi kullandınız ve hangi zorlukları aştınız?",
+      "OSTİM Teknik Üniversitesi'nde mühendislik eğitimi alırken hangi projelere imza attınız? Eğitiminiz boyunca edindiğiniz bilgi ve becerilerin, yapay zeka mühendisliği kariyerinize nasıl bir katkısı oldu?",
+      "Bir yapay zeka mühendisi olarak, hangi teknolojik trendleri yakından takip ediyorsunuz ve bu trendlerin sektör üzerindeki etkisini nasıl değerlendiriyorsunuz?"
+    ],
+    "languages": [
+      "English B2",
+      "German B1"
+    ],
+    "personal_info": {
+      "email": "nisaduru72@gmail.com",
+      "location": "Ankara",
+      "name": "Nisa Duru",
+      "phone": "0552 328 55 07"
+    },
+    "position_match": {
+      "match_percentage": 80,
+      "matching_skills": [
+        "Python",
+        "NLP",
+        "Machine Learning",
+        "Algorithm design"
+      ],
+      "missing_skills": [
+        "TensorFlow or PyTorch",
+        "Statistical modeling",
+        "Deep learning",
+        "Big data technologies",
+        "Object-oriented programming"
+      ],
+      "recommendations": [
+        "Advance skills in TensorFlow or PyTorch for deep learning applications.",
+        "Study statistical modeling techniques.",
+        "Explore big data technologies for handling large datasets."
+      ]
+    },
+    "profile_summary": "Nisa Duru is a proficient AI Engineer with hands-on experience in developing and implementing sophisticated AI solutions across different sectors. Her strength lies in applying these technologies to real-world challenges, enhancing productivity, safety, and efficiency.",
+    "show_quiz_option": true,
+    "skills": [
+      "Microsoft Office (Excel, Word, PowerPoint)",
+      "Python",
+      "C/C++",
+      "JavaScript",
+      "MySQL",
+      "HTML & CSS",
+      "SQL"
+    ],
+    "strengths": [
+      "Innovation in AI application",
+      "Cross-functional project experience",
+      "Technical skills in software and hardware integration"
+    ],
+    "success": true,
+    "suggested_questions": [
+      "Can you describe a project where you utilized TensorFlow or PyTorch?",
+      "What is your approach when you face an engineering challenge you haven't encountered before?",
+      "How do you ensure the scalability of your AI models?",
+      "Can you discuss your experience with real-time data analysis?",
+      "What methodologies do you use for optimizing algorithm performance?"
+    ],
+    "summary": "A driven AI Engineer with experience in developing AI solutions for automation, safety, and efficiency enhancements across several industries."
+  },
+  "quiz_results": {
+    "timestamp": "2025-03-21 13:36:14",
+    "score": {
+      "correct": 6,
+      "total": 20,
+      "percentage": 30
+    },
+    "result_file": "result_26A7TGL9_1742553374.json"
+  },
+  "report_pdf": "mulakat_raporu_26A7TGL9_20250321_133614.pdf",
+  "report_generated_at": "2025-03-21T13:36:14.096859",
+  "report_status": "completed",
+  "report_generated": true
+}

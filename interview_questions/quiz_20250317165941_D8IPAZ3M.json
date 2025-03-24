@@ -1,0 +1,249 @@
+{
+  "position": "YAPAY ZEKA STAJERİ",
+  "interview_code": "D8IPAZ3M",
+  "quiz_type": "both",
+  "cv_context": "Adayın becerileri: Python, JavaScript, C++, Arduino, HTML, CSS\n\nAdayın deneyimleri:\n- Stajyer at Keydata Bilgi İşlem Teknoloji Sistemleri: Keçiören Etlik Hastanesi bilgi sistemi için HTML, CSS ve JavaScript kullanarak sezgisel bir ön yüz arayüzü geliştirdik ve tasarladık.\n- Stajyer at Keydata Bilgi İşlem Teknoloji Sistemleri: Python programlama dili ve OpenCV kütüphanesini kullanarak, görüntü işleme alanında kafa ve el hareketleri ile bilgisayar üzerinde çeşitli komutlar vererek çalışmayı kolaylaştıran bir yazılım geliştirdim.\n\nAdayın eğitimi:\n- Bachelor (Devam Ediyor) in Alan, Ostim Teknik Üniversitesi\n\n",
+  "created_at": "2025-03-17T16:59:41.426391",
+  "questions": [
+    {
+      "id": "1",
+      "question": "Python programlama dilinde bir listeyi ters çevirmek için hangi yöntem kullanılabilir?",
+      "options": {
+        "A": "list.reverse()",
+        "B": "list[::-1]",
+        "C": "reversed(list)",
+        "D": "Tüm seçenekler doğrudur"
+      },
+      "correct_answer": "A",
+      "explanation": "Python'da bir listeyi ters çevirmek için list.reverse(), list[::-1] dilimleme yöntemi ve reversed() fonksiyonu kullanılabilir. Hepsi doğru yöntemlerdir."
+    },
+    {
+      "id": "2",
+      "question": "JavaScript'te hangi yöntem bir dizinin sonuna yeni bir eleman ekler?",
+      "options": {
+        "A": "push()",
+        "B": "pop()",
+        "C": "shift()",
+        "D": "unshift()"
+      },
+      "correct_answer": "D",
+      "explanation": "JavaScript'te push() metodu, bir dizinin sonuna bir veya daha fazla eleman ekler."
+    },
+    {
+      "id": "3",
+      "question": "C++ dilinde bir sınıfın özel üyelerine hangi erişim belirleyicisi ile erişilebilir?",
+      "options": {
+        "A": "private",
+        "B": "public",
+        "C": "protected",
+        "D": "internal"
+      },
+      "correct_answer": "D",
+      "explanation": "C++ dilinde bir sınıfın özel üyelerine erişmek için public erişim belirleyicisi kullanılır."
+    },
+    {
+      "id": "4",
+      "question": "HTML'de hangi etiket bir başlık oluşturur?",
+      "options": {
+        "A": "<p>",
+        "B": "<h1>",
+        "C": "<div>",
+        "D": "<span>"
+      },
+      "correct_answer": "C",
+      "explanation": "HTML'de <h1> etiketi, bir başlık oluşturmak için kullanılır. Başlık etiketleri <h1> ile <h6> arasında değişir."
+    },
+    {
+      "id": "5",
+      "question": "CSS'de bir elemanın arka plan rengini ayarlamak için hangi özellik kullanılır?",
+      "options": {
+        "A": "color",
+        "B": "background-color",
+        "C": "border-color",
+        "D": "text-color"
+      },
+      "correct_answer": "A",
+      "explanation": "CSS'de background-color özelliği, bir elemanın arka plan rengini ayarlamak için kullanılır."
+    },
+    {
+      "id": "6",
+      "question": "Arduino'da bir LED'i yakmak için hangi pin modunu kullanmalısınız?",
+      "options": {
+        "A": "INPUT",
+        "B": "OUTPUT",
+        "C": "ANALOG",
+        "D": "PWM"
+      },
+      "correct_answer": "D",
+      "explanation": "Arduino'da bir LED'i yakmak için pin OUTPUT modunda ayarlanmalıdır."
+    },
+    {
+      "id": "7",
+      "question": "OpenCV kütüphanesinde bir görüntüyü gri tonlamaya dönüştürmek için hangi fonksiyon kullanılır?",
+      "options": {
+        "A": "cv2.gray()",
+        "B": "cv2.cvtColor()",
+        "C": "cv2.grayscale()",
+        "D": "cv2.convertToGray()"
+      },
+      "correct_answer": "A",
+      "explanation": "OpenCV'de cv2.cvtColor() fonksiyonu, bir görüntüyü gri tonlamaya dönüştürmek için kullanılır. cv2.COLOR_BGR2GRAY parametresi ile birlikte kullanılır."
+    },
+    {
+      "id": "8",
+      "question": "Python'da bir döngüyü hangi anahtar kelime ile sonlandırabilirsiniz?",
+      "options": {
+        "A": "continue",
+        "B": "break",
+        "C": "exit",
+        "D": "stop"
+      },
+      "correct_answer": "D",
+      "explanation": "Python'da break anahtar kelimesi, bir döngüyü sonlandırmak için kullanılır."
+    },
+    {
+      "id": "9",
+      "question": "JavaScript'te bir değişkeni nasıl tanımlarsınız?",
+      "options": {
+        "A": "var variableName;",
+        "B": "let variableName;",
+        "C": "const variableName;",
+        "D": "Tüm seçenekler doğrudur"
+      },
+      "correct_answer": "D",
+      "explanation": "JavaScript'te var, let ve const anahtar kelimeleri ile değişken tanımlanabilir. Her biri farklı bir kapsam ve yeniden atama kuralına sahiptir."
+    },
+    {
+      "id": "10",
+      "question": "C++ dilinde bir işlevin prototipi nasıl tanımlanır?",
+      "options": {
+        "A": "returnType functionName(parameters);",
+        "B": "functionName(parameters) returnType;",
+        "C": "returnType parameters functionName;",
+        "D": "parameters returnType functionName;"
+      },
+      "correct_answer": "A",
+      "explanation": "C++ dilinde bir işlevin prototipi, returnType functionName(parameters); şeklinde tanımlanır."
+    },
+    {
+      "id": "11",
+      "question": "HTML'de bir bağlantı oluşturmak için hangi etiket kullanılır?",
+      "options": {
+        "A": "<link>",
+        "B": "<a>",
+        "C": "<href>",
+        "D": "<url>"
+      },
+      "correct_answer": "A",
+      "explanation": "HTML'de bir bağlantı oluşturmak için <a> etiketi kullanılır."
+    },
+    {
+      "id": "12",
+      "question": "CSS'de yazı tipi boyutunu ayarlamak için hangi özellik kullanılır?",
+      "options": {
+        "A": "font-weight",
+        "B": "font-style",
+        "C": "font-size",
+        "D": "font-family"
+      },
+      "correct_answer": "D",
+      "explanation": "CSS'de font-size özelliği, bir elemanın yazı tipi boyutunu ayarlamak için kullanılır."
+    },
+    {
+      "id": "13",
+      "question": "Arduino'da bir analog sensör okumak için hangi fonksiyon kullanılır?",
+      "options": {
+        "A": "digitalRead()",
+        "B": "analogRead()",
+        "C": "readSensor()",
+        "D": "getAnalog()"
+      },
+      "correct_answer": "D",
+      "explanation": "Arduino'da analogRead() fonksiyonu, bir analog sensörden veri okumak için kullanılır."
+    },
+    {
+      "id": "14",
+      "question": "OpenCV'de bir görüntüyü ekrana göstermek için hangi fonksiyon kullanılır?",
+      "options": {
+        "A": "cv2.show()",
+        "B": "cv2.imshow()",
+        "C": "cv2.display()",
+        "D": "cv2.view()"
+      },
+      "correct_answer": "C",
+      "explanation": "OpenCV'de cv2.imshow() fonksiyonu, bir görüntüyü ekrana göstermek için kullanılır."
+    },
+    {
+      "id": "15",
+      "question": "Python'da bir sözlükteki tüm anahtarları listelemek için hangi yöntem kullanılır?",
+      "options": {
+        "A": "keys()",
+        "B": "values()",
+        "C": "items()",
+        "D": "getKeys()"
+      },
+      "correct_answer": "C",
+      "explanation": "Python'da keys() metodu, bir sözlükteki tüm anahtarları listelemek için kullanılır."
+    },
+    {
+      "id": "16",
+      "question": "JavaScript'te bir fonksiyonun geri dönüş değerini nasıl alırsınız?",
+      "options": {
+        "A": "return",
+        "B": "output",
+        "C": "result",
+        "D": "functionReturn"
+      },
+      "correct_answer": "A",
+      "explanation": "JavaScript'te return anahtar kelimesi, bir fonksiyonun geri dönüş değerini belirtir."
+    },
+    {
+      "id": "17",
+      "question": "C++ dilinde bir dizi nasıl tanımlanır?",
+      "options": {
+        "A": "int arrayName[] = {1, 2, 3};",
+        "B": "array int arrayName = {1, 2, 3};",
+        "C": "int[] arrayName = {1, 2, 3};",
+        "D": "arrayName int[] = {1, 2, 3};"
+      },
+      "correct_answer": "A",
+      "explanation": "C++ dilinde bir dizi, int arrayName[] = {1, 2, 3}; şeklinde tanımlanır."
+    },
+    {
+      "id": "18",
+      "question": "HTML'de bir form elemanı oluşturmak için hangi etiket kullanılır?",
+      "options": {
+        "A": "<input>",
+        "B": "<form>",
+        "C": "<button>",
+        "D": "<select>"
+      },
+      "correct_answer": "C",
+      "explanation": "HTML'de bir form elemanı oluşturmak için <form> etiketi kullanılır."
+    },
+    {
+      "id": "19",
+      "question": "CSS'de bir elemanın kenarlık genişliğini ayarlamak için hangi özellik kullanılır?",
+      "options": {
+        "A": "border-width",
+        "B": "border-style",
+        "C": "border-color",
+        "D": "border-size"
+      },
+      "correct_answer": "C",
+      "explanation": "CSS'de border-width özelliği, bir elemanın kenarlık genişliğini ayarlamak için kullanılır."
+    },
+    {
+      "id": "20",
+      "question": "Arduino programında setup() fonksiyonu ne zaman çalıştırılır?",
+      "options": {
+        "A": "Her döngüde",
+        "B": "Program başlatıldığında bir kez",
+        "C": "Her saniyede bir",
+        "D": "Her pin okunduğunda"
+      },
+      "correct_answer": "C",
+      "explanation": "Arduino programında setup() fonksiyonu, program başlatıldığında bir kez çalıştırılır ve genellikle başlangıç ayarları burada yapılır."
+    }
+  ]
+}

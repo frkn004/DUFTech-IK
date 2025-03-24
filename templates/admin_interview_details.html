@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mülakat Detayları - {{ interview.get('candidate_name', 'İsimsiz Aday') }}</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body class="bg-gray-100">
+    <div class="min-h-screen">
+        <!-- Başlık -->
+        <header class="bg-blue-600 shadow-md">
+            <div class="container mx-auto px-4 py-6 flex justify-between items-center">
+                <div>
+                    <h1 class="text-white text-2xl font-bold">Mülakat Detayları</h1>
+                    <p class="text-blue-100">{{ interview.get('candidate_name', 'İsimsiz Aday') }} - {{ interview_code }}</p>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="/admin" class="text-white hover:text-blue-200">
+                        <i class="fas fa-arrow-left mr-2"></i> Admin Paneline Dön
+                    </a>
+                    <a href="/logout" class="text-white hover:text-blue-200">
+                        <i class="fas fa-sign-out-alt mr-2"></i> Çıkış Yap
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Ana İçerik -->
+        <main class="container mx-auto px-4 py-8">
+            <!-- Aday Bilgileri -->
+            <div class="bg-white shadow-md rounded-lg mb-8 p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-semibold text-gray-800">Aday Bilgileri</h2>
+                    {% if report_url %}
+                    <a href="{{ report_url }}" target="_blank" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md transition">
+                        <i class="fas fa-file-pdf mr-2"></i> Raporu Görüntüle
+                    </a>
+                    {% endif %}
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div>
+                        <p class="text-sm text-gray-600">Aday Adı:</p>
+                        <p class="font-medium">{{ interview.get('candidate_name', 'İsimsiz Aday') }}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600">Pozisyon:</p>
+                        <p class="font-medium">{{ interview.get('position', 'Belirtilmemiş') }}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600">E-posta:</p>
+                        <p class="font-medium">{{ interview.get('email', 'Belirtilmemiş') }}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600">Mülakat Kodu:</p>
+                        <p class="font-medium">{{ interview_code }}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600">Durum:</p>
+                        <p class="font-medium">
+                            {% if interview.get('completed', False) %}
+                            <span class="text-green-600"><i class="fas fa-check-circle mr-1"></i> Tamamlandı</span>
+                            {% else %}
+                            <span class="text-yellow-600"><i class="fas fa-clock mr-1"></i> Devam Ediyor</span>
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600">Oluşturulma Tarihi:</p>
+                        <p class="font-medium">{{ interview.get('created_at', 'Belirtilmemiş') }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sekme Gezinti -->
+            <div class="mb-6">
+                <div class="border-b border-gray-200">
+                    <nav class="-mb-px flex space-x-8">
+                        <button id="tab-questions" class="tab-button active border-b-2 border-blue-500 py-4 px-1 text-sm font-medium text-blue-600">
+                            <i class="fas fa-question-circle mr-2"></i> Sorular ve Cevaplar
+                        </button>
+                        {% if photos %}
+                        <button id="tab-photos" class="tab-button py-4 px-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300 hover:text-gray-700">
+                            <i class="fas fa-images mr-2"></i> Fotoğraflar
+                        </button>
+                        {% endif %}
+                        {% if quiz_results %}
+                        <button id="tab-quiz" class="tab-button py-4 px-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300 hover:text-gray-700">
+                            <i class="fas fa-tasks mr-2"></i> Quiz Sonuçları
+                        </button>
+                        {% endif %}
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Sorular ve Cevaplar Bölümü -->
+            <div id="content-questions" class="tab-content">
+                <div class="bg-white shadow-md rounded-lg p-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-6">Sorular ve Cevaplar</h2>
+                    
+                    {% if questions %}
+                    <div class="space-y-6">
+                        {% for q in questions %}
+                        <div class="border-b border-gray-200 pb-4 mb-4 last:border-b-0 last:pb-0 last:mb-0">
+                            <div class="mb-2">
+                                <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded-full mr-2">Soru {{ loop.index }}</span>
+                                {% if q.timestamp %}
+                                <span class="text-gray-500 text-sm">{{ q.timestamp }}</span>
+                                {% endif %}
+                            </div>
+                            <p class="font-medium text-gray-800 mb-2">{{ q.question }}</p>
+                            <div class="pl-4 border-l-2 border-gray-300">
+                                <p class="text-gray-700">{{ q.answer }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-center py-8">
+                        <i class="fas fa-inbox text-gray-400 text-5xl mb-4"></i>
+                        <p class="text-gray-500">Henüz soru cevaplandırılmamış.</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Fotoğraflar Bölümü -->
+            {% if photos %}
+            <div id="content-photos" class="tab-content hidden">
+                <div class="bg-white shadow-md rounded-lg p-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-6">Fotoğraflar</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {% for photo in photos %}
+                        <div class="group relative">
+                            <div class="relative overflow-hidden rounded-lg shadow-md aspect-w-16 aspect-h-9">
+                                <img src="{{ photo.url }}" alt="Mülakat Fotoğrafı" class="w-full h-64 object-cover hover:scale-105 transition-transform duration-300">
+                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+                                    <p class="text-white text-sm">{{ photo.timestamp }}</p>
+                                </div>
+                            </div>
+                            <a href="{{ photo.url }}" target="_blank" class="absolute top-2 right-2 bg-white/80 hover:bg-white p-2 rounded-full shadow-md invisible group-hover:visible transition-all">
+                                <i class="fas fa-external-link-alt text-gray-700"></i>
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Quiz Sonuçları Bölümü -->
+            {% if quiz_results %}
+            <div id="content-quiz" class="tab-content hidden">
+                <div class="bg-white shadow-md rounded-lg p-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-6">Quiz Sonuçları</h2>
+                    
+                    <div class="mb-8">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <p class="text-sm text-gray-600">Tarih:</p>
+                                <p class="font-medium">{{ quiz_results.timestamp }}</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="relative inline-flex items-center justify-center">
+                                    <svg class="w-24 h-24">
+                                        <circle class="text-gray-200" stroke-width="6" stroke="currentColor" fill="transparent" r="40" cx="45" cy="45" />
+                                        <circle class="text-blue-600" stroke-width="6" stroke-linecap="round" stroke="currentColor" fill="transparent" r="40" cx="45" cy="45" 
+                                                stroke-dasharray="251.2" stroke-dashoffset="{{ 251.2 - (251.2 * quiz_results.percentage / 100) | round }}" />
+                                    </svg>
+                                    <span class="absolute text-xl font-bold text-blue-700">{{ quiz_results.percentage }}%</span>
+                                </div>
+                                <p class="mt-2 font-medium">Doğru: {{ quiz_results.correct_count }} / {{ quiz_results.total_questions }}</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600">Sonuç:</p>
+                                <p class="font-medium">
+                                    {% if quiz_results.percentage >= 70 %}
+                                    <span class="text-green-600">Başarılı</span>
+                                    {% elif quiz_results.percentage >= 50 %}
+                                    <span class="text-yellow-600">Orta</span>
+                                    {% else %}
+                                    <span class="text-red-600">Başarısız</span>
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {% if quiz_results.detailed_results %}
+                    <h3 class="text-lg font-medium text-gray-800 mb-4">Detaylı Sonuçlar</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Soru No</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Soru</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kullanıcı Cevabı</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Doğru Cevap</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sonuç</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                {% for result in quiz_results.detailed_results %}
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ loop.index }}</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">{{ result.question }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ result.user_answer }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ result.correct_answer }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        {% if result.is_correct %}
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            <i class="fas fa-check mr-1"></i> Doğru
+                                        </span>
+                                        {% else %}
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                            <i class="fas fa-times mr-1"></i> Yanlış
+                                        </span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    {% if quiz_results.analysis %}
+                    <h3 class="text-lg font-medium text-gray-800 mt-8 mb-4">Performans Analizi</h3>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <p class="text-gray-700 mb-2"><strong>Değerlendirme:</strong> {{ quiz_results.analysis.evaluation }}</p>
+                        <p class="text-gray-700 mb-2"><strong>Güçlü Yönler:</strong> {{ quiz_results.analysis.strengths }}</p>
+                        <p class="text-gray-700"><strong>Gelişim Alanları:</strong> {{ quiz_results.analysis.improvement_areas }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    {% else %}
+                    <div class="text-center py-8">
+                        <i class="fas fa-clipboard-list text-gray-400 text-5xl mb-4"></i>
+                        <p class="text-gray-500">Detaylı sonuçlar bulunamadı.</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+        </main>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sekme değiştirme işlevi
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Aktif sekme düğmesini ve içeriğini güncelle
+                    tabButtons.forEach(btn => btn.classList.remove('active', 'border-blue-500', 'text-blue-600'));
+                    tabContents.forEach(content => content.classList.add('hidden'));
+                    
+                    const tabId = button.id.replace('tab-', '');
+                    button.classList.add('active', 'border-blue-500', 'text-blue-600');
+                    document.getElementById(`content-${tabId}`).classList.remove('hidden');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html> 
